@@ -1,0 +1,68 @@
+<!-- checkout page -->
+<div class="privacy py-sm-5 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>H</span>ồ sơ
+        </h3>
+        <div class="user-info-wrapper">
+            <form class="form" action="/edit_profile" method="post" name="edit_profile_form">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="user_lastName">Họ: </label>
+                        <input type="text" class="form-control" id="user_lastName" name="lastName" value="{{default user.lastName ""}}" placeholder="Họ">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="user_firstName">Tên: </label>
+                        <input type="text" class="form-control" id="user_firstName" name="firstName" value="{{default user.firstName ""}}" placeholder="Tên">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="user_gender">Giới tính:</label> <br>
+                        {{#check user.gender}}
+                            <label class="radio-inline" style="color: #333333;"><input type="radio" name="gender" value="Nam">Nam</label>
+                            <label class="radio-inline" style="color: #333333;"><input type="radio" name="gender" value="Nữ">Nữ</label>
+                            <label class="radio-inline" style="color: #333333;"><input type="radio" name="gender" value="Khác">Khác</label>
+                        {{/check}}
+
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="user_email">Email:</label>
+                        <input type="email" class="form-control" id="user_email" name="email" value="{{default user.email ""}}" placeholder="Email">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="user_birthDate">Ngày sinh:</label>
+                        <input type="date" class="form-control" id="user_birthDate" name="birthDate" value="{{parseDateInput user.birthDate "-"}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="user_phone">Số điện thoại:</label>
+                        <input type="tel" class="form-control" id="user_phone" name="phone" value="{{default user.phone ""}}" placeholder="Số điện thoại">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="user_address">Địa chỉ:</label>
+                        <textarea class="form-control" id="user_address" name="address" rows="3" placeholder="Địa chỉ">{{default user.address ""}}</textarea>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="user_city">Tỉnh thành:</label>
+                        <select id="user_city" class="form-control" name="city">
+                        {{#select user.city}}
+                            {{#each cities}}
+                                <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                        {{/select}}
+                        </select>
+                    </div>
+                </div>
+                <div class="display block text-center">
+                    <button type="submit" class="btn btn-success" style="font-size: 1.1em;">Cập nhật</button>
+                    <button type="submit" class="btn btn-danger" style="font-size: 1.1em;"><a href="/profile">Hủy</a></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- //checkout page -->

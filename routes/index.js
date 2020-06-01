@@ -1,9 +1,27 @@
 var express = require('express');
+var ctrlMain = require('../controllers/main.js');
+
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+/* GET Home page. */
+router.get('/', function(req, res) {
+  res.render('dish_detail', {
+		title: 'Stunning Recipe',
+		user: {}
+		//layout: false
+	});
 });
+
+router.get('/contact', ctrlMain.contact);
+
+router.get('/about', ctrlMain.about);
+
+router.get('/privacy', ctrlMain.privacy);
+
+router.get('/terms', ctrlMain.terms);
+
+router.get('/help', ctrlMain.help);
+
+router.get('/faqs', ctrlMain.faqs);
 
 module.exports = router;

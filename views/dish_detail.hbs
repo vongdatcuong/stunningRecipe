@@ -1,0 +1,132 @@
+<!-- Single Page -->
+<div id="dish-detail-wrapper" class="banner-bootom-w3-agileits py-4">
+    <div class="container py-xl-1 py-lg-1">
+        <div class="row">
+            <div class="col-md-9 dish-detail-content py-4">
+                <!-- tittle heading -->
+                <h3 class="tittle-w3l text-center mb-lg-4 mb-sm-3 mb-3">
+                    Bánh Chocolate
+                </h3>
+                <div class="dish-publish mt-1 mb-3">
+                    <div class="recipe-by mr-4">
+                        <a href="#">
+                            <img src="/images/user.jpg"/>
+                            St Recipe
+                        </a>
+                    </div>
+                    <div class="dish-publish-date">
+                        <span>21:01 01/06/2020</span>
+                    </div>
+                </div>
+                <div class="dish-favorite">
+                    <a href="#" class="">
+                        <span>3</span>
+                        <i class="far fa-heart"></i>
+                    </a>
+                </div>
+                <!-- //tittle heading -->
+                <!-- Dish content -->
+                <!-- Dish review -->
+                <div class="dish-review mt-0 mb-3 text-center">
+                    <div class="dish-rating">
+                        <input type="hidden" class="dishDetailStarRating kv-ltr-theme-fas-star rating-loading" value="3" disabled data-size="xs"/>
+                        <span class="dish-rating-count">5 đánh giá</span>
+                    </div>
+                </div>
+                <!-- Dish image -->
+                <div class="dish-image-wrapper">
+                    <div class="dish-image">
+                        <img src="/images/bakery_thumbnail.jpg"/>
+                    </div>
+                </div>
+                <div class="dish-types">
+                    <span class="badge badge-pill badge-danger mr-2"><i class="fa fa-fire"></i> Tráng miệng</span>
+                    <span class="badge badge-pill badge-primary mr-2"><i class="fa fa-tint"></i> Món Mexico</span>
+                    <span class="badge badge-pill badge-success"><i class="fa fa-leaf"></i> Lacto Vegetarian</span>
+                </div>
+                <div class="dish-info">
+                    <ul class="list-inline">
+                        <li>
+                            <div>
+                                <div class="dish-info-stats-text">Nguyên liệu </div>
+                                <div class="dish-info-stats-value">
+                                    <b class="dish-info-stats-count">3</b>
+                                    <span class="dish-info-stats-unit">m</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //Dish content-->
+                <!-- Comment -->  
+                <div class="tile" id="tile-1">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs nav-justified" role="tablist">
+                    <div class="slider"></div>
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i class="fas fa-comment"></i> Bình luận</a>
+                    </li>
+                    {{#if user}}
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><i class="fas fa-plus"></i> Thêm bình luận</a>
+                    </li>
+                    {{/if}}
+                    
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <ul class="media-list">
+                            {{# each comments}}
+                            <li class="media">
+                                <a class="pull-left" href="#">
+                                <img class="rounded-circle" src="../images/avatar.png" alt="profile" height="50">
+                                </a>
+                                <div class="media-body">
+                                <div class="well well-lg">
+                                    <h5 class="text-uppercase">{{user.username}}</h5>
+                                    <ul class="media-date text-uppercase list-inline">
+                                        <li class="dd/mm/aaaa">123</li>
+                                    </ul>
+                                    <p class="media-comment">
+                                        {{content}}
+                                    </p>
+                                </div>              
+                                </div>
+                            </li>
+                            {{/each}}         
+                        </ul> 
+                        <!-- Pagination -->
+                        <nav id="dishes-pagination" aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item"><a class="page-link page-link-first-last" href="#">FIRST</a></li>
+                                <li class="page-item"><a class="page-link page-link-active" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link page-link-first-last" href="#">LAST</a></li>
+                            </ul>
+                        </nav>
+                        <div class="clearfix"> </div>
+                    </div>
+                
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <form action="/comment/{{product.productId}}" method="post" class="form-horizontal" id="commentForm" role="form">
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                <textarea class="form-control" name="addComment" id="addComment" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">                    
+                                    <button class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> Bình luận</button>
+                                </div>
+                            </div>            
+                        </form>
+                    </div>
+                </div>
+                </div> 
+                <!-- //Comment --> 
+            </div> 
+    </div>
+</div>
