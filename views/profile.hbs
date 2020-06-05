@@ -1,75 +1,146 @@
-<div class="privacy py-sm-5 py-4">
-    <div class="container py-xl-4 py-lg-2">
-        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+
+<link rel="stylesheet" href="https://bootswatch.com/4/simplex/bootstrap.min.css" />
+
+
+<!-- profile style -->
+<link href="/stylesheets/profile.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
+<div class="container">
+    {{!-- <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
             <span>H</span>ồ sơ
-        </h3>
-        <div class="user-info-wrapper">
-            <form class="form" action="" method="post">
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="user_name">Tên người dùng:</label>
-                        <input type="text" class="form-control" id="user_name" name="user" value="{{default user.firstName user.lastName "..."}} {{user.lastName}}" disabled>
+        </h3> --}}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="card-title mb-4">
+                        <div class="d-flex justify-content-start">
+                            <div class="image-container">
+                                <img src="https://cdn4.iconfinder.com/data/icons/avatars-62/64/chef-cooker-avatar-restaurant-512.png"
+                                    id="imgProfile" style="width: 216px; height: 216px" class="img-thumbnail" />
+
+                            </div>
+                            <div class="userData ml-3">
+                                <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a
+                                        href="javascript:void(0);">Đỗ Thế Anh (@nhoxtheanh)</a></h2>
+                                <span class="badge badge-success"
+                                    style="font-size: 1.2rem; font-weight: bold">Blogger</span>
+                                <br><br>
+                                <h6 class="d-block"><a href="javascript:void(0)">300</a> Bài Blog đã đăng tải</h6>
+                                <h6 class="d-block"> Tham gia ngày 6/5/2020</h6>
+                                <h6 class="d-block"> <i class="fa fa-phone" aria-hidden="true"></i> 0904113942</h6>
+                                <h6 class="d-block"> <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    nhoxtheanh@gmail.com</h6>
+                                <h6 class="d-block">
+                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 10px;"><a
+                                            href="https://www.facebook.com/nhoxtheanh"><i class="fa fa-facebook"
+                                                aria-hidden="true"></i></a></button>
+                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 10px;"><a
+                                            href="https://www.instagram.com/nhoxtheanh"><i class="fa fa-instagram"
+                                                aria-hidden="true"></i></a></button>
+
+                                </h6>
+
+                            </div>
+
+
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="user_userId">User ID:</label>
-                        <div class="" id="user_userId">{{user.userId}}</div>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo"
+                                        role="tab" aria-controls="basicInfo" aria-selected="true">Các bài viết</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="connectedServices-tab" data-toggle="tab"
+                                        href="#connectedServices" role="tab" aria-controls="connectedServices"
+                                        aria-selected="false">Món ăn yêu thích</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content ml-1" id="myTabContent">
+                                <div class="tab-pane fade show active" id="basicInfo" role="tabpanel"
+                                    aria-labelledby="basicInfo-tab">
+
+
+
+                                    <div class="container">
+                                        <div class="row">
+                                            {{!-- Each dish --}}
+                                            <div class="card"
+                                                style="width: 18rem; margin-left: 20px; margin-right: 20px;">
+                                                <img src="https://daubepgiadinh.vn/wp-content/uploads/2018/04/bo-bit-tet-600x400.jpg"
+                                                    class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Bò bít tết</h5>
+                                                    <p class="card-text">Hôm nay, Daubepgiadinh.vn sẽ hướng dẫn cho bạn
+                                                        cách
+                                                        làm bò bít tết thơm ngon đậm đà hương vị để bạn chuẩn bị cho bữa
+                                                        sáng của gia đình. Hãy vào bếp để cùng chúng tôi tìm hiểu ngay
+                                                        bây
+                                                        giờ nhé.</p>
+                                                    <a href="#" class="btn btn-primary">Xem bài viết</a>
+                                                </div>
+                                            </div>
+
+                                            {{!-- Each dish --}}
+                                            <div class="card"
+                                                style="width: 18rem; margin-left: 20px; margin-right: 20px;">
+                                                <img src="https://i.ytimg.com/vi/Q5V0uEkdTPg/maxresdefault.jpg"
+                                                    class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Thịt kho tàu</h5>
+                                                    <p class="card-text">Caramelized Pork in Vietnamese style. One of
+                                                        famous
+                                                        traditional food in Vietnam lunar new year. </p>
+                                                    <a href="#" class="btn btn-primary">Xem bài viết</a>
+                                                </div>
+                                            </div>
+                                            {{!-- Each dish --}}
+                                            <div class="card"
+                                                style="width: 18rem; margin-left: 20px; margin-right: 20px;">
+                                                <img src="https://sites.google.com/site/baongocandfoods/_/rsrc/1493300218579/nhat/sushi/cach-an-sushi-chuyen-nghiep-nhu-nguoi-nhat_e4f82a72c5.jpg"
+                                                    class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Sushi</h5>
+                                                    <p class="card-text">Sushilà món ăn truyền thống của Nhật Bản. Cùng
+                                                        với
+                                                        trà đạo, nghệ thuật cắm hoa ikebanna, sushi đã thực sự trở thành
+                                                        nét
+                                                        văn hóa đặc trưng của xứ sở mặt trời mọc.</p>
+                                                    <a href="#" class="btn btn-primary">Xem bài viết</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="tab-pane fade" id="connectedServices" role="tabpanel"
+                                    aria-labelledby="ConnectedServices-tab">
+                                    <div>Danh sách món ăn yêu thích</div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+
                 </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="user_gender">Giới tính:</label>
-                        <input type="text" class="form-control" id="user_gender" name="user_gender" value="{{default user.gender "..."}}" disabled>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="user_tk">Tên tài khoản:</label>
-                        <div class="" id="user_tk">{{user.username}}</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="user_birthDate">Ngày sinh:</label>
-                        <input type="date" class="form-control" id="user_birthDate" name="user_birthDate" value="{{parseDateInput user.birthDate "-"}}" disabled>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="user_type">Loại tài khoản:</label>
-                        <div class="" id="user_type">{{default user.typeStr "..."}}</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="user_email">Email:</label>
-                        <input type="email" class="form-control" id="user_email" name="user_email" value="{{default user.email "..."}}" disabled>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="user_createdDate">Ngày đăng ký:</label>
-                        <div class="" id="user_createdDate">{{parseDateTime user.createdDate "/"}}</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="user_address">Địa chỉ:</label>
-                        <textarea class="form-control" id="user_address" name="user_address" rows="3" disabled>{{default user.address "..."}}</textarea>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <button type="submit" class="btn btn-success my-btn-link" style="font-size: 1.1em;"><a href="/edit_profile">Cập nhật thông tin</a></button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="user_phone">Số điện thoại:</label>
-                        <input type="tel" class="form-control" id="user_phone" name="user_phone" value="{{default user.phone "..."}}" disabled>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="user_city">Tỉnh thành:</label>
-                        <select id="user_city" class="form-control" name="user_city" disabled>
-                            <option selected>{{default user.city "..."}}</option>
-                        </select>
-                    </div>
-                </div>
-            </form>
+
+            </div>
         </div>
-        <div class="clearfix"> </div>
+
     </div>
 </div>
