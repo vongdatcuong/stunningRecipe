@@ -1,5 +1,5 @@
-var express = require('express');
-var ctrlMain = require('../controllers/main.js');
+var express = require("express");
+var ctrlMain = require("../controllers/main.js");
 
 var router = express.Router();
 
@@ -67,16 +67,24 @@ router.get('/post_recipe', function(req, res) {
 	});
 });
 
-router.get('/contact', ctrlMain.contact);
+/* Profile */
+router.get('/profile', function(req, res) {
+	res.render('profile', {
+		  title: 'Stunning Recipe',
+		  user: {}
+	});
+});
 
-router.get('/about', ctrlMain.about);
+router.get("/contact", ctrlMain.contact);
 
-router.get('/privacy', ctrlMain.privacy);
+router.get("/about", ctrlMain.about);
 
-router.get('/terms', ctrlMain.terms);
+router.get("/privacy", ctrlMain.privacy);
 
-router.get('/help', ctrlMain.help);
+router.get("/terms", ctrlMain.terms);
 
-router.get('/faqs', ctrlMain.faqs);
+router.get("/help", ctrlMain.help);
+
+router.get("/faqs", ctrlMain.faqs);
 
 module.exports = router;
