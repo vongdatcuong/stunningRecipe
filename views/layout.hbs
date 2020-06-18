@@ -22,6 +22,9 @@
       <link href="/stylesheets/lightslider.min.css" rel="stylesheet" type="text/css" media="all" />
       <!-- Lightslider css -->
       <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" media="all" />
+      <!-- FilePond css -->
+      <link href="/stylesheets/filepond/filepond.min.css" rel="stylesheet" type="text/css" media="all" />
+      <link href="/stylesheets/filepond/filepond-plugin-image-review.css" rel="stylesheet" type="text/css" media="all" />
       <!-- Main css -->
       <link rel="stylesheet" href="/stylesheets/fontawesome-all.css">
       <!-- Font-Awesome-Icons-CSS -->
@@ -88,9 +91,6 @@
                   <div class="col-lg-4 header-right mt-lg-0 mt-2 pt-1">
                       <!-- header lists -->
                       <ul class="pt-2 pb-2">
-                          <li class="text-center border-right text-white">
-                              <i class="fas fa-phone mr-2"></i> 001 234 5678
-                          </li>
                           {{#if user}}
                               <li id="welcomeUser" class="text-center border-right text-white">
                                   <div class="show">
@@ -102,6 +102,10 @@
                                           <a class="dropdown-item" href="/history">Kiểm duyệt</a>
                                       </div>
                                   </div>
+                              </li>
+                               <li id="postRecipe" class="text-center text-white">
+                                  <a href="/post_recipe" class="text-white">
+                                      <i class="fas fa-sticky-note mr-2"></i> Đăng CT</a>
                               </li>
                               <li id="logout" class="text-center text-white">
                                   <a href="/logout" class="text-white">
@@ -729,6 +733,16 @@
         })
       </script>
       <!-- //Star rating -->
+
+      <!-- FilePond -->
+      <script type="text/javascript" src="/javascripts/filepond/filepond.min.js"></script>
+      <script type="text/javascript" src="/javascripts/filepond/filepond-plugin-image-review.js"></script>
+      <script type="text/javascript" src="/javascripts/filepond/filepond-config.js"></script>
+      <!-- //FilePond -->
+
+      <!-- Dynamic guide js-->
+      <script type="text/javascript" src="/javascripts/dynamic-guide.js"></script>
+      <!-- //Dynamic guide js -->
 
       <!-- Service js-->
       <script type="text/javascript" src="/javascripts/service/loading.js"></script>
