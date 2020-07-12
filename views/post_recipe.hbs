@@ -1,0 +1,482 @@
+<!-- top Dishes -->
+<div class="ads-grid py-sm-2 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>C</span>hia
+            <span>S</span>ẻ
+            <span>C</span>ông
+            <span>T</span>hức
+        </h3>
+        <!-- //tittle heading -->
+        <div class="row">
+            <div id="postRecipePanel" class="col-md-12">
+                <div class="tab" role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item"><a id="recipeInfoTab" href="#recipeInfo" class="nav-link active" aria-controls="recipeInfo" role="tab" data-toggle="tab" aria-selected="true"><span>1</span> Thông tin món ăn</a></li>
+                        <li class="nav-item"><a id="recipeGuideTab" href="#recipeGuide" class="nav-link" aria-controls="recipeGuide" role="tab" data-toggle="tab" aria-selected="false"><span>2</span> Các bước thực hiện</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content tabs">
+                        <!-- Recipe info -->
+                        <div role="tabpanel" class="tab-pane fade show active" id="recipeInfo" aria-labelledby="recipeInfoTab">
+                            <div class="recipe-info-wrapper">
+                                <form class="form" action="/post_recipe" method="post" name="post_recipe_form">
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="recipe_name">Tên món ăn: </label>
+                                            <input type="text" class="form-control" id="recipe_name" name="recipeName" value="" placeholder="Tên món ăn">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="recipe_health_Score">Chỉ số sức khỏe: </label>
+                                            <input type="number" min="0" max="100" step="1" class="form-control" id="recipe_health_Score" name="healthScore" value="0" placeholder="Chỉ số sức khỏe">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="recipe_difficulty">Độ khó:</label> <br>
+                                            <select id="recipe_difficulty" class="form-control" name="difficulty">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="recipe_servings">Khẩu phần:</label>
+                                            <input type="number" min="1" max="100" step="1" class="form-control" id="recipe_servings" name="servings" value="1" placeholder="Khẩu phần">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="recipe_readyTime">Thời gian thực hiện (phút):</label>
+                                            <input type="number" min="1" step="1" class="form-control" id="recipe_readyTime" name="readyTime" value="0" placeholder="Thời gian thực hiện">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="recipe_price">Chi phí (VND):</label>
+                                            <input type="number" min="0" step="1000" class="form-control" id="recipe_price" name="price" value="0" placeholder="Chi phí">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="recipe_description">Mô tả:</label>
+                                            <textarea class="form-control" id="recipe_description" name="description" rows="5" placeholder="Giới thiệu về món ăn"></textarea>
+                                        </div>
+                                    </div>
+                                    <h4 class="my-3">Phân loại</h4>
+                                    <!-- Recipe type -->
+                                    <div class="row my-3">
+                                        <div id="recipeType" class="form-group col-md-12">
+                                            <label for="recipe_type"><h5>Loại món ăn</h5></label>
+                                            <div class="recipe-type-wrapper">
+                                                <div class="row mb-2">
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Món chính
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Món phụ
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Tráng miệng
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Món khai vị
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Salad
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Bánh
+                                                        </label> 
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Ăn sáng
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Soup
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Thức uống
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Nước sốt
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Snack
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Ăn trưa
+                                                        </label> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Recipe cuisine -->
+                                    <div class="row my-3">
+                                        <div id="recipeCuisine" class="form-group col-md-12">
+                                            <label for="recipe_cuisine"><h5>Nền ẩm thực</h5></label>
+                                            <div class="recipe-cuisine-wrapper">
+                                                <div class="row mb-2">
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Món Mỹ
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Món Trung
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Món Pháp
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Món Ý
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Món Nhật
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Món Mexico
+                                                        </label> 
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Món Thái
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Món Việt
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Món Âu
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Món Tây
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Món Đông
+                                                        </label> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Recipe diet -->
+                                    <div class="row my-3">
+                                        <div id="recipeCuisine" class="form-group col-md-12">
+                                            <label for="recipe_diet"><h5>Chế độ ăn</h5></label>
+                                            <div class="recipe-diet-wrapper">
+                                                <div class="row mb-3">
+                                                    <div class="col-md-3">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Không
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Không Glutent
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Không chứa sữa
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Ketogenic
+                                                        </label> 
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-md-3">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Vegetarian
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Lacto Vegetarian
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Ovo Vegetarian
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Vegan
+                                                        </label> 
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-md-3">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Pescetarian
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Primal
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Whole30
+                                                        </label> 
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Paleo
+                                                        </label> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Image -->
+                                    <h4 class="my-3">Minh họa</h4>
+                                    <input id="recipe-image" type="file" /> 
+                                    <!-- Ingredients -->
+                                    <h4 class="mt-5 mb-3">Nguyên liệu</h4>
+                                    <h5 class="my-3 text-danger"><i class="fa fa-rocket"></i> Nguyên liệu chính</h5>
+                                    <div id="recipe-ingredients" class="guide-wrapper py-2 px-3">
+                                        <!-- Ingredient row -->
+                                        <div class="recipe-ingredient-row guide-row py-3">
+                                            <div class="row py-2">
+                                                <div class="d-none"><span class="guide-number">1</span></div>
+                                                <div class="col-md-1 text-center text-danger"><i class="fa fa-chevron-right"></i></div>
+                                                <div class="col-md-6 form-group recipe-ingredient-content">
+                                                    <input type="text" class="form-control" id="recipe_ingredient" name="recipeIngredient" value="" placeholder="Tên nguyên liệu">
+                                                </div>
+                                                <div class="col-md-3 input-group mb-2">
+                                                    <input type="text" class="form-control d-inline rounded" id="recipe_ingredient_unit" name="recipeIngredientUnit" value="" placeholder="Số lượng">
+                                                    <div class="input-group-append mx-2">
+                                                        <span class="recipe-ingredient-unit"> / quả</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 recipe-ingredient-buttons text-center">
+                                                    <a class="guide-delete btn"><i class="fa fa-window-close"></i></a>
+                                                </div>
+                                            </div>
+                                            <!-- Define ingredient -->
+                                            <div class="row">
+                                                <h6 class="recipe-ingredient-add-new-title col-md-12 d-block pb-2 px-5 text-primary"><a class="ingredient-new-collapser btn" data-toggle="collapse" role="button" aria-expanded="false"><i class="fa fa-plus"></i> Định nghĩa nguyên liệu</a></h6>
+                                            </div>
+                                            <div class="row">
+                                                <div class="collapse ingredient-new-collapsee col-md-12 px-3 pb-3">
+                                                    <div class="card-body row border">
+                                                        <div class="col-md-6">
+                                                            <div class="row mb-3">
+                                                                <label for="recipe-ingredient-add-new-unit-long" class="col-md-4">Đơn vị đầy đủ</label>
+                                                                <input type="text" class="form-control col-md-8" id="recipe-ingredient-add-new-unit-long" name="recipeIngredientNewUnitLong" value="" placeholder="Đơn vị đầy đủ">
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <label for="recipe-ingredient-add-new-unit-short" class="col-md-4">Đơn vị tắt</label>
+                                                                <input type="text" class="form-control col-md-8" id="recipe-ingredient-add-new-unit-short" name="recipeIngredientNewUnitShort" value="" placeholder="Đơn vị ngắn">
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <label for="recipe-ingredient-add-new-price" class="col-md-4">Giá cả (VND)</label>
+                                                                <input type="number" class="form-control col-md-8" id="recipe-ingredient-add-new-price" name="recipeIngredientNewPrice" value="" placeholder="Giá cả">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input class="recipe-ingredient-add-new-image" type="file" /> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- //Ingredient row -->
+                                        <!-- Add button -->
+                                        <div class="display block text-left my-5 guide-button-wrapper">
+                                            <button type="button" class="btn btn-success guide-add py-2 px-3" style="font-size: 0.9em;">+ Thêm nguyên liệu</button>
+                                        </div>
+                                    </div>
+                                    <!-- Extended Ingredients -->
+                                    <h5 class="my-3 text-danger"><i class="fa fa-rocket"></i> Nguyên liệu phụ</h5>
+                                    <div id="recipe-extended-ingredients" class="guide-wrapper py-2 px-3">
+                                        <!-- Ingredient row -->
+                                        <div class="recipe-ingredient-row guide-row py-3">
+                                            <div class="row py-2">
+                                                <div class="d-none"><span class="guide-number">1</span></div>
+                                                <div class="col-md-1 text-center text-danger"><i class="fa fa-chevron-right"></i></div>
+                                                <div class="col-md-6 form-group recipe-ingredient-content">
+                                                    <input type="text" class="form-control" id="recipe_ext_ingredient" name="recipeExtIngredient" value="" placeholder="Tên nguyên liệu">
+                                                </div>
+                                                <div class="col-md-3 input-group mb-2">
+                                                    <input type="text" class="form-control d-inline rounded" id="recipe_ext_ingredient_unit" name="recipeExtIngredientUnit" value="" placeholder="Số lượng">
+                                                    <div class="input-group-append mx-2">
+                                                        <span class="recipe-ingredient-unit"> / quả</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 recipe-ingredient-buttons text-center">
+                                                    <a class="guide-delete btn"><i class="fa fa-window-close"></i></a>
+                                                </div>
+                                            </div>
+                                            <!-- Define ingredient -->
+                                            <div class="row">
+                                                <h6 class="recipe-ingredient-add-new-title col-md-12 d-block pb-2 px-5 text-primary"><a class="ingredient-new-collapser btn" data-toggle="collapse" role="button" aria-expanded="false"><i class="fa fa-plus"></i> Định nghĩa nguyên liệu</a></h6>
+                                            </div>
+                                            <div class="row">
+                                                <div class="collapse ingredient-new-collapsee col-md-12 px-3 pb-3">
+                                                    <div class="card-body row border">
+                                                        <div class="col-md-6">
+                                                            <div class="row mb-3">
+                                                                <label for="recipe-ingredient-add-new-unit-long" class="col-md-4">Đơn vị đầy đủ</label>
+                                                                <input type="text" class="form-control col-md-8" id="recipe-extended-ingredient-add-new-unit-long" name="recipeExtIngredientNewUnitLong" value="" placeholder="Đơn vị đầy đủ">
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <label for="recipe-ingredient-add-new-unit-short" class="col-md-4">Đơn vị tắt</label>
+                                                                <input type="text" class="form-control col-md-8" id="recipe-extended-ingredient-add-new-unit-short" name="recipeExtIngredientNewUnitShort" value="" placeholder="Đơn vị ngắn">
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <label for="recipe-ingredient-add-new-price" class="col-md-4">Giá cả (VND)</label>
+                                                                <input type="number" class="form-control col-md-8" id="recipe-extended-ingredient-add-new-price" name="recipeExtIngredientNewPrice" value="" placeholder="Giá cả">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input class="recipe-ingredient-add-new-image" type="file" /> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- //Ingredient row -->
+                                        <!-- Add button -->
+                                        <div class="display block text-left my-5 guide-button-wrapper">
+                                            <button type="button" class="btn btn-success guide-add py-2 px-3" style="font-size: 0.9em;">+ Thêm nguyên liệu</button>
+                                        </div>
+                                    </div>
+                                    <!-- Buttons -->
+                                    <div class="display block text-center my-5">
+                                        <button type="button" class="btn violet-reverse-link-btn pt-2 pb-2 pl-5 pr-5" style="font-size: 1.1em;">Tiếp theo</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>    
+                        <!-- Recipe guide -->                   
+                        <div role="tabpanel" class="tab-pane fade" id="recipeGuide" aria-labelledby="recipeGuideTab">
+                            <div id="recipe-guide" class="guide-wrapper py-2 px-3">
+                                <!-- Guide row -->
+                                <div class="recipe-guide-row guide-row py-3">
+                                    <div class="row py-2">
+                                        <div class="col-md-1 recipe-guide-number text-center"><span class="guide-number">1</span></div>
+                                        <div class="col-md-8 form-group recipe-guide-content">
+                                            <textarea class="form-control" name="guide_content" rows="3" placeholder="Nhập hướng dẫn thực hiện"></textarea>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <textarea class="form-control" name="guide_equipments" rows="3" placeholder="Nhập các dụng cụ cần ở bước này"></textarea>
+                                        </div>
+                                    </div>
+                                    <h6>Tải ảnh hướng dẫn <i>(<span class="red-asterisk">*</span>Tối đa 6 ảnh)</i></h6>
+                                    <input class="recipe-guide-image py-3" type="file"/>
+                                    <div class="recipe-guide-buttons">
+                                        <a class="guide-delete btn"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </div>
+                                <!-- //Guide row -->
+                                <!-- Add button -->
+                                <div class="display block text-left my-5 guide-button-wrapper">
+                                    <button type="button" class="btn btn-info guide-add py-2 px-3" style="font-size: 0.9em;">+ Thêm bước thực hiện</button>
+                                </div>
+                            </div>
+                            <div class="row my-1 px-3">
+                                <h4 class="my-4 px-3">Video minh họa</h4>
+                                <div class="form-group col-md-12">
+                                    <input type="text" class="form-control" id="recipe_video" name="recipeVideo" value="" placeholder="Nhập link video hướng dẫn: https://">
+                                </div>
+                            </div>
+                            <!-- Buttons -->
+                            <div class="display block text-center my-3">
+                                <button type="button" class="btn violet-reverse-link-btn pt-2 pb-2 pl-5 pr-5" style="font-size: 1.1em;">Quay lại</button>
+                                <button type="button" class="btn violet-link-btn pt-2 pb-2 pl-5 pr-5" style="font-size: 1.1em;"> Gửi </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //top Dishes -->

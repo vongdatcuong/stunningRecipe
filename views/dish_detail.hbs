@@ -2,131 +2,380 @@
 <div id="dish-detail-wrapper" class="banner-bootom-w3-agileits py-4">
     <div class="container py-xl-1 py-lg-1">
         <div class="row">
-            <div class="col-md-9 dish-detail-content py-4">
-                <!-- tittle heading -->
-                <h3 class="tittle-w3l text-center mb-lg-4 mb-sm-3 mb-3">
-                    Bánh Chocolate
-                </h3>
-                <div class="dish-publish mt-1 mb-3">
-                    <div class="recipe-by mr-4">
-                        <a href="#">
-                            <img src="/images/user.jpg"/>
-                            St Recipe
+            <!-- Dish detail -left -->
+            <div class="col-md-8 dish-detail-content-wrapper pl-0 pr-1">
+                <div class="dish-detail-content py-4">
+                    <!-- tittle heading -->
+                    <h3 class="tittle-w3l text-center mb-lg-4 mb-sm-3 mb-3">
+                        Bánh Chocolate
+                    </h3>
+                    <div class="dish-publish mt-1 mb-3">
+                        <div class="recipe-by mr-4">
+                            <a href="#">
+                                <img src="/images/user.jpg"/>
+                                St Recipe
+                            </a>
+                        </div>
+                        <div class="dish-publish-date">
+                            <span>21:01 01/06/2020</span>
+                        </div>
+                    </div>
+                    <div class="dish-favorite">
+                        <a href="#" class="">
+                            <span>3</span>
+                            <i class="far fa-heart"></i>
                         </a>
                     </div>
-                    <div class="dish-publish-date">
-                        <span>21:01 01/06/2020</span>
+                    <!-- //tittle heading -->
+                    <!-- Dish content -->
+                    <!-- Dish review -->
+                    <div class="dish-review mt-0 mb-3 text-center">
+                        <div class="dish-rating">
+                            <input type="hidden" class="dishDetailStarRating kv-ltr-theme-fas-star rating-loading" value="3" disabled data-size="xs"/>
+                            <span class="dish-rating-count">5 đánh giá</span>
+                        </div>
                     </div>
-                </div>
-                <div class="dish-favorite">
-                    <a href="#" class="">
-                        <span>3</span>
-                        <i class="far fa-heart"></i>
-                    </a>
-                </div>
-                <!-- //tittle heading -->
-                <!-- Dish content -->
-                <!-- Dish review -->
-                <div class="dish-review mt-0 mb-3 text-center">
-                    <div class="dish-rating">
-                        <input type="hidden" class="dishDetailStarRating kv-ltr-theme-fas-star rating-loading" value="3" disabled data-size="xs"/>
-                        <span class="dish-rating-count">5 đánh giá</span>
+                    <!-- Dish image -->
+                    <div class="dish-image-wrapper">
+                        <div class="dish-image">
+                            <img src="/images/bakery_thumbnail.jpg"/>
+                        </div>
                     </div>
-                </div>
-                <!-- Dish image -->
-                <div class="dish-image-wrapper">
-                    <div class="dish-image">
-                        <img src="/images/bakery_thumbnail.jpg"/>
+                    <div class="dish-types mt-4 mb-5">
+                        <span class="badge badge-pill badge-danger mr-2"><i class="fa fa-fire"></i> Tráng miệng</span>
+                        <span class="badge badge-pill badge-primary mr-2"><i class="fa fa-tint"></i> Món Mexico</span>
+                        <span class="badge badge-pill badge-success"><i class="fa fa-leaf"></i> Lacto Vegetarian</span>
                     </div>
-                </div>
-                <div class="dish-types">
-                    <span class="badge badge-pill badge-danger mr-2"><i class="fa fa-fire"></i> Tráng miệng</span>
-                    <span class="badge badge-pill badge-primary mr-2"><i class="fa fa-tint"></i> Món Mexico</span>
-                    <span class="badge badge-pill badge-success"><i class="fa fa-leaf"></i> Lacto Vegetarian</span>
-                </div>
-                <div class="dish-info">
-                    <ul class="list-inline">
-                        <li>
-                            <div>
-                                <div class="dish-info-stats-text">Nguyên liệu </div>
-                                <div class="dish-info-stats-value">
-                                    <b class="dish-info-stats-count">3</b>
-                                    <span class="dish-info-stats-unit">m</span>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!-- //Dish content-->
-                <!-- Comment -->  
-                <div class="tile" id="tile-1">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs nav-justified" role="tablist">
-                    <div class="slider"></div>
-                    <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i class="fas fa-comment"></i> Bình luận</a>
-                    </li>
-                    {{#if user}}
-                    <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><i class="fas fa-plus"></i> Thêm bình luận</a>
-                    </li>
-                    {{/if}}
-                    
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <ul class="media-list">
-                            {{# each comments}}
-                            <li class="media">
-                                <a class="pull-left" href="#">
-                                <img class="rounded-circle" src="../images/avatar.png" alt="profile" height="50">
-                                </a>
-                                <div class="media-body">
-                                <div class="well well-lg">
-                                    <h5 class="text-uppercase">{{user.username}}</h5>
-                                    <ul class="media-date text-uppercase list-inline">
-                                        <li class="dd/mm/aaaa">123</li>
-                                    </ul>
-                                    <p class="media-comment">
-                                        {{content}}
-                                    </p>
-                                </div>              
+                    <!-- Dish description -->
+                    <div class="dish-description mt-0 mb-5 px-4">
+                        <h4 class="my-3 text-center">Giới thiệu</h4>
+                        <p>Bánh chocolate siêu to khổng loorfooooooooooooooooooooooooooooooooqưeqweqwewqeqweqwewqeqweqwe.</p>
+                    </div>
+                    <div class="dish-info my-4">
+                        <ul class="list-inline">
+                            <li>
+                                <div>
+                                    <div class="dish-info-stats-text">Thực hiện</div>
+                                    <div class="dish-info-stats-value">
+                                        <b class="dish-info-stats-count">45</b>
+                                        <span class="dish-info-stats-unit">min</span>
+                                    </div>
                                 </div>
                             </li>
-                            {{/each}}         
-                        </ul> 
-                        <!-- Pagination -->
-                        <nav id="dishes-pagination" aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link page-link-first-last" href="#">FIRST</a></li>
-                                <li class="page-item"><a class="page-link page-link-active" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link page-link-first-last" href="#">LAST</a></li>
-                            </ul>
-                        </nav>
-                        <div class="clearfix"> </div>
+                            <li>
+                                <div>
+                                    <div class="dish-info-stats-text">Phần</div>
+                                    <div class="dish-info-stats-value">
+                                        <b class="dish-info-stats-count">1</b>
+                                        <span class="dish-info-stats-unit">người</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <div class="dish-info-stats-text">Chi phí</div>
+                                    <div class="dish-info-stats-value">
+                                        <b class="dish-info-stats-count">100.000</b>
+                                        <span class="dish-info-stats-unit">VND</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <div class="dish-info-stats-text">Độ khó</div>
+                                    <div class="dish-info-stats-value">
+                                        <b class="dish-info-stats-count">3</b>
+                                        <span class="dish-info-stats-unit">/5</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- Dish ingredients -->
+                        <div class="dish-ingredient my-4">
+                            <h4 class="my-3">Nguyên liệu</h4>
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span class="dish-inrgredient-value">312.5g</span>
+                                            <span class="dish-inrgredient-text">Bột mì</span>
+                                        </td>
+                                        <td>
+                                            <span class="dish-inrgredient-value">45g</span>
+                                            <span class="dish-inrgredient-text">Gia vị tự nhiên không ngọt</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="dish-inrgredient-value">2.5 muỗng cà phê</span>
+                                            <span class="dish-inrgredient-text">Bột làm bánh</span>
+                                        </td>
+                                        <td>
+                                            <span class="dish-inrgredient-value">1.5 muỗng cà phê</span>
+                                            <span class="dish-inrgredient-text">Baking soda</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="dish-inrgredient-value">1 muỗng cà phê</span>
+                                            <span class="dish-inrgredient-text">Muối</span>
+                                        </td>
+                                        <td>
+                                            <span class="dish-inrgredient-value">1 muỗng cà phê</span>
+                                            <span class="dish-inrgredient-text">Quế</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="dish-inrgredient-value">170.25g</span>
+                                            <span class="dish-inrgredient-text">Bơ</span>
+                                        </td>
+                                        <td>
+                                            <span class="dish-inrgredient-value">200g</span>
+                                            <span class="dish-inrgredient-text">Đường trắng</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="dish-inrgredient-value">220g</span>
+                                            <span class="dish-inrgredient-text">Đường nâu</span>
+                                        </td>
+                                        <td>
+                                            <span class="dish-inrgredient-value">3 quả</span>
+                                            <span class="dish-inrgredient-text">Trứng</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="dish-inrgredient-value">122ml</span>
+                                            <span class="dish-inrgredient-text">Sữa</span>
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <form action="/comment/{{product.productId}}" method="post" class="form-horizontal" id="commentForm" role="form">
-                            <div class="form-group">
-                                <div class="col-sm-10">
-                                <textarea class="form-control" name="addComment" id="addComment" rows="5"></textarea>
+                    <!-- Dish instruction -->
+                    <div class="dish-instruction my-4 pl-3 pr-3">
+                        <h4 class="my-3 text-center">Các bước thực hiện</h4>
+                        <div class="dish-step mb-2">
+                            <div class="dish-step-text">
+                                <span class="dish-step-number">Bước <span>1</span>: </span>
+                                <span>Cho bột bánh, kem, chocolate (đã giã nhuyễn) vào chén, dùng máy trộn đều đến khi thành dạng bông.</span>
+                            </div>
+                            <div class="dish-step-image my-3">
+                                <img src="/images/sauce_thumbnail.jpg"/>
+                            </div>
+                        </div>
+                        <div class="dish-step mb-2">
+                            <div class="dish-step-text">
+                                <span class="dish-step-number">Bước <span>2</span>: </span>
+                                <span>Bỏ đường, muối. Xong đóng thành khuông rồi bỏ vào lò nướng ở 40 độ C trong 20 phút.</span>
+                            </div>
+                            <div class="dish-step-image my-3">
+                                
+                            </div>
+                        </div>
+                        <div class="dish-step mb-2">
+                            <div class="dish-step-text">
+                                <span class="dish-step-number">Bước <span>3</span>: </span>
+                                <span>Lấy bánh ra. Thêm topping quế, chocolate, dâu tây vào.</span>
+                            </div>
+                            <div class="dish-step-image my-3">
+                                <img src="/images/dessert_thumbnail.jpg"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Dish video -->
+                    <div class="dish-video my-4 pl-3 pr-3">
+                        <h4 class="my-3 text-center">Video hướng dẫn</h4>
+                        <iframe class="my-2" width="700" height="420" src="https://www.youtube.com/embed/psbCRCCkWXE" 
+                            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                        </iframe>
+                    </div>
+                    <!-- //Dish content-->
+                </div> 
+            </div>
+            <!-- Dish detail right -->
+            <div class="col-md-4 dish-related-wrapper pl-3 pr-0">
+                <div class="dish-related py-4">
+                    <!-- tittle heading -->
+                    <h4 class="tittle-w3l text-center border-bottom mb-lg-2 mb-sm-2 mb-2 mx-4 pb-2">
+                        Món liên quan
+                    </h4>
+                    <!-- //tittle heading -->
+                     <!-- Dish related list -->
+                    <div class="dish-related-list">
+                        <div class="dish-related-list-recipes row">
+                            <div class="dish-related-item-wrapper py-2 pl-4 pr-1">
+                                <div class="dish-related-item pl-2 pr-1">
+                                    <div class="dish-related-item-image">
+                                        <a href="#">
+                                            <img src="/images/drink_thumbnail.jpg"/>
+                                        </a>
+                                    </div>
+                                    <div class="dish-related-item-info text-ellipsis text-center">
+                                        <a href="#">Bánh chocolate lavaaaaaaa</a>
+                                        <div class="dish-related-item-stats text-left">
+                                            <span class="dish-related-item-stats-item mr-1">
+                                                <span class="item-stats-count">69k</span>
+                                                <span class="item-stats-unit">lượt xem</span>
+                                            </span>
+                                            <span class="dish-related-item-stats-item">
+                                                <span class="item-stats-count">30</span>
+                                                <span class="item-stats-unit">min</span>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">                    
-                                    <button class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> Bình luận</button>
+                            <div class="dish-related-item-wrapper py-2 pl-1 pr-4">
+                                <div class="dish-related-item pl-1 pr-2">
+                                    <div class="dish-related-item-image">
+                                        <a href="#">
+                                            <img src="/images/lunch_thumbnail.jpg"/>
+                                        </a>
+                                    </div>
+                                    <div class="dish-related-item-info text-ellipsis text-center">
+                                        <a href="#">Bánh chocolate lavaaaaaaa</a>
+                                        <div class="dish-related-item-stats text-left">
+                                            <span class="dish-related-item-stats-item mr-1">
+                                                <span class="item-stats-count">69k</span>
+                                                <span class="item-stats-unit">lượt xem</span>
+                                            </span>
+                                            <span class="dish-related-item-stats-item">
+                                                <span class="item-stats-count">30</span>
+                                                <span class="item-stats-unit">min</span>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>            
-                        </form>
+                            </div>
+                            <div class="dish-related-item-wrapper py-2 pl-4 pr-1">
+                                <div class="dish-related-item pl-2 pr-1">
+                                    <div class="dish-related-item-image">
+                                        <a href="#">
+                                            <img src="/images/breakfast_thumbnail.jpg"/>
+                                        </a>
+                                    </div>
+                                    <div class="dish-related-item-info text-ellipsis text-center">
+                                        <a href="#">Bánh chocolate lavaaaaaaa</a>
+                                        <div class="dish-related-item-stats text-left">
+                                            <span class="dish-related-item-stats-item mr-1">
+                                                <span class="item-stats-count">69k</span>
+                                                <span class="item-stats-unit">lượt xem</span>
+                                            </span>
+                                            <span class="dish-related-item-stats-item">
+                                                <span class="item-stats-count">30</span>
+                                                <span class="item-stats-unit">min</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dish-related-item-wrapper py-2 pl-1 pr-4">
+                                <div class="dish-related-item pl-1 pr-2">
+                                    <div class="dish-related-item-image">
+                                        <a href="#">
+                                            <img src="/images/snack_thumbnail.jpg"/>
+                                        </a>
+                                    </div>
+                                    <div class="dish-related-item-info text-ellipsis text-center">
+                                        <a href="#">Bánh chocolate lavaaaaaaa</a>
+                                        <div class="dish-related-item-stats text-left">
+                                            <span class="dish-related-item-stats-item mr-1">
+                                                <span class="item-stats-count">69k</span>
+                                                <span class="item-stats-unit">lượt xem</span>
+                                            </span>
+                                            <span class="dish-related-item-stats-item">
+                                                <span class="item-stats-count">30</span>
+                                                <span class="item-stats-unit">min</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="tittle-w3l text-center border-bottom mb-lg-2 mb-sm-2 mb-2 mx-4 pb-2">
+                    </h4>
+                    <!-- //Dish related list -->
+                </div>
+            </div>
+        </div>
+        <div class="row my-4">
+            <!-- Comment -->
+            <div class="col-md-8 col-sm-12 dish-comment-wrapper py-3 px-3">
+                <div class="dish-comment">
+                    <!-- tittle heading -->
+                    <h4 class="tittle-w3l text-center border-bottom mb-lg-2 mb-sm-2 mb-2 mx-4 py-2">
+                        Bình luận
+                    </h4>
+                    <!-- //tittle heading -->
+                    <div class="panel panel-info">
+                        <div class="panel-heading pt-2 pb-3 pl-2">
+                            Thảo luận về Bánh chocolate
+                        </div>
+                        <div class="panel-body">
+                            <textarea class="form-control" placeholder="Để lại bình luận..." rows="4"></textarea>
+                            <br>
+                            <div class="text-right py-2">
+                                <button type="button" class="btn violet-link-btn px-4 pull-right">Gửi</button>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr>
+                            <ul class="media-list">
+                                <li class="media">
+                                    <a href="#" class="pull-left">
+                                        <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                                    </a>
+                                    <div class="media-body ml-3">
+                                        <span class="text-muted pull-right">
+                                            <small class="text-muted">30 min ago</small>
+                                        </span>
+                                        <strong class="text-success">@MartinoMont</strong>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                            Lorem ipsum dolor sit amet, <a href="#">#consecteturadipiscing </a>.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <a href="#" class="pull-left">
+                                        <img src="https://bootdey.com/img/Content/user_2.jpg" alt="" class="img-circle">
+                                    </a>
+                                    <div class="media-body ml-3">
+                                        <span class="text-muted pull-right">
+                                            <small class="text-muted">30 min ago</small>
+                                        </span>
+                                        <strong class="text-success">@LaurenceCorreil</strong>
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                            Lorem ipsum dolor <a href="#">#ipsumdolor </a>adipiscing elit.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <a href="#" class="pull-left">
+                                        <img src="https://bootdey.com/img/Content/user_3.jpg" alt="" class="img-circle">
+                                    </a>
+                                    <div class="media-body ml-3">
+                                        <span class="text-muted pull-right">
+                                            <small class="text-muted">30 min ago</small>
+                                        </span>
+                                        <strong class="text-success">@JohnNida</strong>
+                                        <p>
+                                            Lorem ipsum dolor <a href="#">#sitamet</a> sit amet, consectetur adipiscing elit.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                </div> 
-                <!-- //Comment --> 
-            </div> 
-    </div>
+            </div>
+        </div>
 </div>
