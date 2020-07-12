@@ -57,8 +57,8 @@
               <div class="row main-top-w3l py-2">
                     <!-- logo -->
                     <div class="col-md-2">
-                        <div class="logo ml-5">
-                            <a href="/" class="font-weight-bold font-italic" style="text-decoration:none; color: white;">
+                        <div>
+                            <a href="/" style="text-decoration:none; color: white;">
                                 <img src="/images/StunningRecipeLogo.png" >
                             </a>
                         </div>
@@ -67,7 +67,7 @@
                     <!-- //logo -->
                     <!-- header-bot -->
                     <div class="col-md-6 header mt-2 mb-md-0 mb-2">
-                        <div class="row">
+                        <div class="row" style="padding-left: 100px;">
                             <!-- search -->
                             <div class="col-10 agileits_search">
                                 <form class="form-inline input-group mb-2" action="/search" method="get">
@@ -97,7 +97,7 @@
                                       <a href="" class="text-white dropdown-toggle" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                           <i class="fas fa-sign-out-alt mr-2" ></i> Chào {{user.username}}</a>
                                       <div class="dropdown-menu" aria-labelledby="profileDropdown">
-                                          <a class="dropdown-item" href="/profile">Hồ sơ</a>
+                                          <a class="dropdown-item" href="/yourProfile">Hồ sơ</a>
                                           <a class="dropdown-item" href="/changePwd">Thay đổi mật khẩu</a>
                                           <a class="dropdown-item" href="/history">Kiểm duyệt</a>
                                       </div>
@@ -328,7 +328,7 @@
                               </div>
                           </li>
                           <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
-                              <a class="nav-link" href="/advancedSearch">Tìm kiếm nâng cao</a>
+                              <a class="nav-link" href="/advanced_search">Tìm kiếm nâng cao</a>
                           </li>
                           <li class="nav-item">
                               <a class="nav-link" href="contact">Liên hệ</a>
