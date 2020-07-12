@@ -4,17 +4,17 @@ var ctrlMain = require("../controllers/main.js");
 var router = express.Router();
 
 /* GET Home page. */
-router.get("/", function (req, res) {
-  //   res.render('yourProfile', {
-  // 		title: 'Stunning Recipe',
-  // 		user: {}
-  // 		//layout: false
-  // 	});
-  res.render("profile", {
-    title: "Stunning Recipe",
-    user: {},
-    //layout: false
-  });
+router.get("/", function(req, res) {
+    //   res.render('yourProfile', {
+    // 		title: 'Stunning Recipe',
+    // 		user: {}
+    // 		//layout: false
+    // 	});
+    res.render("advanced_search", {
+        title: "Stunning Recipe",
+        user: {},
+        //layout: false
+    });
 });
 
 router.get("/contact", ctrlMain.contact);
