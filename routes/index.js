@@ -21,7 +21,7 @@ router.get('/login', function(req, res) {
 
 /* Sign up */
 router.get('/signup', function(req, res) {
-    res.render('login', {
+    res.render('signup', {
         title: 'Stunning Recipe',
         layout: false
     });
@@ -75,9 +75,25 @@ router.get('/profile', function(req, res) {
     });
 });
 
-/* Your own Profile */
-router.get('/yourProfile', function(req, res) {
-    res.render('yourProfile', {
+/* Your own Information */
+router.get('/yourInfo', function(req, res) {
+    res.render('yourInfo', {
+        title: 'Stunning Recipe',
+        user: {}
+    });
+});
+
+/* Edit Your own Information */
+router.get('/editInfo', function(req, res) {
+    res.render('editInfo', {
+        title: 'Stunning Recipe',
+        user: {}
+    });
+});
+
+/* Change Password */
+router.get('/changePwd', function(req, res) {
+    res.render('changePwd', {
         title: 'Stunning Recipe',
         user: {}
     });
