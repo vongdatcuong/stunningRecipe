@@ -83,6 +83,14 @@ router.get('/yourProfile', function(req, res) {
     });
 });
 
+/* Edit Your own Profile */
+router.get('/edit_profile', function(req, res) {
+    res.render('edit_profile', {
+        title: 'Stunning Recipe',
+        user: {}
+    });
+});
+
 router.get("/contact", ctrlMain.contact);
 
 router.get("/about", ctrlMain.about);
