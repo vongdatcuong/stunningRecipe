@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <title>{{title}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,14 +15,27 @@
     <!-- Font-Awesome-Icons-CSS -->
 
     <!-- web fonts -->
-    <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext" rel="stylesheet">
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese"
-          rel="stylesheet">
+    <link
+        href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext"
+        rel="stylesheet">
+    <link
+        href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese"
+        rel="stylesheet">
 
 </head>
+
 <body>
+    <style>
+        .container {
+            padding: 0;
+        }
+
+        .changePwd-container {
+            margin-top: 50px;
+        }
+    </style>
     <div class="bg-image"></div>
-    <div class="container">
+    <div class="changePwd-container">
         <!-- modals -->
         <!-- log in -->
         <div class="show" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -32,29 +46,38 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-signin" action="/changePwd" method="POST">
-                        	{{#if success_messages }}
-                              <div class="alert alert-success">{{success_messages}}</div>
+                            {{#if success_messages }}
+                            <div class="alert alert-success">{{success_messages}}</div>
                             {{/if}}
                             {{#if error_messages }}
-                              <div class="alert alert-danger">{{error_messages}}</div>
+                            <div class="alert alert-danger">{{error_messages}}</div>
                             {{/if}}
-                        <div class="form-group">
-						  <label class="col-form-label">Mật khẩu cũ</label>
-						  <input type="password" id="passwordOld" name="passwordOld" class="form-control" placeholder="Nhập mật khẩu cũ" required autofocus>
-                        </div>
+                            <div class="form-group">
+                                <label class="col-form-label">Mật khẩu cũ</label>
+                                <input type="password" id="passwordOld" name="passwordOld" class="form-control"
+                                    placeholder="Nhập mật khẩu cũ" required autofocus>
+                            </div>
 
-                        <div class="form-group">
-                            <label class="col-form-label">Mật khẩu mới</label>
-                            <input type="password" class="form-control" placeholder="Mật khẩu mới" name="password" id="password1" required="">
-                        </div>
-                        <div class="form-group">
-                            <label class="col-form-label">Nhập lại mật khẩu mới</label>
-                            <input type="password" class="form-control" placeholder="Nhập lại mật khẩu mới" name="re-password" id="password2" required="">
-                        </div>
-						  <br/>
-						  
-						  <button class="btn btn-lg btn-default btn-block" type="submit">Đổi mật khẩu</button>
-						</form>
+                            <div class="form-group">
+                                <label class="col-form-label">Mật khẩu mới</label>
+                                <input type="password" class="form-control" placeholder="Mật khẩu mới" name="password"
+                                    id="password1" required="">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">Nhập lại mật khẩu mới</label>
+                                <input type="password" class="form-control" placeholder="Nhập lại mật khẩu mới"
+                                    name="re-password" id="password2" required="">
+                            </div>
+                            <br />
+                            <div id="SubmitArea" style="display: flex">
+                                <span style="margin: auto; display: block;">
+                                    <input class="btn btn-primary" type="submit" value="Đổi mật khẩu">
+                                    {{!-- <button class="btn btn-lg btn-primary btn-block" type="submit">Đổi mật khẩu</button> --}}
+                                    <a class="btn btn-outline-danger" href="/" role="button"
+                                        style="margin-left: 20px;">Hủy</a>
+                                </span>
+                            </div>                            
+                        </form>
 
                     </div>
                 </div>
@@ -87,4 +110,5 @@
     <script type="text/javascript" src="javascripts/service/loading.js"></script>
     <!-- //Service js -->
 </body>
+
 </html>
