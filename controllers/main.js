@@ -18,6 +18,12 @@ const search = (req, res) => {
 	});
 };
 
+const changePwd = (req, res) => {
+	res.render('changePwd', {
+		title: 'Thay đổi mật khảu',
+	});
+};
+
 const contact = (req, res) => {
 	res.render('contact', {
 		title: 'Liên hệ',

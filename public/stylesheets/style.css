@@ -1895,8 +1895,10 @@ a:focus {
     vertical-align: text-bottom;
     margin: 0 5px;
 }
-
-
+/* Post recipe Nutritions*/
+#post_recipe_nutritions .twitter-typeahead {
+    width: 100%;
+}
 /* Post recipe ingredients */
 
 #recipe-ingredients .recipe-ingredient-unit {

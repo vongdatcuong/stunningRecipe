@@ -83,6 +83,15 @@ router.get('/yourProfile', function(req, res) {
     });
 });
 
+/* Change password */
+router.get('/changePwd', function(req, res) {
+    res.render('changePwd', {
+        title: 'Stunning Recipe',
+        layout: false,
+        user: {}
+    });
+});
+
 router.get("/contact", ctrlMain.contact);
 
 router.get("/about", ctrlMain.about);
