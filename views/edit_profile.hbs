@@ -1,68 +1,208 @@
-<!-- checkout page -->
-<div class="privacy py-sm-5 py-4">
-    <div class="container py-xl-4 py-lg-2">
-        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
-            <span>H</span>ồ sơ
-        </h3>
-        <div class="user-info-wrapper">
-            <form class="form" action="/edit_profile" method="post" name="edit_profile_form">
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="user_lastName">Họ: </label>
-                        <input type="text" class="form-control" id="user_lastName" name="lastName" value="{{default user.lastName ""}}" placeholder="Họ">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="user_firstName">Tên: </label>
-                        <input type="text" class="form-control" id="user_firstName" name="firstName" value="{{default user.firstName ""}}" placeholder="Tên">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="user_gender">Giới tính:</label> <br>
-                        {{#check user.gender}}
-                            <label class="radio-inline" style="color: #333333;"><input type="radio" name="gender" value="Nam">Nam</label>
-                            <label class="radio-inline" style="color: #333333;"><input type="radio" name="gender" value="Nữ">Nữ</label>
-                            <label class="radio-inline" style="color: #333333;"><input type="radio" name="gender" value="Khác">Khác</label>
-                        {{/check}}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
 
+
+<link rel="stylesheet" href="https://bootswatch.com/4/simplex/bootstrap.min.css" />
+
+
+<!-- profile style -->
+<link href="/stylesheets/profile.css" rel="stylesheet" type="text/css" media="all" />
+
+<!-- profile javascript -->
+<script src="javascripts/profile.js"></script>
+
+
+<div class="container">
+    {{!-- <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>H</span>ồ sơ
+        </h3> --}}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="card-title mb-4">
+                        <div class="d-flex justify-content-start">
+                            <div class="image-container">
+                                <img src="https://cdn4.iconfinder.com/data/icons/avatars-62/64/chef-cooker-avatar-restaurant-512.png"
+                                    id="imgProfile" style="width: 216px; height: 216px" class="img-thumbnail" />
+                                <div class="middle">
+                                    <input type="button" class="btn btn-secondary" id="btnChangePicture"
+                                        value="Change" />
+                                    <input type="file" style="display: none;" id="profilePicture" name="file" />
+                                </div>
+                            </div>
+                            <div class="userData ml-3">
+                                <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a
+                                        href="javascript:void(0);">Đỗ Thế Anh (@nhoxtheanh)</a></h2>
+                                <h6 class="d-block"><a href="javascript:void(0)">1,500</a> Video đã đăng tải</h6>
+                                <h6 class="d-block"><a href="javascript:void(0)">300</a> bài Blog</h6>
+                            </div>
+                            <div class="ml-auto">
+                                <input type="button" class="btn btn-primary d-none" id="btnDiscard"
+                                    value="Discard Changes" />
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="user_email">Email:</label>
-                        <input type="email" class="form-control" id="user_email" name="email" value="{{default user.email ""}}" placeholder="Email">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo"
+                                        role="tab" aria-controls="basicInfo" aria-selected="true">Basic Info</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="connectedServices-tab" data-toggle="tab"
+                                        href="#connectedServices" role="tab" aria-controls="connectedServices"
+                                        aria-selected="false">Connected Services</a>
+                                </li>
+                            </ul>
+                            <form action="#">
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="basicInfo" role="tabpanel"
+                                        aria-labelledby="basicInfo-tab">
+
+
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Tên người dùng</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                <input type="text" class="form-control" id="fname" name="fname"
+                                                    value="Đỗ Thế Anh">
+                                            </div>
+                                        </div>
+                                        <hr />
+
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Ngày sinh</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                <input type="date" class="form-control" id="birthday" name="birthday"
+                                                    value="1999-12-03">
+                                            </div>
+                                        </div>
+                                        <hr />
+
+
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Giới tính</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                <div class="form-check form-check-inline"><input type="radio" id="male"
+                                                        name="gender" value="Nam" checked>
+                                                    <label for="male" style="margin-bottom: 0px;">Nam</label><br></div>
+
+                                                <div class="form-check form-check-inline"><input type="radio"
+                                                        id="female" name="gender" value="Nữ">
+                                                    <label for="female" style="margin-bottom: 0px;">Nữ</label><br></div>
+
+                                                <div class="form-check form-check-inline"><input type="radio" id="other"
+                                                        name="gender" value="Khác">
+                                                    <label for="other" style="margin-bottom: 0px;">Khác</label></div>
+
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Loại tài khoản</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                Blogger
+                                            </div>
+                                        </div>
+                                        <hr />
+
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Ngày đăng ký</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                5/6/2020
+                                            </div>
+                                        </div>
+                                        <hr />
+
+                                    </div>
+                                    <div class="tab-pane fade" id="connectedServices" role="tabpanel"
+                                        aria-labelledby="ConnectedServices-tab">
+
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Số điện thoại</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                <input type="text" class="form-control" id="phone_number"
+                                                    name="phone_number" value="0904113942">
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Địa chỉ</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                <input type="text" class="form-control" id="address" name="address"
+                                                    value="Quận 1 TP HCM">
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Email</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                <input type="text" class="form-control" id="emal" name="emal"
+                                                    value="nhoxtheanh@gmail.com">
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Facebook</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                <input type="text" class="form-control" id="facebook" name="facebook"
+                                                    value="nhoxtheanh">
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Instagram</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                <input type="text" class="form-control" id="instagram" name="instagram"
+                                                    value="nhoxtheanh">
+                                            </div>
+                                        </div>
+                                        <hr />
+                                    </div>
+                                </div>
+                                <br><br>
+                                <div id="SubmitArea" style="display: flex">
+                                    <span style="margin: auto; display: block;">
+                                        <input class="btn btn-success" type="submit" value="Submit">
+                                        <a class="btn btn-outline-primary" href="yourProfile" role="button"
+                                            style="margin-left: 30px;">Cancel</a>
+                                    </span>
+                                </div>
+                                <br><br>
+                            </form>
+                        </div>
                     </div>
+
+
                 </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="user_birthDate">Ngày sinh:</label>
-                        <input type="date" class="form-control" id="user_birthDate" name="birthDate" value="{{parseDateInput user.birthDate "-"}}">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="user_phone">Số điện thoại:</label>
-                        <input type="tel" class="form-control" id="user_phone" name="phone" value="{{default user.phone ""}}" placeholder="Số điện thoại">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="user_address">Địa chỉ:</label>
-                        <textarea class="form-control" id="user_address" name="address" rows="3" placeholder="Địa chỉ">{{default user.address ""}}</textarea>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="user_city">Tỉnh thành:</label>
-                        <select id="user_city" class="form-control" name="city">
-                        {{#select user.city}}
-                            {{#each cities}}
-                                <option value="{{this}}">{{this}}</option>
-                            {{/each}}
-                        {{/select}}
-                        </select>
-                    </div>
-                </div>
-                <div class="display block text-center">
-                    <button type="submit" class="btn btn-success" style="font-size: 1.1em;">Cập nhật</button>
-                    <button type="submit" class="btn btn-danger" style="font-size: 1.1em;"><a href="/profile">Hủy</a></button>
-                </div>
-            </form>
+
+            </div>
         </div>
     </div>
 </div>
-<!-- //checkout page -->
+</div>
