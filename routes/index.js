@@ -1,15 +1,10 @@
-var express = require("express");
-var ctrlMain = require("../controllers/main.js");
-
-var router = express.Router();
+const express = require("express");
+const ctrlMain = require("../controllers/main.js");
+const router = express.Router();
+const mainController = require('../controllers/main');
 
 /* GET Home page. */
-router.get('/', function(req, res) {
-    res.render('index', {
-        title: 'Stunning Recipe',
-        user: {}
-    });
-});
+router.get('/', mainController.home);
 
 /* Login */
 router.get('/login', function(req, res) {

@@ -2,7 +2,8 @@
 
 const home = async (req, res) => {
 	res.render('index', {
-		title: 'Shoppy',
+		title: 'Stunning Recipe',
+		user: {}
 	});
 };
 
