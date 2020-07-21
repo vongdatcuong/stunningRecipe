@@ -1,73 +1,74 @@
+//const Dish = require("../models/dish");
 
-
-const home = async (req, res) => {
-	res.render('index', {
-		title: 'Stunning Recipe',
-		user: {}
-	});
+const home = async(req, res) => {
+    //const dish = await Dish.getDish(1);
+    res.render('index', {
+        title: 'Stunning Recipe',
+        user: {}
+    });
 };
 
 const history = (req, res) => {
-	res.render('history', {
-		title: 'Lịch sử',
-	});
+    res.render('history', {
+        title: 'Lịch sử',
+    });
 };
 
 const search = (req, res) => {
-	res.render('search', {
-		title: 'Tìm kiếm',
-	});
+    res.render('search', {
+        title: 'Tìm kiếm',
+    });
 };
 
 const changePwd = (req, res) => {
-	res.render('changePwd', {
-		title: 'Thay đổi mật khảu',
-	});
+    res.render('changePwd', {
+        title: 'Thay đổi mật khảu',
+    });
 };
 
 const contact = (req, res) => {
-	res.render('contact', {
-		title: 'Liên hệ',
-	});
+    res.render('contact', {
+        title: 'Liên hệ',
+    });
 };
 
 const about = (req, res) => {
-	res.render('about', {
-		title: 'About Us',
-	});
+    res.render('about', {
+        title: 'About Us',
+    });
 };
 
 const privacy = (req, res) => {
-	res.render('privacy', {
-		title: 'Riêng tư',
-	});
+    res.render('privacy', {
+        title: 'Riêng tư',
+    });
 };
 
 const terms = (req, res) => {
-	res.render('terms', {
-		title: 'Chính sách',
-	});
+    res.render('terms', {
+        title: 'Chính sách',
+    });
 };
 
 const help = (req, res) => {
-	res.render('help', {
-		title: 'Hỗ trợ',
-	});
+    res.render('help', {
+        title: 'Hỗ trợ',
+    });
 };
 
 const faqs = (req, res) => {
-	res.render('faqs', {
-		title: 'FAQS',
-	});
+    res.render('faqs', {
+        title: 'FAQS',
+    });
 };
 
 module.exports = {
-	home,
-	history,
-	contact,
-	about,
-	privacy,
-	terms,
-	help,
-	faqs,
+    home,
+    history,
+    contact,
+    about,
+    privacy,
+    terms,
+    help,
+    faqs,
 };

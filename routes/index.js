@@ -86,14 +86,6 @@ router.get('/editInfo', function(req, res) {
     });
 });
 
-/* Change Password */
-router.get('/changePwd', function(req, res) {
-    res.render('changePwd', {
-        title: 'Stunning Recipe',
-        user: {}
-    });
-});
-
 /* Change password */
 router.get('/changePwd', function(req, res) {
     res.render('changePwd', {
