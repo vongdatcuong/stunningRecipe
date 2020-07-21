@@ -2,25 +2,16 @@ const express = require("express");
 const ctrlMain = require("../controllers/main.js");
 const router = express.Router();
 const mainController = require('../controllers/main');
+const userController = require('../controllers/user');
 
 /* GET Home page. */
 router.get('/', mainController.home);
 
 /* Login */
-router.get('/login', function(req, res) {
-    res.render('login', {
-        title: 'Stunning Recipe',
-        layout: false
-    });
-});
+router.get('/login', userController.login);
 
 /* Sign up */
-router.get('/signup', function(req, res) {
-    res.render('signup', {
-        title: 'Stunning Recipe',
-        layout: false
-    });
-});
+router.get('/signup', userController.signup);
 
 /* Dishes */
 router.get('/dishes', function(req, res) {
@@ -63,37 +54,16 @@ router.get('/post_recipe', function(req, res) {
 });
 
 /* Profile */
-router.get('/profile', function(req, res) {
-    res.render('profile', {
-        title: 'Stunning Recipe',
-        user: {}
-    });
-});
+router.get('/profile', userController.profile);
 
 /* Your own Information */
-router.get('/yourInfo', function(req, res) {
-    res.render('yourInfo', {
-        title: 'Stunning Recipe',
-        user: {}
-    });
-});
+router.get('/yourInfo', userController.yourInfo);
 
 /* Edit Your own Information */
-router.get('/editInfo', function(req, res) {
-    res.render('editInfo', {
-        title: 'Stunning Recipe',
-        user: {}
-    });
-});
+router.get('/editInfo', userController.editInfo);
 
 /* Change password */
-router.get('/changePwd', function(req, res) {
-    res.render('changePwd', {
-        title: 'Stunning Recipe',
-        layout: false,
-        user: {}
-    });
-});
+router.get('/changePwd', userController.changePwd);
 
 router.get("/contact", ctrlMain.contact);
 

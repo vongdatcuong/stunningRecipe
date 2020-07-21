@@ -1,20 +1,42 @@
-(function(){
+(function() {
     const $loginForm = $(document.loginForm);
     const $signupForm = $(document.signupForm);
     const $alertMsg = $('.alert-message');
     const alertTimeout = 3000;
 
-    if ($alertMsg.css('display') !== 'none'){
-        setTimeout(()=>{
+    if ($alertMsg.css('display') !== 'none') {
+        setTimeout(() => {
             $alertMsg.css('display', 'none');
         }, alertTimeout)
     }
-    if ($loginForm.length > 0){
+    if ($loginForm.length > 0) {
         $(document.loginForm.username).focus();
+        $loginForm.validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 7,
+                },
+            },
+            messages: {
+                email: {
+                    required: "Email không được để trống",
+                    email: "Email phải có dạng example@abc.com"
+                },
+                password: {
+                    required: "Mật khẩu không được để trống",
+                    minlength: "Mật khẩu phải có trên 6 ký tự"
+                }
+            }
+        });
     }
-    if ($signupForm.length > 0){
+    if ($signupForm.length > 0) {
         $(document.signupForm.username).focus();
-        $signupForm .validate({
+        $signupForm.validate({
             rules: {
                 username: {
                     required: true
@@ -59,7 +81,7 @@
     }
 
     $('#signupBtn').on('click', (e) => {
-        if ($signupForm.valid()){
+        if ($signupForm.valid()) {
             showLoading();
         }
     })
