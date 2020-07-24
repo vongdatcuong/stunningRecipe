@@ -117,7 +117,7 @@ const ingredientSchema = new mongoose.Schema({
     image: String,
     unitShort: String,
     unitLong: String,
-    estimatedCost: String,
+    estimatedCost: { type: SchemaTypes.Long, min: 0, default: 0 },
 }, { collection: "Ingredients" });
 
 ingredientSchema.index({ coords: "2dsphere" });
