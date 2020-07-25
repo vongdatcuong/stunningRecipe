@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <title>{{title}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,11 +15,15 @@
     <!-- Font-Awesome-Icons-CSS -->
 
     <!-- web fonts -->
-    <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext" rel="stylesheet">
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese"
-          rel="stylesheet">
+    <link
+        href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext"
+        rel="stylesheet">
+    <link
+        href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese"
+        rel="stylesheet">
 
 </head>
+
 <body>
     <div class="bg-image"></div>
     <div class="container">
@@ -33,18 +38,20 @@
                     <div class="modal-body">
                         <form name="loginForm" action="/login" method="post">
                             {{#if success_messages }}
-                              <div class="alert alert-success">{{success_messages}}</div>
+                            <div class="alert alert-success">{{success_messages}}</div>
                             {{/if}}
                             {{#if error_messages }}
-                              <div class="alert alert-danger">{{error_messages}}</div>
+                            <div class="alert alert-danger">{{error_messages}}</div>
                             {{/if}}
                             <div class="form-group">
                                 <label class="col-form-label">Tên đăng nhập</label>
-                                <input type="text" class="form-control" placeholder="Tài khoản" name="username" required="">
+                                <input type="text" class="form-control" placeholder="Username" name="username"
+                                    required="">
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Mật khẩu</label>
-                                <input type="password" class="form-control" placeholder="Mật khẩu" name="password" required="">
+                                <input type="password" class="form-control" placeholder="Mật khẩu" name="password"
+                                    required="">
                             </div>
                             <div class="right-w3l">
                                 <input id="loginBtn" type="submit" class="form-control" value="Đăng nhập">
@@ -52,8 +59,10 @@
                             <div class="sub-w3l">
                                 <div class="custom-control custom-checkbox mr-sm-2 align-right">
                                     <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-                                    <label class="custom-control-label" for="customControlAutosizing">Duy trì đăng nhập</label>
-                                    <a href="/enterEmail" id="forgetPasswordBtn" class="float-right text-right dont-do" data-toggle="modal" data-target="#forgetPasswordModal">
+                                    <label class="custom-control-label" for="customControlAutosizing">Duy trì đăng
+                                        nhập</label>
+                                    <a href="/enterEmail" id="forgetPasswordBtn" class="float-right text-right dont-do"
+                                        data-toggle="modal" data-target="#forgetPasswordModal">
                                         Quên mật khẩu</a>
                                 </div>
                             </div>
@@ -87,6 +96,9 @@
     <!-- jquery -->
     <script type="text/javascript" src="javascripts/jquery-2.2.3.min.js"></script>
     <!-- //jquery -->
+    <!-- jquery validation-->
+    <script type="text/javascript" src="javascripts/jquery.validate.min.js"></script>
+    <!-- //jquery validation-->
     <!-- account -->
     <script type="text/javascript" src="javascripts/account.js"></script>
     <!-- end account -->
@@ -94,4 +106,5 @@
     <script type="text/javascript" src="javascripts/service/loading.js"></script>
     <!-- //Service js -->
 </body>
+
 </html>

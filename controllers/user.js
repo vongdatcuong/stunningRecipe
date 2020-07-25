@@ -1,5 +1,6 @@
 // passport
 const passport = require('passport');
+const bcrypt = require('bcryptjs');
 require('../routes/passport.js');
 
 const User = require('../models/user');
@@ -92,7 +93,7 @@ const editInfo = async(req, res) => {
     }
 }
 
-const changePwd = async(req, res) => {
+const changePwdView = async(req, res) => {
     if (req.isAuthenticated()) {
         res.render('changePwd', {
             title: 'Stunning Recipe',
@@ -106,6 +107,32 @@ const changePwd = async(req, res) => {
     }
 }
 
+const changePwd = async(req, res, next) => {
+    try {
+        const pwdOld = req.body.passwordOld;
+        const pwdNew = req.body.password;
+
+        var user = null;
+        if (req.isAuthenticated) {
+            user = req.user;
+        } else {
+            res.redirect('/login');
+            return;
+        }
+        const temp = bcrypt.compareSync(pwdOld, user.password);
+        if (!temp) {
+            req.flash('error', 'Sai mật khẩu.');
+            res.redirect('/changePwd');
+            return;
+        }
+        const result = await User.setPassword(user.userID, pwdNew);
+        req.flash('success', 'Đổi mật khẩu thành công, bây giờ bạn có thể đăng nhập lại.');
+        res.redirect('/login');
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     loginView,
     login,
@@ -115,5 +142,6 @@ module.exports = {
     profile,
     yourInfo,
     editInfo,
+    changePwdView,
     changePwd
 };

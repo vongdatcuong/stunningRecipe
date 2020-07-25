@@ -45,7 +45,7 @@
                         <h5 class="modal-title text-center">Đổi mật khẩu mới</h5>
                     </div>
                     <div class="modal-body">
-                        <form class="form-signin" action="/changePwd" method="POST">
+                        <form name="changePwdForm" class="form-signin" action="/changePwd" method="POST">
                             {{#if success_messages }}
                             <div class="alert alert-success">{{success_messages}}</div>
                             {{/if}}
@@ -71,7 +71,7 @@
                             <br />
                             <div id="SubmitArea" style="display: flex">
                                 <span style="margin: auto; display: block;">
-                                    <input class="btn btn-primary" type="submit" value="Đổi mật khẩu">
+                                    <input id="changePwdBtn" class="btn btn-primary" type="submit" value="Đổi mật khẩu">
                                     {{!-- <button class="btn btn-lg btn-primary btn-block" type="submit">Đổi mật khẩu</button> --}}
                                     <a class="btn btn-outline-danger" href="/" role="button"
                                         style="margin-left: 20px;">Hủy</a>
@@ -103,6 +103,9 @@
     <!-- jquery -->
     <script type="text/javascript" src="javascripts/jquery-2.2.3.min.js"></script>
     <!-- //jquery -->
+        <!-- jquery validation-->
+    <script type="text/javascript" src="javascripts/jquery.validate.min.js"></script>
+    <!-- //jquery validation-->
     <!-- account -->
     <script type="text/javascript" src="javascripts/account.js"></script>
     <!-- end account -->

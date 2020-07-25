@@ -39,6 +39,12 @@ module.exports = {
     getUser(userID) {
         return User.findOne({ userID: userID }).exec();
     },
+    setPassword(userID, pwdNew) {
+        hash = bcrypt.hashSync(pwdNew, constant.SALT_ROUND);
+        return User.findOneAndUpdate({ userID: userID }, {
+            password: hash
+        }).exec();
+    },
     // setUserInfo(userID, info) {
     //     return User.findOneAndUpdate({ userID: userID }, {
     //         firstName: info.firstName || "",

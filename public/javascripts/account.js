@@ -1,6 +1,7 @@
 (function() {
     const $loginForm = $(document.loginForm);
     const $signupForm = $(document.signupForm);
+    const $changePwdForm = $(document.changePwdForm);
     const $alertMsg = $('.alert-message');
     const alertTimeout = 3000;
 
@@ -11,6 +12,26 @@
     }
     if ($loginForm.length > 0) {
         $(document.loginForm.username).focus();
+        $loginForm.validate({
+            rules: {
+                username: {
+                    required: true
+                },
+                password: {
+                    required: true,
+                    minlength: 7,
+                }
+            },
+            messages: {
+                username: {
+                    required: "Username không được để trống",
+                },
+                password: {
+                    required: "Mật khẩu không được để trống",
+                    minlength: "Mật khẩu phải có trên 6 ký tự"
+                }
+            }
+        });
     }
     if ($signupForm.length > 0) {
         $(document.signupForm.username).focus();
@@ -48,11 +69,37 @@
                     minlength: "Mật khẩu phải có trên 6 ký tự"
                 },
                 "re-password": {
-                    required: "Xác nhận mật khẩu không trùng khớp",
+                    required: "Vui lòng nhập lại mật khẩu để xác nhận",
                     equalTo: "Xác nhận mật khẩu không trùng khớp"
                 },
                 agree: {
                     required: "Chưa chấp nhận điều khoản"
+                }
+            }
+        });
+    }
+
+    if ($changePwdForm.length > 0) {
+        $(document.changePwdForm.passwordOld).focus();
+        $changePwdForm.validate({
+            rules: {
+                password: {
+                    required: true,
+                    minlength: 7,
+                },
+                "re-password": {
+                    required: true,
+                    equalTo: "#password1"
+                }
+            },
+            messages: {
+                password: {
+                    required: "Mật khẩu không được để trống",
+                    minlength: "Mật khẩu phải có trên 6 ký tự"
+                },
+                "re-password": {
+                    required: "Vui lòng nhập lại mật khẩu để xác nhận",
+                    equalTo: "Xác nhận mật khẩu không trùng khớp"
                 }
             }
         });
@@ -64,6 +111,13 @@
         }
     })
     $('#loginBtn').on('click', (e) => {
-        showLoading();
+        if ($loginForm.valid()) {
+            showLoading();
+        }
+    })
+    $('#changePwdBtn').on('click', (e) => {
+        if ($changePwdForm.valid()) {
+            showLoading();
+        }
     })
 })();

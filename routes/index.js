@@ -74,7 +74,8 @@ router.get('/yourInfo', userController.yourInfo);
 router.get('/editInfo', userController.editInfo);
 
 /* Change password */
-router.get('/changePwd', userController.changePwd);
+router.get('/changePwd', userController.changePwdView);
+router.post('/changePwd', userController.changePwd);
 
 router.get("/contact", ctrlMain.contact);
 
