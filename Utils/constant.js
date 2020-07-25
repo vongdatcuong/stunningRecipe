@@ -33,17 +33,18 @@ const millisecondOfWeek = millisecondOfDay * 7;
 const emptyStr = "";
 const commaSpace = ", ";
 
-function getUserType(typeStr){
+function getUserType(typeStr) {
     return Object.keys(type).find(key => type[key] === typeStr);
 }
-function splitToChunk(arr, size){
+
+function splitToChunk(arr, size) {
     let temp = [];
-    for (let i = 0; i < arr.length; i+=size){
+    for (let i = 0; i < arr.length; i += size) {
         temp.push(arr.slice(i, i + size));
     }
     return temp;
 }
-function createDishImageName(productId, num, extension){
+function createDishImageName(productId, num, extension) {
     return `dish_${productId}_image_${num}${extension}`;
 }
 module.exports = {

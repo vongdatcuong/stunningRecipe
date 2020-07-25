@@ -1,4 +1,5 @@
 const Dish = require("../models/dish");
+const User = require('../models/user');
 const constant = require("../Utils/constant");
 
 const home = async (req, res) => {
@@ -37,6 +38,7 @@ const home = async (req, res) => {
     });
     res.render('index', {
         title: 'Stunning Recipe',
+        user: req.user,
         popularDishes: popularDishes,
         newDishes: newDishes,
         userType: constant.userType
@@ -46,6 +48,7 @@ const home = async (req, res) => {
 const history = (req, res) => {
     res.render('history', {
         title: 'Lịch sử',
+        user: req.user
     });
 };
 
@@ -55,45 +58,46 @@ const search = (req, res) => {
     });
 };
 
-const changePwd = (req, res) => {
-    res.render('changePwd', {
-        title: 'Thay đổi mật khảu',
-    });
-};
 
 const contact = (req, res) => {
     res.render('contact', {
         title: 'Liên hệ',
+        user: req.user
     });
 };
 
 const about = (req, res) => {
     res.render('about', {
         title: 'About Us',
+        user: req.user
     });
 };
 
 const privacy = (req, res) => {
     res.render('privacy', {
         title: 'Riêng tư',
+        user: req.user
     });
 };
 
 const terms = (req, res) => {
     res.render('terms', {
         title: 'Chính sách',
+        user: req.user
     });
 };
 
 const help = (req, res) => {
     res.render('help', {
         title: 'Hỗ trợ',
+        user: req.user
     });
 };
 
 const faqs = (req, res) => {
     res.render('faqs', {
         title: 'FAQS',
+        user: req.user
     });
 };
 

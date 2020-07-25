@@ -105,7 +105,7 @@
                             <div class="show">
                                 <a href="" class="text-white dropdown-toggle" id="profileDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-sign-out-alt mr-2"></i> Chào {{user.username}}</a>
+                                    <i class="fas fa-user mr-2"></i> Chào {{user.lastName}}</a>
                                 <div class="dropdown-menu" aria-labelledby="profileDropdown">
                                     <a class="dropdown-item" href="/yourInfo">Hồ sơ</a>
                                     <a class="dropdown-item" href="/changePwd">Thay đổi mật khẩu</a>
@@ -115,7 +115,7 @@
                         </li>
                         <li id="postRecipe" class="text-center text-white">
                             <a href="/post_recipe" class="text-white">
-                                <i class="fas fa-sticky-note mr-2"></i> Đăng CT</a>
+                                <i class="fas fa-sticky-note mr-2"></i>Công thức mới</a>
                         </li>
                         <li id="logout" class="text-center text-white">
                             <a href="/logout" class="text-white">
@@ -128,7 +128,7 @@
                         </li>
                         <li id="signup" class="text-center text-white">
                             <a href="/signup" class="text-white">
-                                <i class="fas fa-sign-out-alt mr-2"></i> Đăng ký </a>
+                                <i class="fas fa-user-plus mr-2"></i> Đăng ký </a>
                         </li>
                         {{/if}}
                     </ul>
@@ -348,10 +348,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="contact">Liên hệ</a>
                         </li>
+                        {{#if user}}
                         <li class="nav-item text-center border-left text-white">
                             
                             <a class="nav-link" href="/profile"><i class="fa fa-user mr-2 ml-2" aria-hidden="true"></i>Trang cá nhân</a>
                         </li>
+                        {{/if}}
                     </ul>
                 </div>
             </nav>

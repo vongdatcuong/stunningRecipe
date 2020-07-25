@@ -11,28 +11,6 @@
     }
     if ($loginForm.length > 0) {
         $(document.loginForm.username).focus();
-        $loginForm.validate({
-            rules: {
-                email: {
-                    required: true,
-                    email: true
-                },
-                password: {
-                    required: true,
-                    minlength: 7,
-                },
-            },
-            messages: {
-                email: {
-                    required: "Email không được để trống",
-                    email: "Email phải có dạng example@abc.com"
-                },
-                password: {
-                    required: "Mật khẩu không được để trống",
-                    minlength: "Mật khẩu phải có trên 6 ký tự"
-                }
-            }
-        });
     }
     if ($signupForm.length > 0) {
         $(document.signupForm.username).focus();

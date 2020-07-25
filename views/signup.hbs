@@ -49,6 +49,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-form-label">Tên đăng nhập</label>
+                                <input type="text" class="form-control" placeholder="Username" name="username" required="">
+                            </div>
+                            <div class="form-group">
                                 <label class="col-form-label">Email</label>
                                 <input type="email" class="form-control" placeholder="Email" name="email" required="">
                             </div>
@@ -64,15 +68,16 @@
                                 <label class="col-form-label">Xác nhận mật khẩu</label>
                                 <input type="password" class="form-control" placeholder="Xác nhận mật khẩu" name="re-password" id="password2" required="">
                             </div>
-                            <div class="right-w3l">
-                                <input id="signupBtn" type="submit" class="form-control" value="Đăng ký">
-                            </div>
                             <div class="sub-w3l">
                                 <div class="custom-control custom-checkbox mr-sm-2">
                                     <input type="checkbox" class="custom-control-input" name="agree" id="signupCb">
-                                    <label class="custom-control-label" for="signupCb">Tôi đồng ý điều khoản</label>
+                                    <label class="custom-control-label" for="signupCb">Tôi đồng ý với <a href="/about">điều khoản</a></label>
                                 </div>
                             </div>
+                            <div class="right-w3l">
+                                <input id="signupBtn" type="submit" class="form-control" value="Đăng ký">
+                            </div>
+                            
                             <p class="text-center dont-do mt-2">Đã có tài khoản ?
                                 <a href="/login">
                                     Đăng nhập ngay</a>
