@@ -4,14 +4,25 @@ const router = express.Router();
 const mainController = require('../controllers/main');
 const userController = require('../controllers/user');
 
+// passport
+const passport = require('passport');
+require('./passport.js');
+
+
+
 /* GET Home page. */
 router.get('/', mainController.home);
 
 /* Login */
-router.get('/login', userController.login);
+router.get('/login', userController.loginView);
+router.post('/login', userController.login);
 
 /* Sign up */
-router.get('/signup', userController.signup);
+router.get('/signup', userController.signupView);
+router.post('/signup', userController.signup);
+
+/*logout*/
+router.get('/logout', userController.logout);
 
 /* Dishes */
 router.get('/dishes', function(req, res) {

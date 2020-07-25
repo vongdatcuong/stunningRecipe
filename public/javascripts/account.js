@@ -86,6 +86,7 @@
         }
     })
     $('#loginBtn').on('click', (e) => {
+        //if ($loginForm.valid()) {
         showLoading();
     })
 })();
