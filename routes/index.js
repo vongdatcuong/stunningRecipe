@@ -28,7 +28,7 @@ router.get('/logout', userController.logout);
 router.get('/dishes', function(req, res) {
     res.render('dishes', {
         title: 'Stunning Recipe',
-        user: {}
+        user: req.user
     });
 });
 
@@ -36,7 +36,7 @@ router.get('/dishes', function(req, res) {
 router.get('/dish_detail', function(req, res) {
     res.render('dish_detail', {
         title: 'Stunning Recipe',
-        user: {}
+        user: req.user
     });
 });
 
@@ -44,7 +44,7 @@ router.get('/dish_detail', function(req, res) {
 router.get('/search', function(req, res) {
     res.render('search', {
         title: 'Stunning Recipe',
-        user: {}
+        user: req.user
     });
 });
 
@@ -52,7 +52,7 @@ router.get('/search', function(req, res) {
 router.get('/advanced_search', function(req, res) {
     res.render('advanced_search', {
         title: 'Stunning Recipe',
-        user: {}
+        user: req.user
     });
 });
 
@@ -60,7 +60,7 @@ router.get('/advanced_search', function(req, res) {
 router.get('/post_recipe', function(req, res) {
     res.render('post_recipe', {
         title: 'Stunning Recipe',
-        user: {}
+        user: req.user
     });
 });
 

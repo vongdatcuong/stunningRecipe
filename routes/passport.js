@@ -6,11 +6,11 @@ const User = mongoose.model('User');
 const constant = require('../Utils/constant');
 
 passport.use(new LocalStrategy({ passReqToCallback: true },
-    function(req, email, password, done) {
-        User.findOne({ email: email }, function(err, user) {
+    function(req, username, password, done) {
+        User.findOne({ username: username }, function(err, user) {
             if (err) { return done(err); }
             if (!user) {
-                return done(null, false, { message: 'Email đăng nhập không tồn tại.' });
+                return done(null, false, { message: 'Tên đăng nhập không tồn tại.' });
             }
             if (!user.isActive) {
                 return done(null, false, { message: 'Tài khoản đã bị khóa.' });

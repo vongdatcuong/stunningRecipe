@@ -4,18 +4,19 @@ const bcrypt = require('bcryptjs');
 const constant = require('../Utils/constant');
 
 module.exports = {
-    // checkUsername(username) {
-    //     return User.findOne({ username: username }).exec();
-    // },
+    findUsername(username) {
+        return User.findOne({ username: username }).exec();
+    },
     findEmail(email) {
         return User.findOne({ email: email }).exec();
     },
-    addUser(firstName, lastName, email, phone, password) {
+    addUser(firstName, lastName, username, email, phone, password) {
         return new Promise((resolve, reject) => {
             bcrypt.hash(password, constant.SALT_ROUNDS, (err, hash) => {
                 const newUser = new User({
                     firstName: firstName,
                     lastName: lastName,
+                    username: username,
                     email: email,
                     phone: phone,
                     password: hash,
