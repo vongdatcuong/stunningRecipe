@@ -4,6 +4,19 @@ const constant = require('../Utils/constant');
 
 
 module.exports = {
+  getDishes(query, sort, perPage, page){
+    return Dish.find(query)
+    .select({})
+    .limit(perPage)
+    .skip(perPage * (page - 1))
+    .sort(sort)
+    .populate('creator')
+    .populate('dishTypes')
+    .populate('cuisines')
+    .populate('diets')
+    .populate('favoriteNumber')
+    .exec();
+  },
   getDish(dishID) {
     return Dish.find({dishID: dishID})
       .exec();

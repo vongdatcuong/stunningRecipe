@@ -5,6 +5,7 @@ const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 // User
 const userSchema = new mongoose.Schema({
+    username: String,
     email: String,
     password: String,
     firstName: String,
@@ -50,6 +51,7 @@ const dishSchema = new mongoose.Schema({
     description: String,
     video: String,
     status: { type: Number, min: 0, default: 0 },
+    rating: { type: Number, min: 0, default: 0 },
     totalView: { type: SchemaTypes.Long, min: 0, default: 0 },
     totalReview: { type: SchemaTypes.Long, min: 0, default: 0 },
     createdBy: { type: SchemaTypes.Long, min: 0, default: 0 },
@@ -105,6 +107,13 @@ dishSchema.virtual("diets", {
     localField: "dishID",
     foreignField: "dishID",
     justOne: false,
+});
+
+dishSchema.virtual("favoriteNumber", {
+    ref: "UserFavoriteDish",
+    localField: "dishID",
+    foreignField: "dishID",
+    count: true
 });
 
 dishSchema.index({ coords: "2dsphere" });

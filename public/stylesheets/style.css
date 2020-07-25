@@ -5,6 +5,7 @@ License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 --*/
 
+/**/
 @font-face {
     font-family: 'Montserrat-Regular';
     src: url('/webfonts/Montserrat-Regular.eot');
@@ -16,7 +17,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     url('/webfonts/Montserrat-Regular.svg#svgFontName') format('svg');
     /* Legacy iOS */
 }
-
 html,
 body {
     margin: 0;
@@ -173,8 +173,20 @@ span.red-asterisk {
 .header-right ul li i {
     font-size: 15px;
 }
-
-
+.truncate1{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.truncate2{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 /*-- modal login --*/
 
 .modal-title {
@@ -1396,11 +1408,18 @@ div#testimonials h4.m-title {
     margin-bottom: .25rem;
 }
 
-.item-info-header .item-info-stats ul.item-info-stats-2 li {
-    padding: 0 2px;
-    font-size: 0.75em;
+.item-info-header .item-info-stats ul.item-info-stats-2{
+    min-height: 40px;
 }
 
+.item-info-header .item-info-stats ul.item-info-stats-2 li {
+    display: block;
+    padding: 5px 2px;
+    font-size: 0.75em;
+}
+.item-info-header .item-info-stats ul.item-info-stats-2 li span span:hover{
+    cursor: pointer;
+}
 .item-info-header .item-info-stats ul.item-info-stats-2 li.stats-item-dish-type {
     color: #D44638;
 }

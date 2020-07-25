@@ -36,24 +36,6 @@ hbs.registerHelper("numberWithCommas", function(x) {
 hbs.registerHelper("numberizeBoolean", function(bool) {
     return (bool)? 1:0;
 });
-hbs.registerHelper("getStatusMsg", function(status) {
-    if (status)
-        return "Hoạt động";
-    else
-        return "Khóa";
-});
-hbs.registerHelper("getStatusColor", function(status) {
-    if (status)
-        return "#3c763d";
-    else
-        return "#D44638";
-});
-hbs.registerHelper("getStatusBlockMsg", function(status) {
-    if (status)
-        return "Khóa TK";
-    else
-        return "Mở khóa";
-});
 hbs.registerHelper("getStatusBlockBtnClass", function(status) {
     if (status)
         return "btn-danger";
@@ -93,14 +75,14 @@ hbs.registerHelper("select", function(value, options) {
         })
         .join('\n')
 });
-hbs.registerHelper("getBillStatusClass", function(status) {
+hbs.registerHelper("getDishRecipeStatus", function(status) {
     switch (status) {
-        case constant.billStatus.waiting:
-            return "text-danger";
-        case constant.billStatus.onGoing:
+        case constant.dishRecipeStatus.waiting:
             return "text-warning";
-        case constant.billStatus.complete:
+        case constant.dishRecipeStatus.accepted:
             return "text-success";
+        case constant.dishRecipeStatus.rejected:
+            return "text-danger";
         default:
             return "";
     }
@@ -114,9 +96,43 @@ hbs.registerHelper("check", function(value, options) {
         })
         .join('\n')
 });
+hbs.registerHelper("getDishTypeName", function(idx) {
+    return constant.dishTypes[idx];
+});
+hbs.registerHelper("getCuisineName", function(idx) {
+    return constant.cuisines[idx];
+});
+hbs.registerHelper("getDietName", function(idx) {
+    return constant.diets[idx];
+});
+hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
+    switch (operator) {
+        case '==':
+            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+        case '===':
+            return (v1 === v2) ? options.fn(this) : options.inverse(this);
+        case '!=':
+            return (v1 != v2) ? options.fn(this) : options.inverse(this);
+        case '!==':
+            return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+        case '<':
+            return (v1 < v2) ? options.fn(this) : options.inverse(this);
+        case '<=':
+            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+        case '>':
+            return (v1 > v2) ? options.fn(this) : options.inverse(this);
+        case '>=':
+            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+        case '&&':
+            return (v1 && v2) ? options.fn(this) : options.inverse(this);
+        case '||':
+            return (v1 || v2) ? options.fn(this) : options.inverse(this);
+        default:
+            return options.inverse(this);
+    }
+});
 const handlebarsHelpers = require('handlebars-helpers');
 const helpers =  handlebarsHelpers();
-// app.helper({'is': helpers.is});
 hbs.registerHelper("is", helpers.is);
 hbs.registerHelper("compare", helpers.compare);
 hbs.registerHelper("default", helpers.default);
