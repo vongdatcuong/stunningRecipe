@@ -5,6 +5,7 @@ const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 // User
 const userSchema = new mongoose.Schema({
+    username: String,
     email: String,
     password: String,
     firstName: String,

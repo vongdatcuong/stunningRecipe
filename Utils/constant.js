@@ -1,5 +1,8 @@
 // Messages
 
+// Mongo connection string (connectionString)
+//mongodb+srv://StunningRecipe:tkpm1731@academic.2tteq.mongodb.net/test?authSource=admin&replicaSet=atlas-zw0z0h-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true
+
 // Constant variables
 const SALT_ROUNDS = 15;
 const type = {
@@ -34,20 +37,23 @@ const chartYearRange = 5;
 // Str
 const emptyStr = "";
 
-function getUserType(typeStr){
+function getUserType(typeStr) {
     return Object.keys(type).find(key => type[key] === typeStr);
 }
-function splitToChunk(arr, size){
+
+function splitToChunk(arr, size) {
     let temp = [];
-    for (let i = 0; i < arr.length; i+=size){
+    for (let i = 0; i < arr.length; i += size) {
         temp.push(arr.slice(i, i + size));
     }
     return temp;
 }
+
 function parseDateMonth(date, seperator = "-") {
     return [("0" + date.getDate()).slice(-2), ("0" + (date.getMonth() + 1)).slice(-2)].join(seperator);
 }
-function createDishImageName(productId, num, extension){
+
+function createDishImageName(productId, num, extension) {
     return `dish_${productId}_image_${num}${extension}`;
 }
 module.exports = {

@@ -76,4 +76,22 @@ app.use(function(err, req, res, next) {
     });
 });
 
+
+app.use(async function(req, res, next) {
+    res.locals.session = req.session;
+    //Authentication
+    if (req.isAuthenticated()) {
+        res.locals.user = req.user;
+        res.locals.authenticated = !req.user.anonymous;
+    }
+    // const categories = await Param.getAllCategory();
+    // res.locals.categories = categories;
+    // res.locals.categoryChunks = constant.splitToChunk(categories, 4);
+
+    // const brands = await Brand.getBrands();
+    // res.locals.brands = brands;
+    // res.locals.brandChunks = constant.splitToChunk(brands, 4);
+    next();
+});
+
 module.exports = app;

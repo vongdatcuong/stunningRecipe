@@ -1,9 +1,13 @@
 const Dish = require("../models/dish");
+const User = require('../models/user');
 
-const home = async (req, res) => {
+const home = async(req, res) => {
+    console.log(req.user);
     res.render('index', {
         title: 'Stunning Recipe',
-        user: {}
+        user: {
+            lastName: req.isAuthenticated
+        }
     });
 };
 
