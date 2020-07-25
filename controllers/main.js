@@ -1,7 +1,6 @@
-//const Dish = require("../models/dish");
+const Dish = require("../models/dish");
 
-const home = async(req, res) => {
-    //const dish = await Dish.getDish(1);
+const home = async (req, res) => {
     res.render('index', {
         title: 'Stunning Recipe',
         user: {}

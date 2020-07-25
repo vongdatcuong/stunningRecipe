@@ -1,7 +1,19 @@
+// Messages
+
+// Constant variables
 const SALT_ROUNDS = 15;
 const type = {
     admin: 0,
     customer: 1
+}
+const userType = {
+    admin: 0,
+    user: 1
+}
+const dishRecipeStatus = {
+    waiting: 0,
+    accepted: 1,
+    rejected: 2
 }
 const perPage = 5;
 const paginationMax = 5;
@@ -18,6 +30,10 @@ const numOfMonth = 12;
 const numOfQuarter = 4;
 const monthOfQuarter = 3;
 const chartYearRange = 5;
+
+// Str
+const emptyStr = "";
+
 function getUserType(typeStr){
     return Object.keys(type).find(key => type[key] === typeStr);
 }
