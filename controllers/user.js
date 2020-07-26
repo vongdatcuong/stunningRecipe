@@ -84,14 +84,43 @@ const yourInfo = async(req, res) => {
     }
 }
 
-const editInfo = async(req, res) => {
+const editInfoView = async(req, res) => {
     if (req.isAuthenticated()) {
+        const userInfo = await User.getUser(req.user.userID);
         res.render('editInfo', {
             title: 'Stunning Recipe',
-            user: req.user
+            user: req.user,
+            userInfo: userInfo
         });
     } else {
         res.redirect('/login');
+    }
+}
+
+const editInfo = async(req, res) => {
+    if (!req.isAuthenticated()) {
+        res.redirect('/login');
+    } else {
+        try {
+            const info = {
+                firstName: req.body.firstName || "",
+                lastName: req.body.lastName || "",
+                gender: req.body.gender || "",
+                email: req.body.email || "",
+                birthDate: req.body.birthDate || "",
+                phone: req.body.phone || "",
+                address: req.body.address || ""
+            };
+            const user = await User.setUserInfo(req.user.userID, info);
+            if (user) {
+                res.redirect('/yourInfo');
+            } else {
+                res.redirect('/error');
+            }
+
+        } catch (err) {
+            console.log('err', err);
+        }
     }
 }
 
@@ -143,6 +172,7 @@ module.exports = {
     logout,
     profile,
     yourInfo,
+    editInfoView,
     editInfo,
     changePwdView,
     changePwd

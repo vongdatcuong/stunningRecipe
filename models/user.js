@@ -51,16 +51,15 @@ module.exports = {
             password: hash
         }).exec();
     },
-    // setUserInfo(userID, info) {
-    //     return User.findOneAndUpdate({ userID: userID }, {
-    //         firstName: info.firstName || "",
-    //         lastName: info.lastName || "",
-    //         gender: info.gender || "",
-    //         email: info.email || "",
-    //         birthDate: info.birthDate || "",
-    //         phone: info.phone || "",
-    //         address: info.address || "",
-    //         city: info.city || "",
-    //     }).exec();
-    // }
+    setUserInfo(userID, info) {
+        return User.findOneAndUpdate({ userID: userID }, {
+            firstName: info.firstName || "",
+            lastName: info.lastName || "",
+            gender: info.gender || "",
+            email: info.email || "",
+            birthDate: info.birthDate || "",
+            phone: info.phone || "",
+            address: info.address || ""
+        }).exec();
+    }
 };

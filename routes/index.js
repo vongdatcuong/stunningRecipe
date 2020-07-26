@@ -71,7 +71,8 @@ router.get('/profile', userController.profile);
 router.get('/yourInfo', userController.yourInfo);
 
 /* Edit Your own Information */
-router.get('/editInfo', userController.editInfo);
+router.get('/editInfo', userController.editInfoView);
+router.post('/editInfo', userController.editInfo);
 
 /* Change password */
 router.get('/changePwd', userController.changePwdView);
@@ -88,5 +89,11 @@ router.get("/terms", ctrlMain.terms);
 router.get("/help", ctrlMain.help);
 
 router.get("/faqs", ctrlMain.faqs);
+
+router.get("/error", (req, res) => {
+    res.render('error', {
+        title: 'Lỗi'
+    });
+});
 
 module.exports = router;
