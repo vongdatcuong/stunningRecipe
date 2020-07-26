@@ -13,6 +13,7 @@ module.exports = {
     addUser(firstName, lastName, username, email, phone, password) {
         return new Promise((resolve, reject) => {
             bcrypt.hash(password, constant.SALT_ROUNDS, (err, hash) => {
+                today = new Date();
                 const newUser = new User({
                     firstName: firstName,
                     lastName: lastName,
@@ -20,6 +21,11 @@ module.exports = {
                     email: email,
                     phone: phone,
                     password: hash,
+                    gender: "",
+                    birthDate: today,
+                    address: "",
+                    avatar: "",
+                    createdDate: today,
                     isActive: true
                 });
                 try {

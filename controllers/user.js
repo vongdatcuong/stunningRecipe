@@ -73,9 +73,11 @@ const profile = async(req, res) => {
 
 const yourInfo = async(req, res) => {
     if (req.isAuthenticated()) { //trả về true nếu đã đăng nhập rồi
+        const userInfo = await User.getUser(req.user.userID);
         res.render('yourInfo', {
             title: 'Stunning Recipe',
-            user: req.user
+            user: req.user,
+            userInfo: userInfo
         });
     } else {
         res.redirect('/login');
