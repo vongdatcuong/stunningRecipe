@@ -1566,7 +1566,10 @@ a.filter-link:hover {
     display: inline;
 }
 
-.dish-review .dish-rating .dish-rating-count {
+.dish-review-view .dish-rating {
+    display: inline-block;
+}
+.dish-review-view .dish-rating .dish-rating-count {
     vertical-align: bottom;
     font-size: .9em;
     color: #777777;

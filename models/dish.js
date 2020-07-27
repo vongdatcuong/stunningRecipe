@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
 const Dish = mongoose.model('Dish');
+const UserFavoriteDish = mongoose.model('UserFavoriteDish');
 const constant = require('../Utils/constant');
 
 
 module.exports = {
   getDishes(query, sort, perPage, page){
+    // Default get accepted disshes
+    query.status = query.status || constant.dishRecipeStatus.accepted;
     return Dish.find(query)
     .select({})
     .limit(perPage)
@@ -18,8 +21,55 @@ module.exports = {
     .exec();
   },
   getDish(dishID) {
-    return Dish.find({dishID: dishID})
+    return Dish.findOne({dishID: dishID})
+      .populate('creator')
+      .populate('dishTypes')
+      .populate('cuisines')
+      .populate('diets')
+      .populate('favoriteNumber')
+      .populate({
+          path: "ingredients",
+          populate: "ingredient"
+      })
+      .populate({
+          path: "nutritions",
+          populate: "nutrition"
+      })
+      .populate('steps')
+      .populate({
+          path: "comments",
+          populate: "user"
+      })
+      .populate('reviewNumber')
       .exec();
+  },
+  getDishAndUpdateView(dishID) {
+    return new Promise(async (resolve, reject) => {
+      const dish = await Dish.findOne({dishID: dishID})
+                            .populate('creator')
+                            .populate('dishTypes')
+                            .populate('cuisines')
+                            .populate('diets')
+                            .populate('favoriteNumber')
+                            .populate({
+                                path: "ingredients",
+                                populate: "ingredient"
+                            })
+                            .populate({
+                                path: "nutritions",
+                                populate: "nutrition"
+                            })
+                            .populate('steps')
+                            .populate({
+                                path: "comments",
+                                populate: "user"
+                            })
+                            .populate('reviewNumber')
+                            .exec();
+      dish.totalView = parseInt(dish.totalView) + 1;
+      await dish.save();
+      resolve(dish);
+    })
   },
   addDish(props){
     const dish = new Dish({
@@ -41,5 +91,17 @@ module.exports = {
       censoreDate: null,
     })
     return dish.save();
+  },
+  isDishUserFavorite(dishID, userID){
+    return new Promise(async (resolve, reject) => {
+      const dishUserFav = await UserFavoriteDish.find({
+        dishID: dishID,
+        userID: userID
+      }).exec();
+      if (dishUserFav)
+        resolve(true);
+      else 
+        resolve(false);
+    })
   }
 };

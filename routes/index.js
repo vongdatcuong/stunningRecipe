@@ -33,12 +33,7 @@ router.get('/dishes', function(req, res) {
 });
 
 /* Dish detail */
-router.get('/dish_detail', function(req, res) {
-    res.render('dish_detail', {
-        title: 'Stunning Recipe',
-        user: req.user
-    });
-});
+router.get('/dish/:dishID', mainController.dishDetail);
 
 /* Search */
 router.get('/search', function(req, res) {

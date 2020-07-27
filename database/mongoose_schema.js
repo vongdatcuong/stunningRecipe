@@ -81,6 +81,13 @@ dishSchema.virtual("ingredients", {
     justOne: false,
 });
 
+dishSchema.virtual("nutritions", {
+    ref: "DishNutrition",
+    localField: "dishID",
+    foreignField: "dishID",
+    justOne: false,
+});
+
 dishSchema.virtual("steps", {
     ref: "DishStep",
     localField: "dishID",
@@ -109,8 +116,22 @@ dishSchema.virtual("diets", {
     justOne: false,
 });
 
+dishSchema.virtual("comments", {
+    ref: "Comment",
+    localField: "dishID",
+    foreignField: "dishID",
+    justOne: false,
+});
+
 dishSchema.virtual("favoriteNumber", {
     ref: "UserFavoriteDish",
+    localField: "dishID",
+    foreignField: "dishID",
+    count: true
+});
+
+dishSchema.virtual("reviewNumber", {
+    ref: "Review",
     localField: "dishID",
     foreignField: "dishID",
     count: true

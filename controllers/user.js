@@ -1,6 +1,8 @@
 // passport
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
+const constant = require("../utils/constant");
+
 require('../routes/passport.js');
 
 const User = require('../models/user');
@@ -8,7 +10,7 @@ const User = require('../models/user');
 
 const loginView = async(req, res) => {
     res.render('login', {
-        title: 'Stunning Recipe',
+        title: constant.appName,
         layout: false,
         error_messages: req.flash('error'),
         success_messages: req.flash('success')
@@ -32,7 +34,7 @@ const login = async(req, res, next) => {
 
 const signupView = async(req, res) => {
     res.render('signup', {
-        title: 'Stunning Recipe',
+        title: constant.appName,
         layout: false,
         error_messages: req.flash('error'),
         success_messages: req.flash('success')
@@ -66,7 +68,7 @@ const logout = async(req, res) => {
 
 const profile = async(req, res) => {
     res.render('profile', {
-        title: 'Stunning Recipe',
+        title: constant.appName,
         user: req.user
     });
 }
@@ -74,7 +76,7 @@ const profile = async(req, res) => {
 const yourInfo = async(req, res) => {
     if (req.isAuthenticated()) { //trả về true nếu đã đăng nhập rồi
         res.render('yourInfo', {
-            title: 'Stunning Recipe',
+            title: constant.appName,
             user: req.user
         });
     } else {
@@ -85,7 +87,7 @@ const yourInfo = async(req, res) => {
 const editInfo = async(req, res) => {
     if (req.isAuthenticated()) {
         res.render('editInfo', {
-            title: 'Stunning Recipe',
+            title: constant.appName,
             user: req.user
         });
     } else {
@@ -96,7 +98,7 @@ const editInfo = async(req, res) => {
 const changePwdView = async(req, res) => {
     if (req.isAuthenticated()) {
         res.render('changePwd', {
-            title: 'Stunning Recipe',
+            title: constant.appName,
             layout: false,
             error_messages: req.flash('error'),
             success_messages: req.flash('success'),

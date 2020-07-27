@@ -1,3 +1,4 @@
+const appName = "Stunning Recipe";
 // Messages
 
 // Constant variables
@@ -6,9 +7,9 @@ const cuisines = ["Món Mỹ", "Món Trung", "Món Pháp", "Món Ý", "Món Nh�
 const diets = ["Không Gluent", "Không chứa sữa", "Ketogenic", "Vegetarian", "Lacto Vegetarian", "Ovo Vegetarian", "Vegan", "Pescetarian", "Paleo", "Primal", "Whole30"];
 const imageStorageLink = "https://stunningrecipe.blob.core.windows.net/";
 const dishPath = "dish/";
-const ingredientPath = "dish/";
-const nutritionPath = "dish/";
-const SALT_ROUNDS = 15;
+const ingredientPath = "ingredient/";
+const dishStepPath = "dishstep/";
+const SALT_ROUNDS = 10;
 const type = {
     admin: 0,
     customer: 1
@@ -48,13 +49,14 @@ function createDishImageName(productId, num, extension) {
     return `dish_${productId}_image_${num}${extension}`;
 }
 module.exports = {
+    appName,
     dishTypes,
     cuisines,
     diets,
     imageStorageLink,
     dishPath,
     ingredientPath,
-    nutritionPath,
+    dishStepPath,
     SALT_ROUNDS,
     type,
     userType,
