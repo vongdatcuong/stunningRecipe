@@ -1,7 +1,7 @@
 const express = require("express");
-const ctrlMain = require("../controllers/main.js");
 const router = express.Router();
 const mainController = require('../controllers/main');
+const dishController = require('../controllers/dish');
 const userController = require('../controllers/user');
 const requireLogin = require("./../middlewares/auth.mdw");
 
@@ -26,15 +26,10 @@ router.post('/signup', userController.signup);
 router.get('/logout', userController.logout);
 
 /* Dishes */
-router.get('/dishes', function(req, res) {
-    res.render('dishes', {
-        title: 'Stunning Recipe',
-        user: req.user
-    });
-});
+router.get('/dishes', dishController.dishes);
 
 /* Dish detail */
-router.get('/dish/:dishID', mainController.dishDetail);
+router.get('/dish/:dishID', dishController.dishDetail);
 
 /* Search */
 router.get('/search', function(req, res) {
@@ -77,17 +72,17 @@ router.post('/editInfo', userController.editInfo);
 router.get('/changePwd', userController.changePwdView);
 router.post('/changePwd', userController.changePwd);
 
-router.get("/contact", ctrlMain.contact);
+router.get("/contact", mainController.contact);
 
-router.get("/about", ctrlMain.about);
+router.get("/about", mainController.about);
 
-router.get("/privacy", ctrlMain.privacy);
+router.get("/privacy", mainController.privacy);
 
-router.get("/terms", ctrlMain.terms);
+router.get("/terms", mainController.terms);
 
-router.get("/help", ctrlMain.help);
+router.get("/help", mainController.help);
 
-router.get("/faqs", ctrlMain.faqs);
+router.get("/faqs", mainController.faqs);
 
 router.get("/error", (req, res) => {
     res.render('error', {
