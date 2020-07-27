@@ -1,4 +1,5 @@
 const Dish = require("../models/dish");
+const AzureBlob = require("../models/azure_blob");
 const constant = require("../Utils/constant");
 
 /* Dish Detail */
@@ -32,8 +33,8 @@ const dishDetail = async (req, res) => {
 }
 /* Dishes */
 const dishes = async (req, res) => {
-    const dish = await Dish.getDishAndUpdateView(req.params.dishID);
-    res.render('dish_detail', {
+    //const dish = await Dish.getDishAndUpdateView(req.params.dishID);
+    res.render('dishes', {
         title: constant.appName,
         user: req.user,
         userType: constant.userType

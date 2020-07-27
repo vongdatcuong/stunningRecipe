@@ -1290,6 +1290,12 @@ div#testimonials h4.m-title {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
+.dish-type.active {
+    border: 5px solid #7d00bb;
+}
+.dish-type.active .dish-type-label {
+    color: #7d00bb;
+}
 
 /* Light slider*/
 
@@ -1314,6 +1320,9 @@ div#testimonials h4.m-title {
     color: #7d00bb;
 }
 
+.cuisineSelect li.active {
+    border-top: 3px solid #7d00bb;
+}
 
 /* Diet select*/
 
@@ -1336,9 +1345,11 @@ div#testimonials h4.m-title {
     text-decoration: none;
 }
 
-.dietSelect a.active {
+.dietSelect li.active {
+    background-color: #117c13;
+}
+.dietSelect li.active a {
     color: #ffffff;
-    background-color: #f45c5d;
 }
 
 
@@ -1617,7 +1628,6 @@ a.filter-link:hover {
 #dish-detail-wrapper .dish-detail-content .dish-types span.badge.badge-success {
     background-color: #117c13;
 }
-
 
 /* Dish author & publish */
 
