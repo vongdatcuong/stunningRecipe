@@ -30,15 +30,19 @@
                             </div>
                             <div class="userData ml-3">
                                 <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a
-                                        href="javascript:void(0);">Đỗ Thế Anh (@nhoxtheanh)</a></h2>
+                                        href="javascript:void(0);">{{userProfile.firstName}} {{userProfile.lastName}} (@{{userProfile.username}})</a></h2>
                                 <span class="badge badge-success"
-                                    style="font-size: 1.2rem; font-weight: bold">Blogger</span>
+                                    style="font-size: 1.2rem; font-weight: bold">?Blogger</span>
                                 <br><br>
-                                <h6 class="d-block"><a href="javascript:void(0)">300</a> Bài Blog đã đăng tải</h6>
-                                <h6 class="d-block"> Tham gia ngày 6/5/2020</h6>
-                                <h6 class="d-block"> <i class="fa fa-phone" aria-hidden="true"></i> 0904113942</h6>
+                                <h6 class="d-block"><a href="javascript:void(0)">?300</a> Bài Blog đã đăng tải</h6>
+                                <h6 class="d-block"> Tham gia ngày {{parseDate userProfile.createdDate "/"}}</h6>
+                                {{#if userProfile.phone}}
+                                <h6 class="d-block"> <i class="fa fa-phone" aria-hidden="true"></i> {{userProfile.phone}}</h6>
+                                {{/if}}
+                                {{#if userProfile.email}}
                                 <h6 class="d-block"> <i class="fa fa-envelope" aria-hidden="true"></i>
-                                    nhoxtheanh@gmail.com</h6>
+                                    {{userProfile.email}}</h6>
+                                {{/if}}
                                 <h6 class="d-block">
                                     <button type="button" class="btn btn-outline-primary" style="margin-right: 10px;"><a
                                             href="https://www.facebook.com/nhoxtheanh"><i class="fa fa-facebook"
@@ -46,9 +50,7 @@
                                     <button type="button" class="btn btn-outline-primary" style="margin-right: 10px;"><a
                                             href="https://www.instagram.com/nhoxtheanh"><i class="fa fa-instagram"
                                                 aria-hidden="true"></i></a></button>
-
                                 </h6>
-
                             </div>
 
 

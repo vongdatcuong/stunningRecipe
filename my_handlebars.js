@@ -1,12 +1,10 @@
 const hbs = require('hbs');
 const constant = require('./Utils/constant');
 
-hbs.registerHelper("inc", function(value, options)
-{
+hbs.registerHelper("inc", function(value, options) {
     return parseInt(value) + 1;
 });
-hbs.registerHelper("dec", function(value, options)
-{
+hbs.registerHelper("dec", function(value, options) {
     return parseInt(value) - 1;
 });
 hbs.registerHelper("myAppend", function(str, suffix) {
@@ -34,7 +32,7 @@ hbs.registerHelper("numberWithCommas", function(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 });
 hbs.registerHelper("numberizeBoolean", function(bool) {
-    return (bool)? 1:0;
+    return (bool) ? 1 : 0;
 });
 hbs.registerHelper("getStatusBlockBtnClass", function(status) {
     if (status)
@@ -45,16 +43,16 @@ hbs.registerHelper("getStatusBlockBtnClass", function(status) {
 hbs.registerHelper("generatePagination", function(route, page, count) {
     let pageStr = "";
     const pageMax = constant.paginationMax;
-    let i = (page > pageMax)? page - (pageMax - 1): 1;
+    let i = (page > pageMax) ? page - (pageMax - 1) : 1;
     if (i !== 1)
         pageStr += `<li class="page-item disabled"><a class="page-link" href="">...</a></li>`;
-    for (; i <= page +  pageMax - 1 && i <= count; i++){
-       if (i === page)
-           pageStr += `<li class="page-item active"><a class="page-link" href="#">${i}</a></li>`;
-       else
-           pageStr += `<li class="page-item"><a class="page-link" href="/${route}?page=${i}">${i}</a></li>`;
-       if (i === page + pageMax - 1 && i < count)
-           pageStr += `<li class="page-item disabled"><a class="page-link" href="">...</a></li>`;
+    for (; i <= page + pageMax - 1 && i <= count; i++) {
+        if (i === page)
+            pageStr += `<li class="page-item active"><a class="page-link" href="#">${i}</a></li>`;
+        else
+            pageStr += `<li class="page-item"><a class="page-link" href="/${route}?page=${i}">${i}</a></li>`;
+        if (i === page + pageMax - 1 && i < count)
+            pageStr += `<li class="page-item disabled"><a class="page-link" href="">...</a></li>`;
     }
     return pageStr;
 });
@@ -69,7 +67,7 @@ hbs.registerHelper("select", function(value, options) {
         .split('\n')
         .map(function(v) {
             const t = 'value="' + value + '"'
-            return ! RegExp(t).test(v) ? v : v.replace(t, t + ' selected="selected"')
+            return !RegExp(t).test(v) ? v : v.replace(t, t + ' selected="selected"')
         })
         .join('\n')
 });
@@ -90,7 +88,7 @@ hbs.registerHelper("check", function(value, options) {
         .split('\n')
         .map(function(v) {
             const t = 'value="' + value + '"'
-            return ! RegExp(t).test(v) ? v : v.replace(t, t + ' checked="checked"')
+            return !RegExp(t).test(v) ? v : v.replace(t, t + ' checked="checked"')
         })
         .join('\n')
 });
@@ -103,7 +101,7 @@ hbs.registerHelper("getCuisineName", function(idx) {
 hbs.registerHelper("getDietName", function(idx) {
     return constant.diets[idx];
 });
-hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
+hbs.registerHelper('ifCond', function(v1, operator, v2, options) {
     switch (operator) {
         case '==':
             return (v1 == v2) ? options.fn(this) : options.inverse(this);
@@ -130,7 +128,7 @@ hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
     }
 });
 const handlebarsHelpers = require('handlebars-helpers');
-const helpers =  handlebarsHelpers();
+const helpers = handlebarsHelpers();
 hbs.registerHelper("is", helpers.is);
 hbs.registerHelper("compare", helpers.compare);
 hbs.registerHelper("default", helpers.default);
@@ -138,8 +136,8 @@ hbs.registerHelper("append", helpers.append);
 hbs.registerHelper("compare", helpers.compare);
 hbs.registerHelper('trimString', function(passedString) {
     var theString = "";
-    if (passedString.length > 16){
-        theString = passedString.substring(0,16) + "...";
+    if (passedString.length > 16) {
+        theString = passedString.substring(0, 16) + "...";
     } else {
         theString = passedString;
     }
@@ -153,7 +151,7 @@ hbs.registerHelper('trimString', function(passedString) {
 hbs.registerHelper("math", function(lvalue, operator, rvalue, options) {
     lvalue = parseFloat(lvalue);
     rvalue = parseFloat(rvalue);
-        
+
     return {
         "+": lvalue + rvalue,
         "-": lvalue - rvalue,

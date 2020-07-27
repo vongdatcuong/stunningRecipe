@@ -31,7 +31,7 @@
                             </div>
                             <div class="userData ml-3">
                                 <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a
-                                        href="javascript:void(0);">Đỗ Thế Anh (@nhoxtheanh)</a></h2>
+                                        href="javascript:void(0);">{{userInfo.firstName}} {{userInfo.lastName}} (@{{userInfo.username}})</a></h2>
                                 <h6 class="d-block"><a href="javascript:void(0)">1,500</a> Video đã đăng tải</h6>
                                 <h6 class="d-block"><a href="javascript:void(0)">300</a> bài Blog</h6>
                                 <button type="submit" class="btn btn-success my-btn-link" style="font-size: 1.1em;"><a
@@ -67,7 +67,8 @@
                                             <label style="font-weight:bold;">Tên người dùng</label>
                                         </div>
                                         <div class="col-md-8 col-6">
-                                            Đỗ Thế Anh
+                                            {{userInfo.firstName}}
+                                            {{userInfo.lastName}}
                                         </div>
                                     </div>
                                     <hr />
@@ -77,7 +78,7 @@
                                             <label style="font-weight:bold;">Ngày sinh</label>
                                         </div>
                                         <div class="col-md-8 col-6">
-                                            3/12/1999</div>
+                                            {{parseDate userInfo.birthDate "/"}}</div>
                                     </div>
                                     <hr />
 
@@ -87,7 +88,7 @@
                                             <label style="font-weight:bold;">Giới tính</label>
                                         </div>
                                         <div class="col-md-8 col-6">
-                                            Nam</div>
+                                            {{userInfo.gender}}</div>
                                     </div>
                                     <hr />
                                     <div class="row">
@@ -105,7 +106,7 @@
                                             <label style="font-weight:bold;">Ngày đăng ký</label>
                                         </div>
                                         <div class="col-md-8 col-6">
-                                            5/6/2020
+                                            {{parseDate userInfo.createdDate "/"}}
                                         </div>
                                     </div>
                                     <hr />
@@ -119,7 +120,7 @@
                                             <label style="font-weight:bold;">Số điện thoại</label>
                                         </div>
                                         <div class="col-md-8 col-6">
-                                            0904113942
+                                            {{userInfo.phone}}
                                         </div>
                                     </div>
                                     <hr />
@@ -128,7 +129,7 @@
                                             <label style="font-weight:bold;">Địa chỉ</label>
                                         </div>
                                         <div class="col-md-8 col-6">
-                                            Quận 1 TP HCM</div>
+                                            {{userInfo.address}}</div>
                                         </div>
                                         <hr />
                                         <div class="row">
@@ -136,7 +137,7 @@
                                                 <label style="font-weight:bold;">Email</label>
                                             </div>
                                             <div class="col-md-8 col-6">
-                                                nhoxtheanh@gmail.com
+                                                {{userInfo.email}}
                                             </div>
                                         </div>
                                         <hr />
