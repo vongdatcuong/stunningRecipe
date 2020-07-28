@@ -24,7 +24,7 @@ module.exports = {
                     gender: "",
                     birthDate: today,
                     address: "",
-                    avatar: "",
+                    avatar: "avatar_default.png",
                     createdDate: today,
                     isActive: true
                 });

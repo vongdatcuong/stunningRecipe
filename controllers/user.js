@@ -6,6 +6,7 @@ const requireLogin = require("./../middlewares/auth.mdw");
 const constant = require("../utils/constant");
 
 const User = require("../models/user");
+const Dish = require("../models/dish");
 
 const loginView = async(req, res) => {
     res.render("login", {
@@ -89,7 +90,7 @@ const profile = async(req, res) => {
     const userProfile = await User.getUser(profileUserID);
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // Lấy ảnh đại diện
-
+    userProfile.avatarUrl = () => constant.imageStorageLink + constant.userPath + userProfile.avatar;
     // Lấy dữ liệu các bài viết
 
     // Lấy dữ liệu món ăn yêu thích

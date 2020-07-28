@@ -62,15 +62,15 @@ router.get("/profile", requireLogin, async(req, res) => {
 router.get('/profile/:id', userController.profile);
 
 /* Your own Information */
-router.get('/yourInfo', userController.yourInfo);
+router.get('/yourInfo', requireLogin, userController.yourInfo);
 
 /* Edit Your own Information */
-router.get('/editInfo', userController.editInfoView);
-router.post('/editInfo', userController.editInfo);
+router.get('/editInfo', requireLogin, userController.editInfoView);
+router.post('/editInfo', requireLogin, userController.editInfo);
 
 /* Change password */
-router.get('/changePwd', userController.changePwdView);
-router.post('/changePwd', userController.changePwd);
+router.get('/changePwd', requireLogin, userController.changePwdView);
+router.post('/changePwd', requireLogin, userController.changePwd);
 
 router.get("/contact", mainController.contact);
 
