@@ -6,6 +6,7 @@ const dishTypes = ["Món chính", "Món phụ", "Tráng miệng", "Món khai v�
 const cuisines = ["Món Mỹ", "Món Trung", "Món Pháp", "Món Ý", "Món Nhật", "Món Mexico", "Món Thái", "Món Việt", "Món Âu", "Món Tây", "Món Đông"];
 const diets = ["Không Gluent", "Không chứa sữa", "Ketogenic", "Vegetarian", "Lacto Vegetarian", "Ovo Vegetarian", "Vegan", "Pescetarian", "Paleo", "Primal", "Whole30"];
 const imageStorageLink = "https://stunningrecipe.blob.core.windows.net/";
+const userPath = "user/";
 const dishPath = "dish/";
 const ingredientPath = "ingredient/";
 const dishStepPath = "dishstep/";
@@ -45,9 +46,15 @@ function splitToChunk(arr, size) {
     }
     return temp;
 }
+
 function createDishImageName(productId, num, extension) {
     return `dish_${productId}_image_${num}${extension}`;
 }
+
+function createUserImageName(userID, extension) {
+    return `avatar_${userID}${extension}`;
+}
+
 module.exports = {
     appName,
     // Messages
@@ -57,6 +64,7 @@ module.exports = {
     cuisines,
     diets,
     imageStorageLink,
+    userPath,
     dishPath,
     ingredientPath,
     dishStepPath,
@@ -75,5 +83,6 @@ module.exports = {
     commaSpace,
     getUserType,
     splitToChunk,
-    createDishImageName
+    createDishImageName,
+    createUserImageName
 };

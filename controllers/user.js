@@ -2,10 +2,13 @@
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
 require("../routes/passport.js");
+var path = require('path');
+const fs = require("fs");
 const requireLogin = require("./../middlewares/auth.mdw");
 const constant = require("../utils/constant");
 
 const User = require("../models/user");
+const Dish = require("../models/dish");
 
 const loginView = async(req, res) => {
     res.render("login", {
@@ -89,7 +92,7 @@ const profile = async(req, res) => {
     const userProfile = await User.getUser(profileUserID);
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // Lấy ảnh đại diện
-
+    userProfile.avatarUrl = () => constant.imageStorageLink + constant.userPath + userProfile.avatar;
     // Lấy dữ liệu các bài viết
 
     // Lấy dữ liệu món ăn yêu thích
@@ -107,6 +110,7 @@ const yourInfo = async(req, res) => {
     if (req.isAuthenticated()) {
         //trả về true nếu đã đăng nhập rồi
         const userInfo = await User.getUser(req.user.userID);
+        userInfo.avatarUrl = () => constant.imageStorageLink + constant.userPath + userInfo.avatar;
         res.render("yourInfo", {
             title: constant.appName,
             user: req.user,
@@ -120,6 +124,7 @@ const yourInfo = async(req, res) => {
 const editInfoView = async(req, res) => {
     if (req.isAuthenticated()) {
         const userInfo = await User.getUser(req.user.userID);
+        userInfo.avatarUrl = () => constant.imageStorageLink + constant.userPath + userInfo.avatar;
         res.render("editInfo", {
             title: constant.appName,
             user: req.user,
@@ -155,6 +160,29 @@ const editInfo = async(req, res) => {
         }
     }
 };
+
+const uploadUserImageCtrl = async(req, res) => {
+    try {
+        const userID = (req.user.userID) ? parseInt(req.user.userID) : -1;
+        //const imageUrl = req.body.imageUrl;
+        var imageUrl = req.file.originalname || "avatar_default.png";
+        try {
+            const url = await User.uploadUserImageModel(userID, req.file); // trả về url của blob vừa được upload
+            imageUrl = url;
+        } catch (err) {
+            res.json({
+                error: "Upload ảnh thất bại 1"
+            })
+        }
+        var finalImageUrl = imageUrl.slice(imageUrl.lastIndexOf('/') + 1); // lấy ra file name để gắn vào User.avatar model
+        const setUrlResult = await User.setUserUrlImage(userID, finalImageUrl);
+        res.redirect("/editInfo");
+    } catch (err) {
+        res.json({
+            error: "Upload ảnh thất bại 2"
+        })
+    }
+}
 
 const changePwdView = async(req, res) => {
     if (req.isAuthenticated()) {
@@ -209,6 +237,7 @@ module.exports = {
     yourInfo,
     editInfoView,
     editInfo,
+    uploadUserImageCtrl,
     changePwdView,
     changePwd,
 };

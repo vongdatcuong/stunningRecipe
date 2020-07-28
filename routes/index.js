@@ -5,7 +5,19 @@ const dishController = require('../controllers/dish');
 const userController = require('../controllers/user');
 const autocompleteController = require('../controllers/autocomplete');
 const requireLogin = require("./../middlewares/auth.mdw");
+var path = require('path');
+const fs = require("fs");
 
+
+const multer = require('multer');
+const inMemoryStorage = multer.memoryStorage();
+const upload = multer({ storage: inMemoryStorage });
+const handleError = (err, res) => {
+    res
+        .status(500)
+        .contentType("text/plain")
+        .end("Oops! Something went wrong!");
+};
 // passport
 const passport = require('passport');
 require('./passport.js');
@@ -58,15 +70,17 @@ router.get("/profile", requireLogin, async(req, res) => {
 router.get('/profile/:id', userController.profile);
 
 /* Your own Information */
-router.get('/yourInfo', userController.yourInfo);
+router.get('/yourInfo', requireLogin, userController.yourInfo);
 
 /* Edit Your own Information */
-router.get('/editInfo', userController.editInfoView);
-router.post('/editInfo', userController.editInfo);
+router.get('/editInfo', requireLogin, userController.editInfoView);
+router.post('/editInfo', requireLogin, userController.editInfo);
+
+router.post('/uploadUserImage', upload.single('file'), userController.uploadUserImageCtrl); // 'file' là thuộc tính name của input ảnh
 
 /* Change password */
-router.get('/changePwd', userController.changePwdView);
-router.post('/changePwd', userController.changePwd);
+router.get('/changePwd', requireLogin, userController.changePwdView);
+router.post('/changePwd', requireLogin, userController.changePwd);
 
 router.get("/contact", mainController.contact);
 
