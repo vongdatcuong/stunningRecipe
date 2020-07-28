@@ -4,11 +4,19 @@ const mainController = require('../controllers/main');
 const dishController = require('../controllers/dish');
 const userController = require('../controllers/user');
 const requireLogin = require("./../middlewares/auth.mdw");
+var path = require('path');
+const fs = require("fs");
 
 
 const multer = require('multer');
 const inMemoryStorage = multer.memoryStorage();
 const upload = multer({ storage: inMemoryStorage });
+const handleError = (err, res) => {
+    res
+        .status(500)
+        .contentType("text/plain")
+        .end("Oops! Something went wrong!");
+};
 // passport
 const passport = require('passport');
 require('./passport.js');

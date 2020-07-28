@@ -165,21 +165,18 @@ const uploadUserImageCtrl = async(req, res) => {
     try {
         const userID = (req.user.userID) ? parseInt(req.user.userID) : -1;
         //const imageUrl = req.body.imageUrl;
-        var imageUrl = "avatar_default.png";
-        //imageUrl = req.file.path;
+        var imageUrl = req.file.originalname || "avatar_default.png";
         try {
-            const url = await User.uploadUserImageModel(userID, req.file);
-            imageUrl = url; ///////////////////??????????? có sai không nhỉ
+            const url = await User.uploadUserImageModel(userID, req.file); // trả về url của blob vừa được upload
+            imageUrl = url;
         } catch (err) {
             res.json({
                 error: "Upload ảnh thất bại 1"
             })
         }
-
-        const setUrlResult = await User.setUserUrlImage(userID, imageUrl);
-        res.json({
-            success: "Upload ảnh thành công"
-        })
+        var finalImageUrl = imageUrl.slice(imageUrl.lastIndexOf('/') + 1); // lấy ra file name để gắn vào User.avatar model
+        const setUrlResult = await User.setUserUrlImage(userID, finalImageUrl);
+        res.redirect("/editInfo");
     } catch (err) {
         res.json({
             error: "Upload ảnh thất bại 2"

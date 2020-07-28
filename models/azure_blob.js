@@ -31,19 +31,9 @@ async function test() {
 }
 
 async function uploadImage(userID, image, extension) { ///////////////////////////////////////////////////////////////
-    let allBlobs = [];
-    for await (const blob of containerClient.listBlobsFlat()) {
-        allBlobs.push(blob.name);
-    }
-    const allBlobsStr = allBlobs.join(" ");
-    let num = 1;
-    let imageName = constant.createUserImageName(userID, "");
-    while (allBlobsStr.includes(imageName)) {
-        num++;
-        imageName = constant.createUserImageName(userID, "");
-    }
-    imageName += extension;
-    const blockBlobClient = containerClient.getBlockBlobClient(imageName);
+
+    let imageName = constant.createUserImageName(userID, extension);
+    const blockBlobClient = userContainerClient.getBlockBlobClient(imageName);
     const uploadBlobResponse = await blockBlobClient.upload(image.buffer, image.size);
     return blockBlobClient.url;
 }
