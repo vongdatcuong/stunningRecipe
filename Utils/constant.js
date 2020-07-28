@@ -50,6 +50,9 @@ function createDishImageName(productId, num, extension) {
 }
 module.exports = {
     appName,
+    // Messages
+    
+    // Constant variables
     dishTypes,
     cuisines,
     diets,
@@ -67,6 +70,7 @@ module.exports = {
     currency,
     millisecondOfDay,
     millisecondOfWeek,
+    // Str
     emptyStr,
     commaSpace,
     getUserType,

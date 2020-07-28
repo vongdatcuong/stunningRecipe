@@ -5,20 +5,28 @@ const constant = require('../Utils/constant');
 
 
 module.exports = {
-  getDishes(query, sort, perPage, page){
-    // Default get accepted disshes
+  getDishes(query, option){
+    option = option || {};
+    // Default get accepted dishes
     query.status = query.status || constant.dishRecipeStatus.accepted;
-    return Dish.find(query)
-    .select({})
-    .limit(perPage)
-    .skip(perPage * (page - 1))
-    .sort(sort)
-    .populate('creator')
-    .populate('dishTypes')
-    .populate('cuisines')
-    .populate('diets')
-    .populate('favoriteNumber')
-    .exec();
+    let findPromise = Dish.find(query)
+                          .select({});
+    if (option.perPage){
+      findPromise = findPromise.limit(option.perPage);
+      if (option.page){
+        findPromise = findPromise.skip(option.perPage * (option.page - 1));
+      }
+    }
+    if (option.sort){
+      findPromise = findPromise.sort(option.sort);
+    }
+    return findPromise
+          .populate('creator')
+          .populate('dishTypes')
+          .populate('cuisines')
+          .populate('diets')
+          .populate('favoriteNumber')
+          .exec();
   },
   getDish(dishID) {
     return Dish.findOne({dishID: dishID})

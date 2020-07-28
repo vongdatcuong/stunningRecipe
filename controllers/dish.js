@@ -40,7 +40,29 @@ const dishes = async (req, res) => {
         userType: constant.userType
     });
 }
+
+/* Post Dish */
+const postDish = function(req, res) {
+    const customDishTypes = constant.dishTypes.map((item, index) =>  {
+        return {name: item, index: index};
+    });
+    const customCuisines = constant.cuisines.map((item, index) =>  {
+        return {name: item, index: index};
+    });
+    const customDiets = constant.diets.map((item, index) =>  {
+        return {name: item, index: index};
+    });
+    res.render('post_recipe', {
+        title: constant.appName,
+        user: req.user,
+        dishTypes: constant.splitToChunk(customDishTypes, 6),
+        cuisines: constant.splitToChunk(customCuisines, 6),
+        diets: constant.splitToChunk(customDiets, 4),
+    });
+}
+
 module.exports = {
     dishDetail,
-    dishes
+    dishes,
+    postDish
 };

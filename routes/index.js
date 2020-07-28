@@ -3,6 +3,7 @@ const router = express.Router();
 const mainController = require('../controllers/main');
 const dishController = require('../controllers/dish');
 const userController = require('../controllers/user');
+const autocompleteController = require('../controllers/autocomplete');
 const requireLogin = require("./../middlewares/auth.mdw");
 
 // passport
@@ -48,12 +49,7 @@ router.get('/advanced_search', function(req, res) {
 });
 
 /* Post recipe */
-router.get('/post_recipe', function(req, res) {
-    res.render('post_recipe', {
-        title: 'Stunning Recipe',
-        user: req.user
-    });
-});
+router.get('/post_recipe', dishController.postDish);
 
 /* Profile */
 router.get("/profile", requireLogin, async(req, res) => {
@@ -89,5 +85,9 @@ router.get("/error", (req, res) => {
         title: 'Lỗi'
     });
 });
+
+// Autocomplete API
+router.get("/autocompleteNutritions", autocompleteController.autocompleteNutritions);
+router.get("/autocompleteIngredients", autocompleteController.autocompleteIngredients);
 
 module.exports = router;

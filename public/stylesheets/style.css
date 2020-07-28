@@ -145,6 +145,24 @@ span.red-asterisk {
     color: red;
 }
 
+.error {
+    color: #ff471a;
+}
+
+.truncate1{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.truncate2{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 /*-- top-header --*/
 
@@ -173,20 +191,7 @@ span.red-asterisk {
 .header-right ul li i {
     font-size: 15px;
 }
-.truncate1{
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.truncate2{
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+
 /*-- modal login --*/
 
 .modal-title {
@@ -1932,6 +1937,10 @@ a:focus {
     width: 100%;
 }
 /* Post recipe ingredients */
+#recipe-ingredients .select2-selection.select2-selection--single[role=combobox]{
+    min-height: 38px;
+    padding-top: 4px;
+}
 
 #recipe-ingredients .recipe-ingredient-unit {
     font-size: 1.2em;
@@ -1955,6 +1964,10 @@ a:focus {
 
 
 /* Post recipe extended ingredients */
+#recipe-extended-ingredients .select2-selection.select2-selection--single[role=combobox]{
+    min-height: 38px;
+    padding-top: 4px;
+}
 
 #recipe-extended-ingredients .recipe-ingredient-unit {
     font-size: 1.2em;

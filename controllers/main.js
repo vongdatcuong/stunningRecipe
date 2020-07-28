@@ -5,7 +5,11 @@ const constant = require("../Utils/constant");
 /* Home */
 const home = async (req, res) => {
     // Popular dishes
-    const popularDishes = await Dish.getDishes({}, {createdDate: -1}, constant.homePerPage, 1);
+    const popularDishes = await Dish.getDishes({}, {
+        sort: {createdDate: -1},
+        perPage: constant.homePerPage,
+        page: 1
+    });
 
     const popularFavorites = {
         "1": 1
@@ -20,7 +24,11 @@ const home = async (req, res) => {
     });
 
     // New Dishes
-    const newDishes = await Dish.getDishes({}, {createdDate: -1}, constant.homePerPage, 1);
+    const newDishes = await Dish.getDishes({}, {
+        sort: {createdDate: -1},
+        perPage: constant.homePerPage,
+        page: 1
+    });
     
     const newFavorites = {
         "2": 1
