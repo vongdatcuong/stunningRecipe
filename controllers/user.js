@@ -2,6 +2,8 @@
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
 require("../routes/passport.js");
+var path = require('path');
+const fs = require("fs");
 const requireLogin = require("./../middlewares/auth.mdw");
 const constant = require("../utils/constant");
 
@@ -108,6 +110,7 @@ const yourInfo = async(req, res) => {
     if (req.isAuthenticated()) {
         //trả về true nếu đã đăng nhập rồi
         const userInfo = await User.getUser(req.user.userID);
+        userInfo.avatarUrl = () => constant.imageStorageLink + constant.userPath + userInfo.avatar;
         res.render("yourInfo", {
             title: constant.appName,
             user: req.user,
@@ -121,6 +124,7 @@ const yourInfo = async(req, res) => {
 const editInfoView = async(req, res) => {
     if (req.isAuthenticated()) {
         const userInfo = await User.getUser(req.user.userID);
+        userInfo.avatarUrl = () => constant.imageStorageLink + constant.userPath + userInfo.avatar;
         res.render("editInfo", {
             title: constant.appName,
             user: req.user,
@@ -156,6 +160,32 @@ const editInfo = async(req, res) => {
         }
     }
 };
+
+const uploadUserImageCtrl = async(req, res) => {
+    try {
+        const userID = (req.user.userID) ? parseInt(req.user.userID) : -1;
+        //const imageUrl = req.body.imageUrl;
+        var imageUrl = "avatar_default.png";
+        //imageUrl = req.file.path;
+        try {
+            const url = await User.uploadUserImageModel(userID, req.file);
+            imageUrl = url; ///////////////////??????????? có sai không nhỉ
+        } catch (err) {
+            res.json({
+                error: "Upload ảnh thất bại 1"
+            })
+        }
+
+        const setUrlResult = await User.setUserUrlImage(userID, imageUrl);
+        res.json({
+            success: "Upload ảnh thành công"
+        })
+    } catch (err) {
+        res.json({
+            error: "Upload ảnh thất bại 2"
+        })
+    }
+}
 
 const changePwdView = async(req, res) => {
     if (req.isAuthenticated()) {
@@ -210,6 +240,7 @@ module.exports = {
     yourInfo,
     editInfoView,
     editInfo,
+    uploadUserImageCtrl,
     changePwdView,
     changePwd,
 };

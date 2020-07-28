@@ -5,6 +5,10 @@ const dishController = require('../controllers/dish');
 const userController = require('../controllers/user');
 const requireLogin = require("./../middlewares/auth.mdw");
 
+
+const multer = require('multer');
+const inMemoryStorage = multer.memoryStorage();
+const upload = multer({ storage: inMemoryStorage });
 // passport
 const passport = require('passport');
 require('./passport.js');
@@ -67,6 +71,8 @@ router.get('/yourInfo', requireLogin, userController.yourInfo);
 /* Edit Your own Information */
 router.get('/editInfo', requireLogin, userController.editInfoView);
 router.post('/editInfo', requireLogin, userController.editInfo);
+
+router.post('/uploadUserImage', upload.single('file'), userController.uploadUserImageCtrl); // 'file' là thuộc tính name của input ảnh
 
 /* Change password */
 router.get('/changePwd', requireLogin, userController.changePwdView);

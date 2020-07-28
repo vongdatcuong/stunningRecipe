@@ -50,6 +50,11 @@ function splitToChunk(arr, size) {
 function createDishImageName(productId, num, extension) {
     return `dish_${productId}_image_${num}${extension}`;
 }
+
+function createUserImageName(userID, extension) {
+    return `avatar_${userID}${extension}`;
+}
+
 module.exports = {
     appName,
     dishTypes,
@@ -74,5 +79,6 @@ module.exports = {
     commaSpace,
     getUserType,
     splitToChunk,
-    createDishImageName
+    createDishImageName,
+    createUserImageName
 };

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const bcrypt = require('bcryptjs');
 const constant = require('../Utils/constant');
+const azureBlob = require('./azure_blob');
 
 module.exports = {
     findUsername(username) {
@@ -61,5 +62,12 @@ module.exports = {
             phone: info.phone || "",
             address: info.address || ""
         }).exec();
-    }
+    },
+    async uploadUserImageModel(userID, image) {
+        const extension = image.originalname.slice(image.originalname.lastIndexOf('.'));
+        return await azureBlob.uploadImage(userID, image, extension);
+    },
+    setUserUrlImage(userID, urlImage) {
+        User.findOneAndUpdate({ userID: userID }, { avatar: urlImage }).exec();
+    },
 };

@@ -30,6 +30,24 @@ async function test() {
     console.log(`Container: ${userContainerClient.containerName}`);
 }
 
+async function uploadImage(userID, image, extension) { ///////////////////////////////////////////////////////////////
+    let allBlobs = [];
+    for await (const blob of containerClient.listBlobsFlat()) {
+        allBlobs.push(blob.name);
+    }
+    const allBlobsStr = allBlobs.join(" ");
+    let num = 1;
+    let imageName = constant.createUserImageName(userID, "");
+    while (allBlobsStr.includes(imageName)) {
+        num++;
+        imageName = constant.createUserImageName(userID, "");
+    }
+    imageName += extension;
+    const blockBlobClient = containerClient.getBlockBlobClient(imageName);
+    const uploadBlobResponse = await blockBlobClient.upload(image.buffer, image.size);
+    return blockBlobClient.url;
+}
+/*
 async function uploadImage(productId, image, extension) {
     let allBlobs = [];
     for await (const blob of containerClient.listBlobsFlat()) {
@@ -38,7 +56,7 @@ async function uploadImage(productId, image, extension) {
     const allBlobsStr = allBlobs.join(" ");
     let num = 1;
     let imageName = constant.createProductImageName(productId, num, "");
-    while (allBlobsStr.includes(imageName)) {
+    while (allBlobsStr.includes(imageName)){
         num++;
         imageName = constant.createProductImageName(productId, num, "");
     }
@@ -47,7 +65,6 @@ async function uploadImage(productId, image, extension) {
     const uploadBlobResponse = await blockBlobClient.upload(image.buffer, image.size);
     return blockBlobClient.url;
 }
-/*
 async function deleteImages(imageNames){
     let allBlobs = [];
     for await (const blob of containerClient.listBlobsFlat()) {
@@ -75,6 +92,6 @@ async function deleteImages(imageNames){
 
 */
 module.exports = {
-    //uploadImage: uploadImage,
+    uploadImage: uploadImage,
     //deleteImages: deleteImages
 }
