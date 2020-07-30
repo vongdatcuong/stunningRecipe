@@ -1942,8 +1942,16 @@ a:focus {
     padding-top: 4px;
 }
 
+#recipe-ingredients .recipe-ingredient + .select2-container {
+    width: 503px !important;
+}
+
 #recipe-ingredients .recipe-ingredient-unit {
     font-size: 1.2em;
+}
+
+#recipe-ingredients .recipe-ingredient-unit + .select2-container {
+    width: 167px !important;
 }
 
 #recipe-ingredients .recipe-ingredient-buttons a {
@@ -1962,7 +1970,6 @@ a:focus {
     border-bottom: 1px solid #dfdfdf;
 }
 
-
 /* Post recipe extended ingredients */
 #recipe-extended-ingredients .select2-selection.select2-selection--single[role=combobox]{
     min-height: 38px;
@@ -1971,6 +1978,10 @@ a:focus {
 
 #recipe-extended-ingredients .recipe-ingredient-unit {
     font-size: 1.2em;
+}
+
+#recipe-extended-ingredients .recipe-ingredient-unit + .select2-container {
+    width: 167px !important;
 }
 
 #recipe-extended-ingredients .recipe-ingredient-buttons a {
@@ -1988,7 +1999,6 @@ a:focus {
 #recipe-extended-ingredients .recipe-ingredient-row {
     border-bottom: 1px solid #dfdfdf;
 }
-
 
 /* Post recipe guide */
 

@@ -5,6 +5,11 @@ const appName = "Stunning Recipe";
 const dishTypes = ["Món chính", "Món phụ", "Tráng miệng", "Món khai vị", "Sald", "Bánh", "Ăn sáng", "Soup", "Thức uống", "Nước sốt", "Snack", "Ăn trưa"];
 const cuisines = ["Món Mỹ", "Món Trung", "Món Pháp", "Món Ý", "Món Nhật", "Món Mexico", "Món Thái", "Món Việt", "Món Âu", "Món Tây", "Món Đông"];
 const diets = ["Không Gluent", "Không chứa sữa", "Ketogenic", "Vegetarian", "Lacto Vegetarian", "Ovo Vegetarian", "Vegan", "Pescetarian", "Paleo", "Primal", "Whole30"];
+const ingredientUnits = [
+    {key: "Trọng lượng", value: ["mg", "gram", "kg"]},
+    {key: "Dung lượng", value: ["ml", "l"]},
+    {key: "Khác", value: ["muỗng cà phê", "muỗng canh", "trái"]}
+];
 const imageStorageLink = "https://stunningrecipe.blob.core.windows.net/";
 const userPath = "user/";
 const dishPath = "dish/";
@@ -63,6 +68,7 @@ module.exports = {
     dishTypes,
     cuisines,
     diets,
+    ingredientUnits,
     imageStorageLink,
     userPath,
     dishPath,

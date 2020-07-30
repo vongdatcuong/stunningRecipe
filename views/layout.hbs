@@ -24,8 +24,8 @@
     <!-- Lightslider css -->
     <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" media="all" />
     <!-- FilePond css -->
-    <link href="/stylesheets/filepond/filepond.min.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="/stylesheets/filepond/filepond-plugin-image-review.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/vendor/css/filepond/filepond.min.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/vendor/css/filepond/filepond-plugin-image-review.css" rel="stylesheet" type="text/css" media="all" />
     <!-- Main css -->
     <link rel="stylesheet" href="/stylesheets/fontawesome-all.css">
     <!-- Font-Awesome-Icons-CSS -->
@@ -36,11 +36,14 @@
     <!-- //Custom-Files -->
 
     <!-- Star rating css -->
-    <link href="/stylesheets/star-rating.min.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="/stylesheets/themes/star-rating-theme-fas.min.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/vendor/css/star-rating/star-rating.min.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/vendor/css/themes/star-rating-theme-fas.min.css" rel="stylesheet" type="text/css" media="all" />
 
     <!-- Select2 css -->
-    <link href="/stylesheets/select2/select2.min.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/vendor/css/select2/select2.min.css" rel="stylesheet" type="text/css" media="all" />
+
+    <!-- Sweetalert2 css -->
+    <link href="/vendor/css/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" media="all" />
 
     <!-- web fonts -->
     <link
@@ -587,9 +590,6 @@
     </div>
 
     <!-- js-files -->
-    <!-- Constant variables -->
-    <script type="text/javascript" src="../javascripts/constant.js"></script>
-    <!-- //Constant variables -->
 
     <!-- jquery -->
     <script type="text/javascript" src="../javascripts/jquery-2.2.3.min.js"></script>
@@ -747,7 +747,7 @@
     <!-- //LightSlider -->
 
     <!-- Star rating -->
-    <script type="text/javascript" src="/javascripts/star-rating.min.js"></script>
+    <script type="text/javascript" src="/vendor/javascript/star-rating/star-rating.min.js"></script>
     <script type="text/javascript">
         $('.starRating').rating({
             min: 0,
@@ -764,14 +764,29 @@
       <!-- //Star rating -->
 
       <!-- FilePond -->
-      <script type="text/javascript" src="/javascripts/filepond/filepond.min.js"></script>
-      <script type="text/javascript" src="/javascripts/filepond/filepond-plugin-image-review.js"></script>
-      <script type="text/javascript" src="/javascripts/filepond/filepond-config.js"></script>
+      <script type="text/javascript" src="/vendor/javascript/filepond/filepond.min.js"></script>
+      <script type="text/javascript" src="/vendor/javascript/filepond/filepond-plugin-file-validate-type.js"></script>
+      <script type="text/javascript" src="/vendor/javascript/filepond/filepond-plugin-image-review.js"></script>
       <!-- //FilePond -->
 
       <!-- Select2 -->
-      <script type="text/javascript" src="/javascripts/select2/select2.min.js"></script>
+      <script type="text/javascript" src="/vendor/javascript/select2/select2.min.js"></script>
       <!-- //Select2 -->
+
+      <!-- Sweetalert2 -->
+      <script type="text/javascript" src="/vendor/javascript/sweetalert2/sweetalert2.min.js"></script>
+      <!-- //Sweetalert2 -->
+
+      <!-- Hand-written code -->
+
+      <!-- Constant variables and Utils -->
+      <script type="text/javascript" src="/javascripts/service/constant.js"></script>
+      <script type="text/javascript" src="/javascripts/service/utils.js"></script>
+      <!-- //Constant variables -->
+
+      <!-- FilePond config-->
+      <script type="text/javascript" src="/vendor/javascript/filepond/filepond-config.js"></script>
+      <!-- FilePond config -->
 
       <!-- Dynamic guide js-->
       <script type="text/javascript" src="/javascripts/dynamic-guide.js"></script>
@@ -785,6 +800,7 @@
       <script type="text/javascript" src="/javascripts/sharedScripts.js"></script>
       <!-- //SharedScripts js -->
 
+      <!-- //Hand-written code -->
       <!-- //js-files -->
       <!-- //template -->
       <!-- end template -->

@@ -8,6 +8,7 @@
         option.init = option.init || new Function();
         option.addCallBack = option.addCallBack || new Function();
         option.deleteCallback = option.deleteCallback || new Function();
+        option.removeModelRow = option.removeModelRow || false;
 
         const firstRowFildPond = option.init();
         
@@ -22,7 +23,9 @@
 
         $addButton.on('click', (e) => {
             let $row = $rowModel.clone();
-            $row.find(".guide-number").text(++currentStep);
+            $row.find(".guide-number").text(currentStep + 1);
+            $row.find(`[data-guide-number]`).attr("data-guide-number", currentStep + 1);
+            currentStep++;
             $row.insertBefore($guideButtonsWrapper);
             
             // Add Callback
@@ -32,7 +35,7 @@
             const $rowDeleteBtn = $row.find('.guide-delete');
             $rowDeleteBtn.on('click', (e) => {
                 // At least 1 row exists
-                if (currentStep > 1){
+                if (currentStep > 1 || option.removeModelRow){
                     $row.remove();
                     $row = null;
                     updateGuideNumbers();
@@ -45,19 +48,23 @@
             
         })
 
-        // First Row delete (if there is currently at least 2 rows)
-        const $firstRowDeleteBtn = $firstRow.find('.guide-delete');
-        $firstRowDeleteBtn.on('click', (e) => {
-            // At least 1 row exists
-            if (currentStep > 1){
-                $firstRow.remove();
-                $firstRow = null;
-                updateGuideNumbers();
+        if (option.removeModelRow){
+            $firstRow.remove();
+        } else {
+            // First Row delete (if there is currently at least 2 rows)
+            const $firstRowDeleteBtn = $firstRow.find('.guide-delete');
+            $firstRowDeleteBtn.on('click', (e) => {
+                // At least 1 row exists
+                if (currentStep > 1){
+                    $firstRow.remove();
+                    $firstRow = null;
+                    updateGuideNumbers();
 
-                // Delete callback
-                option.deleteCallBack($row, firstRowFildPond);
-            }
-        })
+                    // Delete callback
+                    option.deleteCallBack($row, firstRowFildPond);
+                }
+            })
+        }
 
         function updateGuideNumbers(){
             let number = 0;
@@ -73,18 +80,15 @@
         init: function() {
             // First guide row image
             const recipeGuideImage = document.querySelectorAll(".recipe-guide-image");
-            const recipeGuideImagePond = FilePond.create( recipeGuideImage , {
-                labelIdle: "<i class='fa fa-camera'></i> Kéo thả ảnh hoặc <span class='filepond--label-action'> Browse </span>"
-            });
+            const recipeGuideImagePond = FilePond.create( recipeGuideImage[0] , recipeGuideFilePonOption);
             recipeGuideFilePonds.push(recipeGuideImagePond);
             return recipeGuideImagePond;
         },
         addCallBack: function($row) {
             const $recipeGuideImg = $row.find('.recipe-guide-image');
-            const recipeGuideImgPond = FilePond.create( $recipeGuideImg[0] , {
-                labelIdle: "<i class='fa fa-camera'></i> Kéo thả ảnh hoặc <span class='filepond--label-action'> Browse </span>"
-            });
+            const recipeGuideImgPond = FilePond.create( $recipeGuideImg[0] , recipeGuideFilePonOption);
             recipeGuideFilePonds.push(recipeGuideImgPond);
+
             return recipeGuideImgPond;
         },
         deleteCallBack: function($row, filePond) {
@@ -103,9 +107,7 @@
 
               // First ingedient add new image
             const recipeExtIngreNewImage = document.querySelector("#recipe-ingredients .recipe-ingredient-add-new-image");
-            const recipeExtIngreNewImagePond = FilePond.create( recipeExtIngreNewImage , {
-                labelIdle: "<i class='fa fa-camera'></i> Kéo thả ảnh hoặc <span class='filepond--label-action'> Browse </span>"
-            });
+            const recipeExtIngreNewImagePond = FilePond.create( recipeExtIngreNewImage , recipeNewIngreFilePonOption);
             recipeExtIngredientNewImgPonds.push(recipeExtIngreNewImagePond);
             return recipeExtIngreNewImagePond;
         },
@@ -117,15 +119,18 @@
                 $rowCollapsee.collapse('toggle');
             });
 
+            // Select2 for ingredients
+            $row.find('.recipe-ingredient.select2').select2(select2IngredientsOption);
+            // Select2 for ingredient units
+            $row.find('.recipe-ingredient-unit').select2();
+
             const $recipeIngreNewImg = $row.find('.recipe-ingredient-add-new-image');
-            const recipeIngreNewImgPond = FilePond.create( $recipeIngreNewImg[0] , {
-                labelIdle: "<i class='fa fa-camera'></i> Kéo thả ảnh hoặc <span class='filepond--label-action'> Browse </span>"
-            });
+            const recipeIngreNewImgPond = FilePond.create( $recipeIngreNewImg[0] , recipeNewIngreFilePonOption);
             recipeIngredientNewImgPonds.push(recipeIngreNewImgPond);
             return recipeIngreNewImgPond;
         },
         deleteCallBack: function($row, filePond) {
-            recipeIngredientNewImgPonds.remove(filePond);
+            recipeIngredientNewImgPonds.splice(recipeIngredientNewImgPonds.indexOf(filePond), 1);
         }
     });
 
@@ -140,9 +145,7 @@
 
               // First ingedient add new image
             const recipeIngreNewImage = document.querySelector("#recipe-extended-ingredients .recipe-ingredient-add-new-image");
-            const recipeIngreNewImagePond = FilePond.create( recipeIngreNewImage , {
-                labelIdle: "<i class='fa fa-camera'></i> Kéo thả ảnh hoặc <span class='filepond--label-action'> Browse </span>"
-            });
+            const recipeIngreNewImagePond = FilePond.create( recipeIngreNewImage , recipeNewIngreFilePonOption);
             recipeExtIngredientNewImgPonds.push(recipeIngreNewImagePond);
             return recipeIngreNewImagePond;
         },
@@ -154,15 +157,19 @@
                 $rowCollapsee.collapse('toggle');
             });
 
+            // Select2 for ingredients
+            $row.find('.recipe-ext-ingredient.select2').select2(select2IngredientsOption);
+            // Select2 for ingredient units
+            $row.find('.recipe-ingredient-unit').select2();
+
             const $recipeExtIngreNewImg = $row.find('.recipe-ingredient-add-new-image');
-            const recipeExtIngreNewImgPond = FilePond.create( $recipeExtIngreNewImg[0] , {
-                labelIdle: "<i class='fa fa-camera'></i> Kéo thả ảnh hoặc <span class='filepond--label-action'> Browse </span>"
-            });
+            const recipeExtIngreNewImgPond = FilePond.create( $recipeExtIngreNewImg[0] , recipeNewIngreFilePonOption);
             recipeExtIngredientNewImgPonds.push(recipeExtIngreNewImgPond);
             return recipeExtIngreNewImgPond;
         },
         deleteCallBack: function($row, filePond) {
-            recipeExtIngredientNewImgPonds.remove(filePond);
-        }
+            recipeExtIngredientNewImgPonds.splice(recipeExtIngredientNewImgPonds.indexOf(filePond), 1);
+        },
+        removeModelRow: true
     });
 })();

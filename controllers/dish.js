@@ -58,6 +58,7 @@ const postDish = function(req, res) {
         dishTypes: constant.splitToChunk(customDishTypes, 6),
         cuisines: constant.splitToChunk(customCuisines, 6),
         diets: constant.splitToChunk(customDiets, 4),
+        ingredientUnits: constant.ingredientUnits
     });
 }
 
