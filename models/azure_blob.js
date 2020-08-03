@@ -37,6 +37,21 @@ async function uploadImage(userID, image, extension) { /////////////////////////
     const uploadBlobResponse = await blockBlobClient.upload(image.buffer, image.size);
     return blockBlobClient.url;
 }
+async function uploadIngredientImage(name, image){
+    const blockBlobClient = ingredientContainerClient.getBlockBlobClient(name);
+    const uploadBlobResponse = await blockBlobClient.upload(image.buffer, image.size);
+    return name;
+}
+async function uploadDishImage(name, image){
+    const blockBlobClient = dishContainerClient.getBlockBlobClient(name);
+    const uploadBlobResponse = await blockBlobClient.upload(image.buffer, image.size);
+    return name;
+}
+async function uploadDishStepImage(name, image){
+    const blockBlobClient = dishStepContainerClient.getBlockBlobClient(name);
+    const uploadBlobResponse = await blockBlobClient.upload(image.buffer, image.size);
+    return name;
+}
 /*
 async function uploadImage(productId, image, extension) {
     let allBlobs = [];
@@ -83,5 +98,8 @@ async function deleteImages(imageNames){
 */
 module.exports = {
     uploadImage: uploadImage,
+    uploadIngredientImage,
+    uploadDishImage,
+    uploadDishStepImage
     //deleteImages: deleteImages
 }

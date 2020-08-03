@@ -3,6 +3,6 @@ function showLoading(){
     $loading.show();
 }
 function hideLoading(){
-    $loading.show();
+    $loading.hide();
 }
 

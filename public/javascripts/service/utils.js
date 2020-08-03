@@ -43,3 +43,20 @@ function SweetAlert() {
     }
 }
 const swal = new SweetAlert();
+
+function matchYoutubeUrl(url) {
+    var p = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    if(url.match(p)){
+        return url.match(p)[1];
+    }
+    return false;
+}
+
+// Check link youtube valid
+jQuery.validator.addMethod("youtubeLink", function(value, element) {
+    return (this.optional(element) || value == "" || matchYoutubeUrl(value));
+});
+
+function hasDuplicate(arr){
+    return new Set(arr).size != arr.length;
+}

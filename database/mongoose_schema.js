@@ -144,7 +144,10 @@ mongoose.model("Dish", dishSchema);
 // Ingredient
 const ingredientSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    userID: { type: SchemaTypes.Long, min: 0, default: 0 },
+    isActive: Boolean,
+    createdDate: Date
 }, { collection: "Ingredients" });
 
 ingredientSchema.index({ coords: "2dsphere" });
@@ -257,6 +260,7 @@ const dishIngredientSchema = new mongoose.Schema({
     dishID: { type: SchemaTypes.Long, min: 0, default: 0 },
     ingredientID: { type: SchemaTypes.Long, min: 0, default: 0 },
     amount: { type: Number, min: 0, default: 0 },
+    unit: String,
     isExtended: Boolean,
 }, { collection: "DishIngredients" }, { toJSON: { virtuals: true }, toObject: { virtuals: true } });
 

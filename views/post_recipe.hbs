@@ -75,7 +75,7 @@
                                                     <div class="row mb-2">
                                                         {{# each this}}
                                                             <div class="col-md-2">
-                                                                <input class="form-check-input" type="checkbox" value="" id="dishTypeCb{{index}}" name="dishTypeCb">
+                                                                <input class="form-check-input" type="checkbox" value="{{index}}" id="dishTypeCb{{index}}" name="dishTypeCb">
                                                                 <label class="form-check-label" for="dishTypeCb{{index}}">
                                                                     {{name}}
                                                                 </label> 
@@ -95,7 +95,7 @@
                                                     <div class="row mb-2">
                                                         {{# each this}}
                                                             <div class="col-md-2">
-                                                                <input class="form-check-input" type="checkbox" value="" id="cuisineCb{{index}}" name="cuisineCb">
+                                                                <input class="form-check-input" type="checkbox" value="{{index}}" id="cuisineCb{{index}}" name="cuisineCb">
                                                                 <label class="form-check-label" for="cuisineCb{{index}}">
                                                                     {{name}}
                                                                 </label> 
@@ -115,7 +115,7 @@
                                                     <div class="row mb-3">
                                                         {{# each this}}
                                                             <div class="col-md-3">
-                                                                <input class="form-check-input" type="checkbox" value="" id="dietCb{{index}}" name="dietCb">
+                                                                <input class="form-check-input" type="checkbox" value="{{index}}" id="dietCb{{index}}" name="dietCb">
                                                                 <label class="form-check-label" for="dietCb{{index}}">
                                                                     {{name}}
                                                                 </label> 
@@ -133,7 +133,7 @@
                                     <!-- Nutritions -->
                                     <div class="row my-3">
                                         <div class="col-md-12 form-group" id="post_recipe_nutritions">
-                                            <select class="select2 form-control" multiple="multiple"  placeholder="Nhập tên các thành phần dinh dưỡng">
+                                            <select class="select2 form-control" multiple="multiple" name="nutritions" placeholder="Nhập tên các thành phần dinh dưỡng">
                                             </select>
                                         </div>
                                     </div>
@@ -147,13 +147,13 @@
                                                 <div class="d-none"><span class="guide-number">1</span></div>
                                                 <div class="col-md-1 text-center text-danger"><i class="fa fa-chevron-right"></i></div>
                                                 <div class="col-md-6 form-group recipe-ingredient-content">
-                                                    <select class="recipe-ingredient select2 form-control" name="recipeIngredient" data-guide-number="1" value="">
+                                                    <select class="recipe-ingredient select2 form-control" name="recipeIngredient" value="">
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4 input-group mb-2">
-                                                    <input type="number" min="0" class="recipe-ingredient-unit-val form-control d-inline rounded" name="recipeIngredientUnitVal" data-guide-number="1" value="" placeholder="Số lượng">
+                                                    <input type="number" min="0" class="recipe-ingredient-unit-val form-control d-inline rounded" name="recipeIngredientUnitVal" value="" placeholder="Số lượng">
                                                     <div class="input-group-append mx-2">
-                                                        <select class="recipe-ingredient-unit form-control">
+                                                        <select class="recipe-ingredient-unit form-control" name="recipeIngredientUnit">
                                                             {{# each ingredientUnits}}
                                                                 <optgroup label="{{key}}">
                                                                     {{# each value}}
@@ -203,7 +203,7 @@
                                                 <div class="col-md-4 input-group mb-2">
                                                     <input type="number" min="0" class="recipe-ext-ingredient-unit-val form-control d-inline rounded" name="recipeExtIngredientUnitVal" value="" placeholder="Số lượng">
                                                     <div class="input-group-append mx-2">
-                                                        <select class="recipe-ingredient-unit form-control">
+                                                        <select class="recipe-ingredient-unit form-control" name="recipeExtIngredientUnit">
                                                             {{# each ingredientUnits}}
                                                                 <optgroup label="{{key}}">
                                                                     {{# each value}}
@@ -247,7 +247,7 @@
                         </div>    
                         <!-- Recipe guide -->                   
                         <div role="tabpanel" class="tab-pane fade" id="recipeGuide" aria-labelledby="recipeGuideTab">
-                            <form id="recipe-guide" class="guide-wrapper py-2 px-3" name="recipeGuideForm">
+                            <form id="recipe-guide" class="guide-wrapper py-2 px-3" name="recipeGuideForm"> 
                                 <!-- Guide row -->
                                 <div class="recipe-guide-row guide-row py-3">
                                     <div class="row py-2">
@@ -270,13 +270,14 @@
                                 <div class="display block text-left my-5 guide-button-wrapper">
                                     <button type="button" class="btn btn-info guide-add py-2 px-3" style="font-size: 0.9em;">+ Thêm bước thực hiện</button>
                                 </div>
-                            </form>
-                            <div class="row my-1 px-3">
-                                <h4 class="my-4 px-3">Video minh họa (tùy chọn)</h4>
-                                <div class="form-group col-md-12">
-                                    <input type="text" class="form-control" id="recipe_video" name="recipeVideo" value="" placeholder="Nhập link video hướng dẫn: https://">
+
+                                <div class="row my-1 px-3">
+                                    <h4 class="my-4">Video minh họa (tùy chọn)</h4>
+                                    <div class="form-group col-md-12">
+                                        <input type="text" class="form-control" id="recipe_video" name="video" value="" placeholder="Nhập link video hướng dẫn: https://">
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                             <!-- Buttons -->
                             <div class="display block text-center my-3">
                                 <button type="button" href="#top" id="tab2BackBtn" class="btn violet-reverse-link-btn pt-2 pb-2 pl-5 pr-5" style="font-size: 1.1em;">Quay lại</button>

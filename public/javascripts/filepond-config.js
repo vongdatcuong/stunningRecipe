@@ -24,3 +24,10 @@ const recipeGuideFilePonOption = {
 
 const recipeImage = document.getElementById("recipe-image");
 const recipeImagePond = FilePond.create( recipeImage , recipeImgFilePondOption);
+
+// Check recipe image valid
+jQuery.validator.addMethod("recipeImageRule", function(value, element) {
+  if (recipeImagePond)
+    return recipeImagePond.getFile() != null;
+  return false;
+});

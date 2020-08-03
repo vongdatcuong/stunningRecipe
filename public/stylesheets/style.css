@@ -1407,6 +1407,7 @@ div#testimonials h4.m-title {
 
 .item-info-header .item-info-title {
     padding: 10px 0 5px 0;
+    min-height: 70px;
 }
 
 .item-info-header .item-info-stats ul {

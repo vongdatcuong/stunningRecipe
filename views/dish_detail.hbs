@@ -115,8 +115,8 @@
                                         <tr>
                                             {{# each this}}
                                                 <td>
-                                                    <span class="dish-inrgredient-value">{{amount}} {{ingredient.unitLong}}</span>
-                                                    <span class="dish-inrgredient-text">{{ingredient.name}}</span>
+                                                    <span class="dish-inrgredient-value">{{amount}} {{unit}}</span>
+                                                    <span class="dish-inrgredient-text">{{ingredient.name}} {{#if isExtended}}+{{/if}}</span>
                                                 </td>
                                             {{/each}}
                                         </tr>

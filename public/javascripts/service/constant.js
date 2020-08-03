@@ -13,6 +13,10 @@
     const recipeImgErrMsg = "Chọn ảnh minh họa công thức";
     const recipeIngreNameErrMsg = "Có nguyên liệu chưa nhập tên, &nbsp";
     const recipeIngreUnitValNameErrMsg = "Có nguyên liệu chưa nhập số lượng";
+    const recipeVideoErrMsg = "Link video hướng dẫn không hợp lệ (phải là link embedded)";
+    const recipeInfoErrMsg = "Thông tin món ăn chưa hợp lệ";
+    const recipeGuideErrMsg = "Hướng dẫn món ăn chưa hợp lệ";
+    const duplicateIngreErrMsg = "Công thức có nguyên liệu bị trùng";
 
 // Constant variables
 const autocompleteDelay = 500;
@@ -71,7 +75,7 @@ const postRecipeFormValidateOp = {
             required: true
         },
         recipeImage: {
-            required: true
+            recipeImageRule: true
         },
         recipeIngredient: {
             required: true,
@@ -129,7 +133,7 @@ const postRecipeFormValidateOp = {
             required: cuisineCbErrMsg
         },
         recipeImage: {
-            required: recipeImgErrMsg
+            recipeImageRule: recipeImgErrMsg
         },
         recipeIngredient: {
             required: recipeIngreNameErrMsg,
@@ -174,19 +178,26 @@ const postRecipeFormValidateOp = {
         }
         else
             error.insertAfter(element);
-    }
+    },
+    ignore: ""
 }
 const postRecipeGuideValidateOp = {
     rules: {
         guide_content: {
             required: true,
             minlength: 1,
+        },
+        video: {
+            youtubeLink: true
         }
     },
     messages: {
         guide_content: {
             required: guideContentErrMsg,
             minlength: guideContentErrMsg,
+        },
+        video: {
+            youtubeLink: recipeVideoErrMsg
         }
     },
     errorPlacement: function(error, element) {
@@ -222,6 +233,7 @@ const select2IngredientsOption = {
     placeholder: 'Tên nguyên liệu',
     minimumInputLength: 0,            
     allowClear: true,
+    tags: true,
     ajax: {
         url: '/autocompleteIngredients',
         type: "GET",

@@ -12,6 +12,7 @@ const fs = require("fs");
 const multer = require('multer');
 const inMemoryStorage = multer.memoryStorage();
 const upload = multer({ storage: inMemoryStorage });
+//const uploadManyFiles = multer({storage: storage}).array("many-files", 17);
 const handleError = (err, res) => {
     res
         .status(500)
@@ -61,7 +62,13 @@ router.get('/advanced_search', function(req, res) {
 });
 
 /* Post recipe */
-router.get('/post_recipe', dishController.postDish);
+router.get('/post_recipe', requireLogin, dishController.postRecipePage);
+router.post('/postRecipe', requireLogin, upload.fields([
+    { name: 'image', maxCount: 1 },
+    { name: 'newIngreImages' },
+    { name: 'newExtIngreImages' },
+    { name: 'stepImages' }
+]), dishController.postRecipe);
 
 /* Profile */
 router.get("/profile", requireLogin, async(req, res) => {

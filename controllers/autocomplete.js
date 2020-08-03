@@ -8,7 +8,8 @@ const autocompleteNutritions = async (req, res) => {
     const nutritions = await Nutrition.getNutritions({
         name: { $regex: nameReg, $options: 'i' }
     }, {
-        sort: {name: 1}
+        sort: {name: 1},
+        perPage: constant.autoCompleteMaxResult
     });
     const select2Format = nutritions.map((item, index) => {
         return {
@@ -27,7 +28,8 @@ const autocompleteIngredients = async (req, res) => {
     const ingredients = await Ingredient.getIngredients({
         name: { $regex: nameReg, $options: 'i' }
     }, {
-        sort: {name: 1}
+        sort: {name: 1},
+        perPage: constant.autoCompleteMaxResult
     });
     const select2Format = ingredients.map((item, index) => {
         return {
