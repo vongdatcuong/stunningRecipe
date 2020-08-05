@@ -33,7 +33,8 @@ const login = async(req, res, next) => {
             if (err) {
                 return next(err);
             }
-            return res.redirect("/");
+            const url = req.query.retUrl || "/";
+            return res.redirect(url);
         });
     })(req, res, next);
 };
