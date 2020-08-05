@@ -26,7 +26,6 @@ const dishDetail = async (req, res) => {
     relatedDishes = constant.splitToChunk(relatedDishes, 2);
     res.render('dish_detail', {
         title: constant.appName,
-        user: req.user,
         dish: dish,
         relatedDishes,
         userType: constant.userType
@@ -37,7 +36,6 @@ const dishes = async (req, res) => {
     //const dish = await Dish.getDishAndUpdateView(req.params.dishID);
     res.render('dishes', {
         title: constant.appName,
-        user: req.user,
         userType: constant.userType
     });
 }
@@ -55,7 +53,6 @@ const postRecipePage = async (req, res) => {
     });
     res.render('post_recipe', {
         title: constant.appName,
-        user: req.user,
         dishTypes: constant.splitToChunk(customDishTypes, 6),
         cuisines: constant.splitToChunk(customCuisines, 6),
         diets: constant.splitToChunk(customDiets, 4),
@@ -257,9 +254,78 @@ const postRecipe = async (req, res) => {
     })
 }
 
+/* Censor recipe */
+const censorRecipePage = async (req, res) => {
+    const censorQuery = {
+        status: constant.dishRecipeStatus.waiting
+    };
+    const censorOption = {
+        perPage: constant.censorDishesPerPage,
+        sort: {createdDate: 1}
+    };
+    const count = await Dish.getCount(censorQuery);
+    const pageCount = Math.ceil(count / censorOption.perPage);
+    const queryPage = parseInt(req.query.page) || 1;
+    censorOption.page = (queryPage <= pageCount)? queryPage : pageCount
+    
+    const dishes = await Dish.getDishesCensor(censorQuery, censorOption)
+    
+    
+    dishes.forEach((dish) => {
+        dish.imageUrl = () => constant.imageStorageLink + constant.dishPath + dish.image;
+        dish.dishTypesStr = dish.dishTypes.map((item, idx) => constant.dishTypes[item.dishTypeID]).join(constant.commaSpace);
+        dish.cuisinesStr = dish.cuisines.map((item, idx) => constant.cuisines[item.cuisineID]).join(constant.commaSpace);
+        dish.dietsStr = dish.diets.map((item, idx) => constant.diets[item.dietID]).join(constant.commaSpace);
+        dish.nutritionsStr = dish.nutritions.map((item, idx) => item.nutrition.name).join(constant.commaSpace);
+
+        // Seperate main and extended ingredients
+        dish.extIngredients = [];
+        dish.ingredients.forEach((ingredient, index) => {
+            // If ingredient is extended
+            //if (ingredient.isExtended){
+            //    dish.extIngredients.push(dish.ingredients.splice(index, 1)[0]);
+            //}
+        })
+
+        dish.steps.forEach((step, idx) => {
+            step.equipment = step.equipment || constant.emptyStr;
+            step.image = (step.image)? constant.imageStorageLink + constant.dishStepPath + step.image.split(constant.imageUrlSeperator)[0] : constant.emptyStr;
+        })
+    });
+    res.render('censor', {
+        title: constant.appName,
+        dishes: dishes,
+        pagination: { page: censorOption.page, pageCount: pageCount},
+    })
+}
+
+/* Censor recipe */
+const censorRecipe = async (req, res) => {
+    res.json({
+        success: true,
+        message: constant.addDishSuccess,
+        //returnUrl: "/profile/" + user.userID
+    })
+    const dishIDs = req.body.dishIDs.map((id, index) => parseInt(id));
+    const status = parseInt(req.body.status);
+    try {
+        const result = await Dish.setDishesStatus(dishIDs, req.user.userID, status);
+        res.json({
+            success: true,
+            message: "asd"
+        });
+    } catch(err) {
+        res.json({
+            success: false,
+            message: (status == constant.dishRecipeStatus.accepted)? constant.acceptDishFail : constant.rejectDishFail
+        });
+    }
+}
 module.exports = {
     dishDetail,
     dishes,
     postRecipePage,
-    postRecipe
+    postRecipe,
+    censorRecipePage,
+    censorRecipe
 };

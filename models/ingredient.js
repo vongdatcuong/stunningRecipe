@@ -7,7 +7,7 @@ const constant = require('../Utils/constant');
 module.exports = {
   getIngredients(query, option){
     option = option || {};
-    query.isActive = query.isActive || true;
+    query.isActive = (query.isActive != undefined && query.isActive != null)? query.isActive : true;
     let findPromise = Ingredient.find(query)
                               .select({});
     if (option.perPage){

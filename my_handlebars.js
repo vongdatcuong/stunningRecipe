@@ -143,8 +143,8 @@ hbs.registerHelper('trimString', function(passedString) {
     }
     return new hbs.SafeString(theString)
 });
-//var paginate = require('handlebars-paginate');
-//hbs.registerHelper('paginate', paginate);
+var paginate = require('handlebars-paginate');
+hbs.registerHelper('paginate', paginate);
 
 //var NumeralHelper = require("//");
 //NumeralHelper.registerHelpers(hbs);

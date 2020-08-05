@@ -11,8 +11,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     src: url('/webfonts/Montserrat-Regular.eot');
     /* IE9 Compat Modes */
     src: url('/webfonts/Montserrat-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('/webfonts/Montserrat-Regular.woff2') format('woff2'), /* Super Modern Browsers */
-    url('/webfonts/Montserrat-Regular.woff') format('woff'), /* Pretty Modern Browsers */
     url('/webfonts/Montserrat-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
     url('/webfonts/Montserrat-Regular.svg#svgFontName') format('svg');
     /* Legacy iOS */
@@ -643,7 +641,7 @@ input.checked {
 /*-- middle section --*/
 
 .join-w3l1 {
-    background: url(../images/bg.jpg) no-repeat center fixed;
+    background: url(../images/login_bg.jpg) no-repeat center fixed;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -1483,7 +1481,7 @@ div#testimonials h4.m-title {
     color: #7d00bb;
 }
 
-#dishes-pagination a.page-link-active {
+#dishes-pagination .page-item.active a{
     color: #ffffff;
     background-color: #f45c5d;
 }
@@ -1717,21 +1715,21 @@ a.filter-link:hover {
 
 /* Dish instruction */
 
-#dish-detail-wrapper .dish-instruction .dish-step .dish-step-text .dish-step-number {
+.dish-instruction .dish-step .dish-step-text .dish-step-number {
     font-size: 1.1em;
     font-weight: 600;
 }
 
-#dish-detail-wrapper .dish-instruction .dish-step .dish-step-text .dish-step-number span {
+.dish-instruction .dish-step .dish-step-text .dish-step-number span {
     font-size: 1.3em;
     color: #d43f3a;
 }
 
-#dish-detail-wrapper .dish-instruction .dish-step .dish-step-image {
+.dish-instruction .dish-step .dish-step-image {
     text-align: center;
 }
 
-#dish-detail-wrapper .dish-instruction .dish-step .dish-step-image img {
+.dish-instruction .dish-step .dish-step-image img {
     max-height: 450px;
     border-radius: 3px;
 }
@@ -2043,7 +2041,91 @@ a:focus {
     transition: none;
 }
 
+/* Censor dish */
+.action-toolbar {
+    width: 100%;
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 5px;
+    border-bottom: 1px solid rgba(204,204,204,.8);
+}
 
+.action-toolbar li.action-toolbar-item{
+    fill: #7d00bb;
+    color: #323130;
+    cursor: pointer;
+    height: 36px;
+}
+
+.action-toolbar li.action-toolbar-item:hover {
+    background-color: #d5d7db;
+}
+
+.action-toolbar .action-toolbar-item .action-toolbar-item-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    height: 36px;
+}
+
+.action-toolbar .action-toolbar-item .action-toolbar-item-icon {
+    width: 16px;
+}
+
+.action-toolbar .action-toolbar-item .action-toolbar-item-btn {
+    font-weight: 400;
+    line-height: normal;
+    padding-left: 12px;
+    padding-right: 12px;
+    align-self: center;
+    white-space: nowrap;
+    border-right: 1px solid rgba(204,204,204,.8);
+}
+
+.waiting-recipe {
+    border-bottom: 1px solid rgba(204,204,204,.8);
+}
+.waiting-recipe .waiting-recipe-createdDate {
+    font-size: 0.9em;
+}
+.waiting-recipe .waiting-recipe-info-list {
+    display: flex;
+    width: 100%;
+    list-style-type: none;
+    flex-direction: column;
+}
+
+.waiting-recipe .waiting-recipe-info-list .waiting-recipe-info-item{
+    padding: 5px 5px;
+    width: 100%;
+}
+.waiting-recipe .waiting-recipe-info-list .waiting-recipe-info-item:first-child{
+    padding: 0 5px;
+}
+
+.waiting-recipe .waiting-recipe-info-list .waiting-recipe-info-item .waiting-recipe-info-item-text{
+    font-weight: 600;
+}
+
+.waiting-recipe .waiting-recipe-info-list .waiting-recipe-info-item .waiting-recipe-info-item-value{
+    
+}
+
+.waiting-recipe .waiting-recipe-info-list .waiting-recipe-info-item ul.waiting-recipe-info-item-value{
+    columns: 2;
+}
+
+.waiting-recipe .waiting-recipe-checkbox {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.waiting-recipe .waitingRepGuideCollapse {
+    color: #7d00bb;
+    cursor: pointer;
+}
 /*Loading circle */
 
 .sk-fading-circle {

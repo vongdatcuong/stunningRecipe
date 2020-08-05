@@ -17,6 +17,9 @@
     const recipeInfoErrMsg = "Thông tin món ăn chưa hợp lệ";
     const recipeGuideErrMsg = "Hướng dẫn món ăn chưa hợp lệ";
     const duplicateIngreErrMsg = "Công thức có nguyên liệu bị trùng";
+    const noDishSelectedErrMsg = "Chưa có bài đăng nào được chọn";
+    const wantToAccepRecipeMsg = "Bạn có chắc muốn chấp nhận công thức món ăn này ?";
+    const wantToRejectRecipeMsg = "Bạn có chắc muốn từ chối món ăn này ?";
 
 // Constant variables
 const autocompleteDelay = 500;

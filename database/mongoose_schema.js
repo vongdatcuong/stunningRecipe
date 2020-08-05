@@ -57,7 +57,7 @@ const dishSchema = new mongoose.Schema({
     createdBy: { type: SchemaTypes.Long, min: 0, default: 0 },
     createdDate: Date,
     censoredBy: { type: SchemaTypes.Long, min: 0, default: 0 },
-    censoreDate: Date,
+    censoredDate: Date,
 }, { collection: "Dishes" }, { toJSON: { virtuals: true }, toObject: { virtuals: true } });
 
 dishSchema.virtual("creator", {

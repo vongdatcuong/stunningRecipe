@@ -128,7 +128,7 @@ $( document ).ready(function() {
             // Ingredients images
             recipeIngredientNewImgPonds.forEach((item, index) => {
                 const file = item.getFile();
-                if (file != null){
+                if (file != null && ingredients[index].isNew){
                     props.append("newIngreImages", file.file);
                     ingredients[index].hasNewImage = true;
                 }
@@ -160,7 +160,7 @@ $( document ).ready(function() {
             // Extended ingredients images
             recipeExtIngredientNewImgPonds.forEach((item, index) => {
                 const file = item.getFile();
-                if (file != null){
+                if (file != null && extIngredients[index].isNew){
                     props.append("newExtIngreImages", file.file);
                     extIngredients[index].hasNewImage = true;
                 }
@@ -252,8 +252,10 @@ $( document ).ready(function() {
                 processData: false,
                 success: function(dataJson){
                     if (dataJson.success){
-                        swal.success(dataJson.message);
-                        window.location.href = dataJson.returnUrl;
+                        (async function(){
+                            await swal.success(dataJson.message);
+                            window.location.href = dataJson.returnUrl;
+                        })();
                     } else {
                         swal.error(dataJson.message);
                     }
@@ -265,5 +267,104 @@ $( document ).ready(function() {
                 }
             });
         });
+    }
+
+    // Censor recipes
+    const $waitingRecipes = $('#waitingRecipes');
+    const $censorButtonsBar = $('#censorButtonsBar');
+    if ($waitingRecipes.length > 0 && $censorButtonsBar.length > 0){
+        const $waitingRecipeList = $waitingRecipes.find('.waiting-recipe');
+        const $waitingRecipeCbs = $waitingRecipes.find('.waiting-recipe .waiting-recipe-checkbox input[type=checkbox]');
+        $('#selectAll').on('click', (e) => {
+            $waitingRecipeCbs.each((key, cb) => {
+                cb.checked = true;
+            })
+        })
+        $('#acceptRecipe').on('click', async (e) => {
+            const data = [];
+            $waitingRecipes.find('.waiting-recipe .waiting-recipe-checkbox input[type=checkbox]:checked').each((key, input) => {
+                data.push(parseInt(input.value));
+            });
+
+            // Check empty censor
+            if (data.length == 0){
+                swal.error(noDishSelectedErrMsg);
+                return;
+            }
+
+            // Confirm choice
+            const confirm = await swal.warning(wantToAccepRecipeMsg);
+            if (!confirm.isConfirmed)
+                return;
+
+            showLoading();
+            $.ajax({
+                url: '/censorRecipe',
+                data: {
+                    dishIDs: data,
+                    status: 1
+                },
+                type: 'POST',
+                dataType: 'json',
+                success:  function(dataJson){
+                    if (dataJson.success){
+                        (async function(){
+                            await swal.success(dataJson.message);
+                            window.location.href = "/censorRecipe"
+                        })();
+                    } else {
+                        swal.error(dataJson.message);
+                    }
+                    hideLoading();
+                },
+                error: function(err){
+                    swal.error(err);
+                    hideLoading();
+                }
+            });
+        });
+
+        $('#rejectRecipe').on('click', async (e) => {
+            // Confirm choice
+            const confirm = await swal.warning(wantToRejectRecipeMsg);
+            if (!confirm.isConfirmed)
+                return;
+            const data = [];
+            $waitingRecipes.find('.waiting-recipe .waiting-recipe-checkbox input[type=checkbox]:checked').each((key, input) => {
+                data.push(parseInt(input.value));
+            });
+
+            // Check empty censor
+            if (data.length == 0){
+                swal.error(noDishSelectedErrMsg);
+                return;
+            }
+
+            showLoading();
+            $.ajax({
+                url: '/censorRecipe',
+                data: {
+                    dishIDs: data,
+                    status: 2
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(dataJson){
+                    if (dataJson.success){
+                        (async function(){
+                            await swal.success(dataJson.message);
+                            window.location.href = window.location.reload(false);
+                        })();
+                    } else {
+                        swal.error(dataJson.message);
+                    }
+                    hideLoading();
+                },
+                error: function(err){
+                    swal.error(err);
+                    hideLoading();
+                }
+            });
+        })
     }
 });

@@ -16,7 +16,7 @@ module.exports = {
   getDishes(query, option){
     option = option || {};
     // Default get accepted dishes
-    query.status = query.status || constant.dishRecipeStatus.accepted;
+    query.status = (query.status != undefined && query.status != null)? query.status : constant.dishRecipeStatus.accepted;
     let findPromise = Dish.find(query)
                           .select({});
     if (option.perPage){
@@ -86,6 +86,41 @@ module.exports = {
       await dish.save();
       resolve(dish);
     })
+  },
+  getDishesCensor(query, option){
+    option = option || {};
+    // Default get accepted dishes
+    query.status = (query.status != undefined && query.status != null)? query.status : constant.dishRecipeStatus.accepted;
+    let findPromise = Dish.find(query)
+                          .select({});
+    if (option.perPage){
+      findPromise = findPromise.limit(option.perPage);
+      if (option.page){
+        findPromise = findPromise.skip(option.perPage * (option.page - 1));
+      }
+    }
+    if (option.sort){
+      findPromise = findPromise.sort(option.sort);
+    }
+    return findPromise
+          .populate('creator')
+          .populate('dishTypes')
+          .populate('cuisines')
+          .populate('diets')
+          .populate('favoriteNumber')
+          .populate({
+              path: "ingredients",
+              populate: "ingredient"
+          })
+          .populate({
+              path: "nutritions",
+              populate: "nutrition"
+          })
+          .populate('steps')
+          .exec();
+  },
+  getCount(query){
+    return Dish.count(query).exec();
   },
   addDish(createdBy, props){
     const dish = new Dish({
@@ -184,6 +219,36 @@ module.exports = {
   },
   setDishStepImage(dishID, number, imageName){
       return DishStep.findOneAndUpdate({dishID: dishID, number: number}, {image: imageName}).exec();
+  },
+  // Censor recipe
+  async setDishesStatus(dishIDs, userID, status, option){
+    option = option || {};
+    await Dish.updateMany({dishID: {$in: dishIDs}}, {
+      status: status,
+      censoredBy: userID,
+      censoredDate: Date.now()
+    });
+    // Accept dish
+    if (status == constant.dishRecipeStatus.rejected){
+      return Promise.resolve();
+    } else if (status == constant.dishRecipeStatus.accepted){
+      const promises = [];
+      dishIDs.forEach((id, index) => {
+        promises.push(new Promise(async (resolve, reject) => {
+          try {
+            let dishIngres = await DishIngredient.find({dishID: id})
+                                              .select({ingredientID: 1}).exec()
+            dishIngres = dishIngres.map((ingre, index2) =>  ingre.ingredientID);
+            await Ingredient.updateMany({ingredientID: {$in: dishIngres}, isActive: false}, {isActive: true});
+            resolve(true);
+          } catch(err){
+            resolve(false);
+          }
+        }));
+      });
+      await Promise.all(promises);
+      return Promise.resolve();
+    }
   },
   async resetDatabase(){
     await Dish.deleteMany({dishID: {$nin: [1, 2]}});

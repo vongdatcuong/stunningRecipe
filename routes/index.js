@@ -70,6 +70,10 @@ router.post('/postRecipe', requireLogin, upload.fields([
     { name: 'stepImages' }
 ]), dishController.postRecipe);
 
+/* Censor recipe */
+router.get('/censorRecipe', requireLogin, dishController.censorRecipePage);
+router.post('/censorRecipe', requireLogin, dishController.censorRecipe);
+
 /* Profile */
 router.get("/profile", requireLogin, async(req, res) => {
     return res.redirect(`/profile/${req.user.userID}`);
