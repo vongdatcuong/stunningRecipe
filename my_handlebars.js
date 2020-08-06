@@ -92,14 +92,14 @@ hbs.registerHelper("check", function(value, options) {
         })
         .join('\n')
 });
-hbs.registerHelper("getDishTypeName", function(idx) {
-    return constant.dishTypes[idx];
+hbs.registerHelper("getDishTypeName", function(dishTypeID) {
+    return constant.dishTypes[dishTypeID - 1];
 });
-hbs.registerHelper("getCuisineName", function(idx) {
-    return constant.cuisines[idx];
+hbs.registerHelper("getCuisineName", function(cuisineID) {
+    return constant.cuisines[cuisineID - 1];
 });
-hbs.registerHelper("getDietName", function(idx) {
-    return constant.diets[idx];
+hbs.registerHelper("getDietName", function(dietID) {
+    return constant.diets[dietID - 1];
 });
 hbs.registerHelper('ifCond', function(v1, operator, v2, options) {
     switch (operator) {

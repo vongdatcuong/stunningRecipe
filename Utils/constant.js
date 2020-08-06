@@ -9,7 +9,7 @@ const acceptDishFail = "Chấp nhận công thức thất bại";
 const rejectDishSuccess = "Từ chối công thức thành công";
 const rejectDishFail = "Từ chối công thức thất bại";
 // Constant variables
-const dishTypes = ["Món chính", "Món phụ", "Tráng miệng", "Món khai vị", "Sald", "Bánh", "Ăn sáng", "Soup", "Thức uống", "Nước sốt", "Snack", "Ăn trưa"];
+const dishTypes = ["Món chính", "Món phụ", "Tráng miệng", "Món khai vị", "Salad", "Bánh", "Ăn sáng", "Soup", "Thức uống", "Nước sốt", "Snack", "Ăn trưa"];
 const cuisines = ["Món Mỹ", "Món Trung", "Món Pháp", "Món Ý", "Món Nhật", "Món Mexico", "Món Thái", "Món Việt", "Món Âu", "Món Tây", "Món Đông"];
 const diets = ["Không Gluent", "Không chứa sữa", "Ketogenic", "Vegetarian", "Lacto Vegetarian", "Ovo Vegetarian", "Vegan", "Pescetarian", "Paleo", "Primal", "Whole30"];
 const ingredientUnits = [
@@ -49,6 +49,7 @@ const millisecondOfWeek = millisecondOfDay * 7;
 const emptyStr = "";
 const commaSpace = ", ";
 const imageUrlSeperator = ", ";
+const filterValSeperator = ", ";
 
 function getUserType(typeStr) {
     return Object.keys(type).find(key => type[key] === typeStr);
@@ -116,6 +117,7 @@ module.exports = {
     emptyStr,
     commaSpace,
     imageUrlSeperator,
+    filterValSeperator,
     getUserType,
     splitToChunk,
     createDishImageName,

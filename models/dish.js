@@ -30,10 +30,10 @@ module.exports = {
     }
     return findPromise
           .populate('creator')
+          .populate('favoriteNumber')
           .populate('dishTypes')
           .populate('cuisines')
           .populate('diets')
-          .populate('favoriteNumber')
           .exec();
   },
   getDish(dishID) {
@@ -107,7 +107,6 @@ module.exports = {
           .populate('dishTypes')
           .populate('cuisines')
           .populate('diets')
-          .populate('favoriteNumber')
           .populate({
               path: "ingredients",
               populate: "ingredient"
@@ -121,6 +120,116 @@ module.exports = {
   },
   getCount(query){
     return Dish.count(query).exec();
+  },
+  getFilterDishes(query, option, populateOption){
+    option = option || {};
+    // Default get accepted dishes
+    query.status = (query.status != undefined && query.status != null)? query.status : constant.dishRecipeStatus.accepted;
+
+    const pipeLine = [
+      { 
+        $match: query
+      },
+      { 
+        $lookup: {
+          from: "DishTypeDetails",
+          localField: "dishID",
+          foreignField: "dishID",
+          as: "dishTypes"
+        }
+      },
+      
+    ];
+    // Filter dish types
+    if (populateOption.dishTypes){
+      pipeLine.push({
+        $match: { "dishTypes.dishTypeID": { $in: populateOption.dishTypes} } ,
+      });
+    }
+
+    pipeLine.push(...[
+      { 
+        $lookup: {
+          from: "CuisineDetails",
+          localField: "dishID",
+          foreignField: "dishID",
+          as: "cuisines"
+        }
+      },
+    ]);
+    // Filter cuisines
+    if (populateOption.cuisines){
+      pipeLine.push({
+        $match: { "cuisines.cuisineID": { $in: populateOption.cuisines} } ,
+      });
+    }
+
+    pipeLine.push(...[
+      { 
+        $lookup: {
+          from: "DietDetails",
+          localField: "dishID",
+          foreignField: "dishID",
+          as: "diets"
+        }
+      },
+    ]);
+    // Filter cuisines
+    if (populateOption.diets){
+      pipeLine.push({
+        $match: { "diets.dietID": { $in: populateOption.diets} } ,
+      });
+    }
+
+    pipeLine.push(...[
+      { 
+        $lookup: {
+          from: "Users",
+          localField: "createdBy",
+          foreignField: "userID",
+          as: "creator"
+        }
+      },
+      { 
+        $lookup: {
+          from: "UserFavoriteDishes",
+          localField: "dishID",
+          foreignField: "dishID",
+          as: "favorites"
+        }
+      }
+    ]);
+
+    
+    if (option.page && option.perPage){
+      pipeLine.push(...[
+        
+      ]);
+    }
+
+    pipeLine.push(...[
+      // Count 
+      { 
+        $facet: {
+          count:  [{ $count: "count" }],
+          dishes: [
+            // Sort
+            { 
+              $sort: (option.sort)? option.sort : {createdDate: -1}
+            } ,
+            //Skip
+            {
+              $skip: (option.page && option.perPage)? (option.perPage * (option.page - 1)) : 1 
+            },
+            // Limit  
+            {
+              $limit: option.perPage
+            }]
+        }
+      }
+    ])
+
+    return Dish.aggregate(pipeLine).exec()
   },
   addDish(createdBy, props){
     const dish = new Dish({

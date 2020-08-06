@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const UserFavoriteDish = mongoose.model('UserFavoriteDish');
 const bcrypt = require('bcryptjs');
 const constant = require('../Utils/constant');
 const azureBlob = require('./azure_blob');
@@ -70,4 +71,12 @@ module.exports = {
     setUserUrlImage(userID, urlImage) {
         User.findOneAndUpdate({ userID: userID }, { avatar: urlImage }).exec();
     },
+    getUserFavoriteDishes(userID, dishIDs) {
+        return UserFavoriteDish.find({
+            userID: userID, 
+            dishID: {$in: dishIDs}
+        })
+            .select({dishID: 1})
+            .exec();
+    }
 };

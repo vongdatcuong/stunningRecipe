@@ -796,6 +796,21 @@
       <script type="text/javascript" src="/javascripts/service/loading.js"></script>
       <!-- //Service js -->
 
+      <!-- Pagination query-->
+      <script type="text/javascript">
+          $('#dishes-pagination li a').each(function (key, value) {
+              const href = $(this).attr("href");
+              const queryUrl = '{{{queryUrl}}}'
+              if (queryUrl.includes("?")){
+                  $(this).attr("href", queryUrl + href);
+              } else {
+                  $(this).attr("href", queryUrl + "?" + href);
+              }
+
+          })
+      </script>
+       <!-- Pagination query-->
+
       <!-- SharedScripts js-->
       <script type="text/javascript" src="/javascripts/sharedScripts.js"></script>
       <!-- //SharedScripts js -->

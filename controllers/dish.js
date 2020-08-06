@@ -1,12 +1,15 @@
 const Dish = require("../models/dish");
+const User = require("../models/user");
 const Ingredient = require("../models/ingredient");
 const AzureBlob = require("../models/azure_blob");
 const constant = require("../Utils/constant");
+const { dishTypes } = require("../Utils/constant");
 
 /* Dish Detail */
 const dishDetail = async (req, res) => {
     const dish = await Dish.getDishAndUpdateView(req.params.dishID);
     dish.imageUrl = constant.imageStorageLink + constant.dishPath + dish.image;
+    // User favorite
     if (req.user){
         dish.isUserFavorite = await Dish.isDishUserFavorite(req.params.dishID, req.user.userID);
     } else {
@@ -18,9 +21,9 @@ const dishDetail = async (req, res) => {
         step.equipment = step.equipment || constant.emptyStr;
         step.image = (step.image)? constant.imageStorageLink + constant.dishStepPath + step.image.split(constant.imageUrlSeperator)[0] : constant.emptyStr;
     })
-    dish.dishTypesStr = dish.dishTypes.map((item, idx) => constant.dishTypes[item.dishTypeID]).join(constant.commaSpace);
-    dish.cuisinesStr = dish.cuisines.map((item, idx) => constant.cuisines[item.cuisineID]).join(constant.commaSpace);
-    dish.dietsStr = dish.diets.map((item, idx) => constant.diets[item.dietID]).join(constant.commaSpace);
+    dish.dishTypesStr = dish.dishTypes.map((item, idx) => constant.dishTypes[item.dishTypeID - 1]).join(constant.commaSpace);
+    dish.cuisinesStr = dish.cuisines.map((item, idx) => constant.cuisines[item.cuisineID - 1]).join(constant.commaSpace);
+    dish.dietsStr = dish.diets.map((item, idx) => constant.diets[item.dietID - 1]).join(constant.commaSpace);
     // Related dishes
     let relatedDishes = [dish, dish, dish, dish];
     relatedDishes = constant.splitToChunk(relatedDishes, 2);
@@ -33,15 +36,6 @@ const dishDetail = async (req, res) => {
 }
 /* Dishes */
 const dishes = async (req, res) => {
-    //const dish = await Dish.getDishAndUpdateView(req.params.dishID);
-    res.render('dishes', {
-        title: constant.appName,
-        userType: constant.userType
-    });
-}
-
-/* Post Recipe */
-const postRecipePage = async (req, res) => {
     const customDishTypes = constant.dishTypes.map((item, idx) =>  {
         return {name: item, index: (idx)};
     });
@@ -50,6 +44,133 @@ const postRecipePage = async (req, res) => {
     });
     const customDiets = constant.diets.map((item, idx) =>  {
         return {name: item, index: idx};
+    });
+
+    const getOption = {
+        sort: {createdDate: -1},
+        perPage: constant.dishesPerPage,
+        page: parseInt(req.query.page) || 1
+    }
+    const originalUrl = req.originalUrl;
+    req.session.originalUrl = originalUrl;
+    localStorage.setItem('myFirstKey', 'myFirstValue');
+
+    // Filter Dish Types
+    if(req.query.dishTypes){
+        localStorage.setItem('dishTypes', req.query.dishTypes || req.params.dishTypes);
+    } else if (req.params.dishTypes) {
+        localStorage.setItem('dishTypes', req.params.dishTypes);
+    } else {
+        localStorage.setItem('dishTypes', constant.emptyStr);
+    }
+
+    // Filter Cuisines
+    if(req.query.cuisines){
+        localStorage.setItem('cuisines', req.query.cuisines || req.params.cuisines);
+    } else if (req.params.cuisines) {
+        localStorage.setItem('cuisines', req.params.cuisines);
+    } else {
+        localStorage.setItem('cuisines', constant.emptyStr);
+    }
+
+    // Filter Cuisines
+    if(req.query.diets){
+        localStorage.setItem('diets', req.query.diets || req.params.diets);
+    } else if (req.params.diets) {
+        localStorage.setItem('diets', req.params.diets);
+    } else {
+        localStorage.setItem('diets', constant.emptyStr);
+    }
+
+    const localDishTypes = localStorage.getItem('dishTypes');
+    const localCuisines = localStorage.getItem('cuisines');
+    const localDiets = localStorage.getItem('diets');
+
+    const populateOption = {};
+
+    let queryUrl = constant.emptyStr;
+    // Dish Types
+    if(localDishTypes && localDishTypes !== constant.emptyStr){
+        populateOption.dishTypes = JSON.parse(localDishTypes);
+        // Active filter
+        populateOption.dishTypes.forEach((dishType) => {
+            customDishTypes[dishType - 1].isActive = true;
+        })
+        // Add to query url
+        queryUrl+= `dishTypes=${localDishTypes}&`;
+    } 
+    // Cuisines
+    if(localCuisines && localCuisines !== constant.emptyStr){
+        populateOption.cuisines = JSON.parse(localCuisines);
+        // Active filter
+        populateOption.cuisines.forEach((cuisine) => {
+            customCuisines[cuisine - 1].isActive = true;
+        })
+        // Add to query url
+        queryUrl+= `cuisines=${localCuisines}&`;
+    } 
+    // Diets
+    if(localDiets && localDiets !== constant.emptyStr){
+        populateOption.diets = JSON.parse(localDiets);
+        // Active filter
+        populateOption.diets.forEach((diet) => {
+            customDiets[diet - 1].isActive = true;
+        })
+        // Add to query url
+        queryUrl+= `diets=${localDiets}&`;
+    } 
+
+    const result = await Dish.getFilterDishes({}, getOption, populateOption);
+    const dishes = result[0].dishes;
+    const count = (result[0].count.length > 0)? result[0].count[0].count : 0;
+
+    // User favorite Dishes
+    const favoriteHashMap = {};
+    if (req.user){
+        const userFavoriteDishes = await User.getUserFavoriteDishes(req.user.userID, dishes.map((dish, index) => dish.dishID));
+        userFavoriteDishes.forEach((favDish, index) => {
+            favoriteHashMap[favDish.dishID] = 1
+        });
+    }
+
+    dishes.forEach((dish) => {
+        dish.imageUrl = () => constant.imageStorageLink + constant.dishPath + dish.image;
+        // Is User favorite dishe
+        if (req.user){
+            dish.isUserFavorite = favoriteHashMap[dish.dishID] != undefined;
+        }
+        
+        dish.dishTypesStr = dish.dishTypes.map((item, idx) => constant.dishTypes[item.dishTypeID - 1]).join(constant.commaSpace);
+        dish.cuisinesStr = dish.cuisines.map((item, idx) => constant.cuisines[item.cuisineID - 1]).join(constant.commaSpace);
+        dish.dietsStr = dish.diets.map((item, idx) => constant.diets[item.dietID - 1]).join(constant.commaSpace);
+
+        dish.creator = dish.creator[0];
+        dish.favoriteNumber = dish.favorites.length;
+    });
+    console.log(req.originalUrl);
+    res.render('dishes', {
+        title: constant.appName,
+        dishes: constant.splitToChunk(dishes, 4),
+        userType: constant.userType,
+        dishTypes: constant.splitToChunk(customDishTypes, 6),
+        cuisines: customCuisines,
+        diets: customDiets,
+        pagination: { page: getOption.page, pageCount: Math.ceil(count / getOption.perPage)},
+        count: count,
+        queryUrl: "/dishes?" + queryUrl
+    });
+}
+
+/* Post Recipe */
+const postRecipePage = async (req, res) => {
+    const customDishTypes = constant.dishTypes.map((item, idx) =>  {
+        return {name: item, index: (idx + 1)};
+    });
+    const customCuisines = constant.cuisines.map((item, idx) =>  {
+        return {name: item, index: (idx + 1)};
+    });
+    const customDiets = constant.diets.map((item, idx) =>  {
+        return {name: item, index: (idx + 1)};
     });
     res.render('post_recipe', {
         title: constant.appName,
@@ -273,19 +394,19 @@ const censorRecipePage = async (req, res) => {
     
     dishes.forEach((dish) => {
         dish.imageUrl = () => constant.imageStorageLink + constant.dishPath + dish.image;
-        dish.dishTypesStr = dish.dishTypes.map((item, idx) => constant.dishTypes[item.dishTypeID]).join(constant.commaSpace);
-        dish.cuisinesStr = dish.cuisines.map((item, idx) => constant.cuisines[item.cuisineID]).join(constant.commaSpace);
-        dish.dietsStr = dish.diets.map((item, idx) => constant.diets[item.dietID]).join(constant.commaSpace);
+        dish.dishTypesStr = dish.dishTypes.map((item, idx) => constant.dishTypes[item.dishTypeID - 1]).join(constant.commaSpace);
+        dish.cuisinesStr = dish.cuisines.map((item, idx) => constant.cuisines[item.cuisineID - 1]).join(constant.commaSpace);
+        dish.dietsStr = dish.diets.map((item, idx) => constant.diets[item.dietID - 1]).join(constant.commaSpace);
         dish.nutritionsStr = dish.nutritions.map((item, idx) => item.nutrition.name).join(constant.commaSpace);
 
         // Seperate main and extended ingredients
-        dish.extIngredients = [];
+        /*dish.extIngredients = [];
         dish.ingredients.forEach((ingredient, index) => {
             // If ingredient is extended
-            //if (ingredient.isExtended){
-            //    dish.extIngredients.push(dish.ingredients.splice(index, 1)[0]);
-            //}
-        })
+            if (ingredient.isExtended){
+                dish.extIngredients.push(dish.ingredients.splice(index, 1)[0]);
+            }
+        })*/
 
         dish.steps.forEach((step, idx) => {
             step.equipment = step.equipment || constant.emptyStr;
@@ -296,6 +417,7 @@ const censorRecipePage = async (req, res) => {
         title: constant.appName,
         dishes: dishes,
         pagination: { page: censorOption.page, pageCount: pageCount},
+        count: count
     })
 }
 
@@ -312,7 +434,7 @@ const censorRecipe = async (req, res) => {
         const result = await Dish.setDishesStatus(dishIDs, req.user.userID, status);
         res.json({
             success: true,
-            message: "asd"
+            message: (status == constant.dishRecipeStatus.accepted)? constant.acceptDishSuccess : constant.rejectDishSuccess
         });
     } catch(err) {
         res.json({

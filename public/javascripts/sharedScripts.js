@@ -367,4 +367,134 @@ $( document ).ready(function() {
             });
         })
     }
+
+    // Filter
+    const $dishesFilter = $('#dishesFilter');
+    if ($dishesFilter.length > 0){
+        // Dish Types
+        $('.dishTypeSelect .dish-type-item').on('click', (e) => {
+            let queryUrl = (location.pathname == "/dishes" || location.pathname == "/search")? location.pathname : "/dishes";
+            queryUrl+= "?";
+            const urlParams = new URLSearchParams(window.location.search);
+            const dishTypes = urlParams.get("dishTypes");
+            const cuisines = urlParams.get("cuisines");
+            const diets = urlParams.get("diets");
+
+            const $this = $(e.currentTarget);
+            const newDishTypeID = parseInt($this.attr("data-dish-type"));
+            if (dishTypes != null){
+                const arr = JSON.parse(dishTypes);
+                const checkIdx = arr.indexOf(newDishTypeID);
+                // Remove dishTypeID
+                if (checkIdx != -1){
+                    arr.splice(checkIdx, 1);
+                    if (arr.length > 0)
+                        queryUrl+= "dishTypes=" + JSON.stringify(arr) + "&";
+                }
+                // Push dishTypeID
+                else {
+                    arr.push(newDishTypeID);
+                    queryUrl+= "dishTypes=" + JSON.stringify(arr) + "&";
+                }
+            } else {
+                queryUrl+= `dishTypes=[${newDishTypeID}]&`;
+            }
+
+            if (cuisines != null){
+                queryUrl+= `cuisines=${cuisines}&`;
+            }
+
+            if (diets != null){
+                queryUrl+= `diets=${diets}&`;
+            }
+            window.location.href = queryUrl;
+        })
+
+        // Cuisines
+        $('.cuisineSelect .cuisine-item').on('click', (e) => {
+            let queryUrl = (location.pathname == "/dishes" || location.pathname == "/search")? location.pathname : "/dishes";
+            queryUrl+= "?";
+            const urlParams = new URLSearchParams(window.location.search);
+            const dishTypes = urlParams.get("dishTypes");
+            const cuisines = urlParams.get("cuisines");
+            const diets = urlParams.get("diets");
+
+            const $this = $(e.currentTarget);
+            if (dishTypes != null){
+                queryUrl+= `dishTypes=${dishTypes}&`;
+            } 
+
+            const newCuisineID = parseInt($this.attr("data-cuisine"));
+            if (cuisines != null){
+                const arr = JSON.parse(cuisines);
+                const checkIdx = arr.indexOf(newCuisineID);
+                // Remove cuisineID
+                if (checkIdx != -1){
+                    arr.splice(checkIdx, 1);
+                    if (arr.length > 0)
+                        queryUrl+= "cuisines=" + JSON.stringify(arr) + "&";
+                }
+                // Push cuisineID
+                else {
+                    arr.push(newCuisineID);
+                    queryUrl+= "cuisines=" + JSON.stringify(arr) + "&";
+                }
+            } else {
+                queryUrl+= `cuisines=[${newCuisineID}]&`;
+            }
+
+            if (diets != null){
+                queryUrl+= `diets=${diets}&`;
+            }
+            window.location.href = queryUrl;
+        })
+
+        // Diets
+        $('.dietSelect .diet-item').on('click', (e) => {
+            let queryUrl = (location.pathname == "/dishes" || location.pathname == "/search")? location.pathname : "/dishes";
+            queryUrl+= "?";
+            const urlParams = new URLSearchParams(window.location.search);
+            const dishTypes = urlParams.get("dishTypes");
+            const cuisines = urlParams.get("cuisines");
+            const diets = urlParams.get("diets");
+
+            const $this = $(e.currentTarget);
+            if (dishTypes != null){
+                queryUrl+= `dishTypes=${dishTypes}&`;
+            } 
+
+            if (cuisines != null){
+                queryUrl+= `cuisines=${cuisines}&`;
+            }
+
+            const newDietID = parseInt($this.attr("data-diet"));
+            if (diets != null){
+                const arr = JSON.parse(diets);
+                const checkIdx = arr.indexOf(newDietID);
+                // Remove newDietID
+                if (checkIdx != -1){
+                    arr.splice(checkIdx, 1);
+                    if (arr.length > 0)
+                        queryUrl+= "diets=" + JSON.stringify(arr) + "&";
+                }
+                // Push newDietID
+                else {
+                    arr.push(newDietID);
+                    queryUrl+= "diets=" + JSON.stringify(arr) + "&";
+                }
+            } else {
+                queryUrl+= `diets=[${newDietID}]&`;
+            }
+
+            window.location.href = queryUrl;
+        })
+    }
+
+    // Scroll Target
+    const $scrollTarget = $('#scrollTarget');
+    if ($scrollTarget.length > 0){
+        setTimeout(()=> {
+            scrollTo(0, $scrollTarget.offset().top);
+        }, 500)
+    }
 });

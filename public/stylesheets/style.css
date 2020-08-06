@@ -161,7 +161,11 @@ span.red-asterisk {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
+ 
+.nothing-found-wrapper h2 {
+    color: #7d00bb;
+    text-align: center;
+}
 /*-- top-header --*/
 
 .main-top-w3l {
@@ -1270,7 +1274,7 @@ div#testimonials h4.m-title {
 
 /* Filter dishes */
 
-.dish-type {
+.dish-type-item {
     width: 100%;
     height: 130px;
     display: block;
@@ -1278,8 +1282,9 @@ div#testimonials h4.m-title {
     position: relative;
 }
 
-.dish-type:hover {
+.dish-type-item:hover {
     text-decoration: none;
+    cursor: pointer;
 }
 
 .dish-type-label {
@@ -1293,11 +1298,11 @@ div#testimonials h4.m-title {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-.dish-type.active {
+.dish-type-item.filter-active {
     border: 5px solid #7d00bb;
 }
-.dish-type.active .dish-type-label {
-    color: #7d00bb;
+.dish-type-item.filter-active .dish-type-label {
+    /*color: #7d00bb;*/
 }
 
 /* Light slider*/
@@ -1313,6 +1318,9 @@ div#testimonials h4.m-title {
 .cuisineSelect li {
     text-align: center;
 }
+.cuisineSelect li:hover {
+    cursor: pointer;
+}
 
 .cuisineSelect li a img {
     border-radius: 50%;
@@ -1323,7 +1331,7 @@ div#testimonials h4.m-title {
     color: #7d00bb;
 }
 
-.cuisineSelect li.active {
+.cuisineSelect li.filter-active {
     border-top: 3px solid #7d00bb;
 }
 
@@ -1333,26 +1341,29 @@ div#testimonials h4.m-title {
     border: 1px solid #117c13;
     text-align: center;
 }
+.dietSelect li:hover {
+    cursor: pointer;
+}
 
 .dietSelect a {
     display: block;
-    color: #117c13;
+    color: #117c13 !important;
     width: 100%;
     height: 100%;
     padding: 7px 0;
 }
 
 .dietSelect a:hover {
-    color: #ffffff;
-    background-color: #117c13;
+    color: #ffffff !important;
+    background-color: #117c13 !important;
     text-decoration: none;
 }
 
-.dietSelect li.active {
+.dietSelect li.filter-active {
     background-color: #117c13;
 }
-.dietSelect li.active a {
-    color: #ffffff;
+.dietSelect li.filter-active a {
+    color: #ffffff !important;
 }
 
 
