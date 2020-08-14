@@ -41,6 +41,7 @@ const searchTypeOptionTitle = {
     ingredientName: "Nguyên liệu",
     nutritionName: "Dinh dưỡng"
 }
+const notBelongAny = -1;
 const homePerPage = 4;
 const dishesPerPage = 8;
 const censorDishesPerPage = 5;
@@ -111,6 +112,7 @@ module.exports = {
     userType,
     dishRecipeStatus,
     searchTypeOptionTitle,
+    notBelongAny,
     homePerPage,
     dishesPerPage,
     censorDishesPerPage,

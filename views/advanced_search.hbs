@@ -8,7 +8,7 @@
         <!-- //tittle heading -->
         <div class="advanced_search_content mt-3">
             <div class="address_form_agile">
-                <form action="/advancedSearchResult" method="get" class="creditly-card-form agileinfo_form">
+                <div id="advancedSearchForm" class="creditly-card-form agileinfo_form">
                     <div class="creditly-wrapper wthree, w3_agileits_wrapper">
                         <div class="information-wrapper">
                             <div class="first-row">
@@ -16,14 +16,14 @@
                                     <label for="search_keyword" class="">Từ khóa <span style="color: red">*</span></label>
                                     <div class="form-inline input-group mb-2">
                                         <div class="input-group-prepend">
-                                            <button id="advanced-search-type-btn" class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Món ăn </button>
+                                            <button id="advanced-search-type-btn" class="btn search-type-display btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Món ăn </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">Món ăn</a>
-                                                <a class="dropdown-item" href="#">Nguyên liệu</a>
-                                                <a class="dropdown-item" href="#">Thành phần dinh dưỡng</a>
+                                                <a class="dropdown-item search-type-option" data-search-type-title="Món ăn" data-search-type="dishName">Món ăn</a>
+                                                <a class="dropdown-item search-type-option" data-search-type-title="Nguyên liệu" data-search-type="ingredientName">Nguyên liệu</a>
+                                                <a class="dropdown-item search-type-option" data-search-type-title="Dinh dưỡng" data-search-type="nutritionName">Dinh dưỡng</a>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Tìm kiếm món ăn" aria-label="search" aria-describedby="search dishes">
+                                        <input type="text" class="form-control search-keyword" name="dishName" placeholder="Tìm kiếm món ăn" aria-label="search" aria-describedby="search dishes">
                                     </div>
                                 </div>
                             </div>
@@ -32,66 +32,38 @@
                                     <label for="dishType">
                                         Loại món ăn <span style="color: red">*</span>
                                     </label>
-                                    <select class="form-control" id="dishType" name="dishType" style="padding: 0 5px;">
-                                        <option value="">Tất cả</option>
-                                        <option value="">Món chính</option>
-                                        <option value="">Món phụ</option>
-                                        <option value="">Tráng miệng</option>
-                                        <option value="">Món khai vị</option>
-                                        <option value="">Salad</option>
-                                        <option value="">Bánh</option>
-                                        <option value="">Ăn sáng</option>
-                                        <option value="">Soup</option>
-                                        <option value="">Thức uống</option>
-                                        <option value="">Nước sốt</option>
-                                        <option value="">Snack</option>
-                                        <option value="">Ăn trưa</option>
+                                    <select class="form-control" id="dishType" name="dishTypes" multiple style="padding: 0 5px;">
+                                        {{# each dishTypes}}
+                                            <option value="{{inc index}}">{{name}}</option>
+                                        {{/each}}
                                     </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="cuisineType">
                                         Ẩm thực <span style="color: red">*</span>
                                     </label>
-                                    <select class="form-control" id="cuisineType" name="cuisineType" style="padding: 0 5px;">
-                                        <option value="">Tất cả</option>
-                                        <option value="">Món Mỹ</option>
-                                        <option value="">Món Trung</option>
-                                        <option value="">Món Pháp</option>
-                                        <option value="">Món Ý</option>
-                                        <option value="">Món Nhật</option>
-                                        <option value="">Món Mexico</option>
-                                        <option value="">Món Thái</option>
-                                        <option value="">Món Việt</option>
-                                        <option value="">Món Âu</option>
-                                        <option value="">Món Tây</option>
-                                        <option value="">Món Đông</option>
+                                    <select class="form-control" id="cuisineType" name="cuisines" multiple style="padding: 0 5px;">
+                                        {{# each cuisines}}
+                                            <option value="{{inc index}}">{{name}}</option>
+                                        {{/each}}
                                     </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="dietType">
                                         Chế độ ăn <span style="color: red">*</span>
                                     </label>
-                                    <select class="form-control" id="dietType" name="dietType" style="padding: 0 5px;">
-                                        <option value="">Không thuộc chế độ nào</option>
-                                        <option value="">Tất cả</option>
-                                        <option value="">Không Gluten</option>
-                                        <option value="">Không chứa sữa</option>
-                                        <option value="">Ketogenic</option>
-                                        <option value="">Vegetarian</option>
-                                        <option value="">Lacto Vegetarian</option>
-                                        <option value="">Ovo Vegetarian</option>
-                                        <option value="">Vegan</option>
-                                        <option value="">Pescetarian</option>
-                                        <option value="">Paleo</option>
-                                        <option value="">Primal</option>
-                                        <option value="">Whole30</option>
+                                    <select class="form-control" id="dietType" name="diets" multiple style="padding: 0 5px;">
+                                        <option value="-1">Không thuộc chế độ nào</option>
+                                        {{# each diets}}
+                                            <option value="{{inc index}}">{{name}}</option>
+                                        {{/each}}
                                     </select>
                                 </div>
                             </div>
-                            <button id="advanced-search-btn" class="submit check_out btn">Tìm kiếm</button>
+                            <button type="submit" id="advanced-search-btn" class="submit check_out btn">Tìm kiếm</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

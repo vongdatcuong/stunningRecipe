@@ -237,9 +237,16 @@ module.exports = {
     ]);
     // Filter cuisines
     if (populateOption.diets){
-      pipeLine.push({
-        $match: { "diets.dietID": { $in: populateOption.diets} } ,
-      });
+      if (populateOption.diets.length > 0 && populateOption.diets[0] == constant.notBelongAny){
+        pipeLine.push({
+          $match: { $or: [ { "diets": { $size: 0}}, { "diets.dietID": { $in: populateOption.diets} } ]} ,
+        });
+      } else {
+        pipeLine.push({
+          $match: { "diets.dietID": { $in: populateOption.diets} } ,
+        });
+      }
+      
     }
 
     pipeLine.push(...[

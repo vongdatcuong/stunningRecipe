@@ -49,12 +49,7 @@ router.get('/dish/:dishID', dishController.dishDetail);
 router.get('/search', dishController.search);
 
 /* Advanced search */
-router.get('/advanced_search', function(req, res) {
-    res.render('advanced_search', {
-        title: 'Stunning Recipe',
-        user: req.user
-    });
-});
+router.get('/advanced_search', dishController.advancedSearch);
 
 /* Post recipe */
 router.get('/post_recipe', requireLogin, dishController.postRecipePage);

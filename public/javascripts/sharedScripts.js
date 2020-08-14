@@ -1,5 +1,6 @@
 $( document ).ready(function() {
     
+    // Search
     const $searchDishesForm = $(document.searchDishesForm);
     if ($searchDishesForm.length > 0){
         const $submitBtn = $searchDishesForm.find('button[type=submit]');
@@ -9,6 +10,46 @@ $( document ).ready(function() {
             const $this = $(e.target);
             $searchTypeDisplay.text($this.attr("data-search-type-title"));
             $searchKeyword.attr("name", $this.attr("data-search-type"));
+        })
+    }
+
+    // AdvancedSearch
+    const $advancedSearchDishesForm = $("#advancedSearchForm");
+    if ($advancedSearchDishesForm.length > 0){
+        const $submitBtn = $advancedSearchDishesForm.find('button[type=submit]');
+        const $searchTypeDisplay = $advancedSearchDishesForm.find('.search-type-display');
+        const $searchKeyword = $advancedSearchDishesForm.find('.search-keyword');
+        $advancedSearchDishesForm.find('.search-type-option').on('click', (e) => {
+            const $this = $(e.target);
+            $searchTypeDisplay.text($this.attr("data-search-type-title"));
+            $searchKeyword.attr("name", $this.attr("data-search-type"));
+        });
+
+        $submitBtn.on('click', (e) => {
+            let queryUrl = `/search?${$searchKeyword.attr("name")}=${$searchKeyword.val()}&`;
+            let selectedDishTypes = $advancedSearchDishesForm.find('[name=dishTypes]').val();
+            let selectedCuisines = $advancedSearchDishesForm.find('[name=cuisines]').val();
+            let selectedDiets = $advancedSearchDishesForm.find('[name=diets]').val();
+
+            // Dish Types
+            if (selectedDishTypes){
+                selectedDishTypes = selectedDishTypes.map((dishType, index) => parseInt(dishType))
+                queryUrl+= "dishTypes=" + JSON.stringify(selectedDishTypes) + "&";
+            }
+
+            // Cuisines
+            if (selectedCuisines){
+                selectedCuisines = selectedCuisines.map((cuisine, index) => parseInt(cuisine))
+                queryUrl+= "cuisines=" + JSON.stringify(selectedCuisines) + "&";
+            }
+
+            // Diets
+            if (selectedDiets){
+                selectedDiets = selectedDiets.map((diet, index) => parseInt(diet))
+                queryUrl+= "diets=" + JSON.stringify(selectedDiets) + "&";
+            }
+            
+            window.location.href = queryUrl;
         })
     }
     

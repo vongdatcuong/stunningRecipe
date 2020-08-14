@@ -113,7 +113,9 @@ const dishes = async (req, res) => {
         populateOption.diets = JSON.parse(localDiets);
         // Active filter
         populateOption.diets.forEach((diet) => {
-            customDiets[diet - 1].isActive = true;
+            if (diet > 0){
+                customDiets[diet - 1].isActive = true;
+            }
         })
         // Add to query url
         queryUrl+= `diets=${localDiets}&`;
@@ -311,7 +313,9 @@ const search = async (req, res) => {
         populateOption.diets = JSON.parse(localDiets);
         // Active filter
         populateOption.diets.forEach((diet) => {
-            customDiets[diet - 1].isActive = true;
+            if (diet > 0){
+                customDiets[diet - 1].isActive = true;
+            }
         })
         // Add to query url
         queryUrl+= `diets=${localDiets}&`;
@@ -358,6 +362,26 @@ const search = async (req, res) => {
         searchKeyword: searchKeyword,
         searchType: searchType,
         searchTypeTitle: searchTypeTitle
+    });
+}
+
+/* Advanced Search Dishes */
+const advancedSearch = async (req, res) => {
+    const customDishTypes = constant.dishTypes.map((item, idx) =>  {
+        return {name: item, index: (idx)};
+    });
+    const customCuisines = constant.cuisines.map((item, idx) =>  {
+        return {name: item, index: idx};
+    });
+    const customDiets = constant.diets.map((item, idx) =>  {
+        return {name: item, index: idx};
+    });
+
+    res.render('advanced_search', {
+        title: constant.appName,
+        dishTypes: customDishTypes,
+        cuisines: customCuisines,
+        diets: customDiets,
     });
 }
 
@@ -647,6 +671,7 @@ module.exports = {
     dishDetail,
     dishes,
     search,
+    advancedSearch,
     postRecipePage,
     postRecipe,
     censorRecipePage,
