@@ -318,7 +318,18 @@ input[type="submit"] {
     border-bottom-right-radius: 0;
 }
 
+.search-type-option:hover {
+    cursor: pointer;
+}
 
+#searchDishesForm button[type=submit] {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border-radius: .25rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
 /*-- //search --*/
 
 
@@ -1274,7 +1285,7 @@ div#testimonials h4.m-title {
 
 /* Filter dishes */
 
-.dish-type-item {
+a.dish-type-item {
     width: 100%;
     height: 130px;
     display: block;
@@ -1311,41 +1322,44 @@ div#testimonials h4.m-title {
     color: #7d00bb;
 }
 
-.cuisineSelect {
+.filterCuisine {
     margin: 30px 0 30px 0;
 }
 
-.cuisineSelect li {
+.filterCuisine li {
     text-align: center;
 }
-.cuisineSelect li:hover {
+.filterCuisine li:hover {
     cursor: pointer;
 }
 
-.cuisineSelect li a img {
+.filterCuisine li a img {
     border-radius: 50%;
 }
 
-.cuisineSelect div {
+.filterCuisine div {
     margin-top: 9px;
     color: #7d00bb;
 }
 
-.cuisineSelect li.filter-active {
+.filterCuisine li.filter-active {
     border-top: 3px solid #7d00bb;
 }
 
+.cuisine-item:hover {
+    cursor: pointer;
+}
 /* Diet select*/
 
-.dietSelect li {
+.filterDiet li {
     border: 1px solid #117c13;
     text-align: center;
 }
-.dietSelect li:hover {
+.filterDiet li:hover {
     cursor: pointer;
 }
 
-.dietSelect a {
+.filterDiet a {
     display: block;
     color: #117c13 !important;
     width: 100%;
@@ -1353,19 +1367,22 @@ div#testimonials h4.m-title {
     padding: 7px 0;
 }
 
-.dietSelect a:hover {
+.filterDiet a:hover {
     color: #ffffff !important;
     background-color: #117c13 !important;
     text-decoration: none;
 }
 
-.dietSelect li.filter-active {
+.filterDiet li.filter-active {
     background-color: #117c13;
 }
-.dietSelect li.filter-active a {
+.filterDiet li.filter-active a {
     color: #ffffff !important;
 }
 
+.diet-item:hover {
+    cursor: pointer;
+}
 
 /* Item */
 

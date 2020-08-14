@@ -1,94 +1,26 @@
 <!-- Filter Dishes -->
-<div class="container mt-3 mb-0">
+<div class="container mt-3 mb-0" id="dishesFilter">
     <div class="row">
         <!-- Dish type -->
         <div class="col-md-2">
-            <div class="dropdown" id="dishTypeDropdown">
+            <div class="dropdown filterDishTypeCbs" id="dishTypeDropdown">
                 <a class="btn dropdown-toggle filter-link" type="button" id="dishTypeDropdownBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Loại món ăn
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dishTypeDropdownBtn">
                     <div class="pl-3">
-                        <div class="row mb-2">
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Món chính
-                                </label> 
+                        {{# each dishTypes}}
+                            <div class="row mb-2">
+                                {{# each this}}
+                                    <div class="col-md-4">
+                                        <input id="dishTypeCb{{index}}" class="dish-type-item form-check-input" data-dish-type="{{inc index}}" type="checkbox"  value="{{inc index}}" {{#if isActive}}checked{{/if}}>
+                                        <label class="form-check-label" for="dishTypeCb{{index}}">
+                                            {{name}}
+                                        </label> 
+                                    </div>
+                                {{/each}}
                             </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Món phụ
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Tráng miệng
-                                </label> 
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Món khai vị
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Salad
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Bánh
-                                </label> 
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Ăn sáng
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Soup
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Thức uống
-                                </label> 
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Nước sốt
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Snack
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Ăn trưa
-                                </label> 
-                            </div>
-                        </div>
+                        {{/each}}
                     </div>
                 </ul>
             </div>
@@ -96,86 +28,24 @@
         <!-- //Dish type-->
         <!-- Cuisine -->
         <div class="col-md-2">
-            <div class="dropdown" id="cuisineDropdown">
+            <div class="dropdown filterCuisineCbs" id="cuisineDropdown">
                 <a class="btn dropdown-toggle filter-link" type="button" id="dishTypeDropdownBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Ẩm thực
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dishTypeDropdownBtn">
                     <div class="pl-3">
-                        <div class="row mb-2">
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Món Mỹ
-                                </label> 
+                        {{# each cuisines}}
+                            <div class="row mb-2">
+                                {{# each this}}
+                                    <div class="col-md-4">
+                                        <input id="cuisine{{index}}" class="cuisine-item form-check-input" data-cuisine="{{inc index}}" type="checkbox" value="{{inc index}}" {{#if isActive}}checked{{/if}}>
+                                        <label class="form-check-label" for="cuisine{{index}}">
+                                            {{name}}
+                                        </label> 
+                                    </div>
+                                {{/each}}
                             </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Món Trung
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Món Pháp
-                                </label> 
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Món Ý
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Món Nhật
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Món Mexico
-                                </label> 
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Món Thái
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Món Việt
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Món Âu
-                                </label> 
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Món Tây
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Món Đông
-                                </label> 
-                            </div>
-                        </div>
+                        {{/each}}
                     </div>
                 </ul>
             </div>
@@ -183,92 +53,24 @@
         <!-- //Cuisine -->
         <!-- Diet -->
         <div class="col-md-2">
-            <div class="dropdown" id="dietDropdown">
+            <div class="dropdown filterDietCbs" id="dietDropdown">
                 <a class="btn dropdown-toggle filter-link" type="button" id="dishTypeDropdownBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Chế độ ăn
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dishTypeDropdownBtn">
                     <div class="pl-3">
-                        <div class="row mb-2">
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Không
-                                </label> 
+                        {{# each diets}}
+                            <div class="row mb-2">
+                                {{# each this}}
+                                    <div class="col-md-4">
+                                        <input id="diet{{index}}" class="diet-item form-check-input" data-diet="{{inc index}}" type="checkbox" value="{{inc index}}" {{#if isActive}}checked{{/if}}>
+                                        <label class="form-check-label" for="diet{{index}}">
+                                            {{name}}
+                                        </label> 
+                                    </div>
+                                {{/each}}
                             </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Không Glutent
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Không chứa sữa
-                                </label> 
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Ketogenic
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Vegetarian
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Lacto Vegetarian
-                                </label> 
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Ovo Vegetarian
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Vegan
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Pescetarian
-                                </label> 
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Primal
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Whole30
-                                </label> 
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Paleo
-                                </label> 
-                            </div>
-                        </div>
+                        {{/each}}
                     </div>
                 </ul>
             </div>
@@ -283,7 +85,7 @@
     <div class="container py-xl-2 py-lg-2">
         <!-- tittle heading -->
         <h4 class="tittle-w3l text-left mb-lg-3 mb-sm-4">
-            Tìm thấy <span>69</span> kết quả
+            Tìm thấy <span>{{count}}</span> kết quả
         </h4>
         <!-- //tittle heading -->
         <div class="row">
@@ -291,563 +93,120 @@
                 <div class="wrapper">
                     <!-- template section -->
                     <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="item-inner card shadow">
-                                    <div class="item-image">
-                                        <a href="#">
-                                            <img src="/images/bakery_thumbnail.jpg" class="responsive"/>
-                                        </a>
-                                        <a href="#" class="item-favorite">
-                                            <span>3</span>
-                                            <i class="fa fa-heart"></i>
-                                        </a>
-                                    </div>
-                                    <div class="item-info">
-                                        <div class="item-info-header">
-                                            <div class="item-info-title">
-                                                <a href="#"><h4>Bánh chocolate</h4></a>
-                                            </div>
-                                            <div class="item-info-stats">
-                                                <ul class="item-info-stats-1">
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-clock"></i>
-                                                        <span>
-                                                            <span>7</span>
-                                                            <span>min</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-thumbs-up"></i>
-                                                        <span>
-                                                            <span>69</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                                <ul class="item-info-stats-2">
-                                                    <li class="stats-item stats-item-dish-type">
-                                                        <i class="fa fa-fire"></i>
-                                                        <span>
-                                                            <span>Tr miệng</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-cuisine">
-                                                        <i class="fa fa-tint"></i>
-                                                        <span>
-                                                            <span>Mexico</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-diet">
-                                                        <i class="fa fa-leaf"></i>
-                                                        <span>
-                                                            <span>LactoVeget</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="item-info-footer">
-                                            <div class="item-rating">
-                                                <input type="hidden" class="starRating kv-ltr-theme-fas-star rating-loading" value="3" disabled data-size="xs"/>
-                                            </div>
-                                            <div class="recipe-by mt-3">
-                                                <a href="/profile">
-                                                    <img src="/images/user.jpg"/>
-                                                    St Recipe
+                        {{# each dishes}}
+                            <div class="row">
+                                {{# each this}}
+                                    <div class="col-md-3">
+                                        <div class="item-inner card shadow">
+                                            <div class="item-image">
+                                                <a href="/dish/{{dishID}}">
+                                                    <img src="{{imageUrl}}" class="responsive"/>
+                                                </a>
+                                                <a href="#" class="item-favorite">
+                                                    <span>{{favoriteNumber}}</span>
+                                                    {{#if isUserFavorite}}
+                                                        <i class="fa fa-heart"></i>
+                                                    {{else}}
+                                                        <i class="far fa-heart"></i>
+                                                    {{/if}}
+                                                    
                                                 </a>
                                             </div>
+                                            <div class="item-info">
+                                                <div class="item-info-header">
+                                                    <div class="item-info-title">
+                                                        <a href="/dish/{{dishID}}"><h5 class="truncate2">{{name}}</h5></a>
+                                                    </div>
+                                                    <div class="item-info-stats">
+                                                        <ul class="item-info-stats-1">
+                                                            <li class="stats-item">
+                                                                <i class="fa fa-clock"></i>
+                                                                <span>
+                                                                    <span>{{readyTime}}</span>
+                                                                    <span>min</span>
+                                                                </span>
+                                                            </li>
+                                                            <li class="stats-item">
+                                                                <i class="fa fa-eye"></i>
+                                                                <span>
+                                                                    <span>{{totalView}}</span>
+                                                                </span>
+                                                            </li>
+                                                        </ul>
+                                                        <!-- Dish types -->
+                                                        <ul class="item-info-stats-2">
+                                                            <li class="stats-item stats-item-dish-type">
+                                                                <span class="truncate1" data-toggle="tooltip" title="{{dishTypesStr}}">
+                                                                    <i class="fa fa-fire"></i>
+                                                                    {{# each dishTypes}}
+                                                                        <span><a herf="#">{{getDishTypeName dishTypeID}}</a></span>,&nbsp;
+                                                                    {{/each}}
+                                                                </span>
+                                                            </li>
+                                                            <li class="stats-item stats-item-cuisine">
+                                                                <span class="truncate1" data-toggle="tooltip" title="{{cuisinesStr}}">
+                                                                    <i class="fa fa-tint"></i>
+                                                                    {{# each cuisines}}
+                                                                        <span><a herf="#">{{getCuisineName cuisineID}}</a></span>,&nbsp;
+                                                                    {{/each}}
+                                                                </span>
+                                                            </li>
+                                                            <li class="stats-item stats-item-diet">
+                                                                <span class="truncate1" data-toggle="tooltip" title="{{dietsStr}}">
+                                                                    <i class="fa fa-leaf"></i>
+                                                                    {{# each diets}}
+                                                                        <span><a herf="#">{{getDietName dietID}}</a></span>,&nbsp;
+                                                                    {{/each}}
+                                                                </span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="item-info-footer">
+                                                    <div class="item-rating">
+                                                        <input type="hidden" class="starRating kv-ltr-theme-fas-star rating-loading" value="{{rating}}" disabled data-size="xs"/>
+                                                    </div>
+                                                    <div class="recipe-by mt-3">
+                                                        <a href="/profile/{{creator.userID}}">
+                                                            {{#ifCond creator.userType '==' ../userType.admin}}
+                                                                <img src="/images/StunningRecipe.png"/>
+                                                            {{else}}
+                                                                <img src="/images/user.jpg"/>
+                                                            {{/ifCond}}
+                                                            {{creator.firstName}} {{creator.lastName}}
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                {{/each}}
                             </div>
-                            <div class="col-md-3">
-                                <div class="item-inner card shadow">
-                                    <div class="item-image">
-                                        <a href="#">
-                                            <img src="/images/bakery_thumbnail.jpg" class="responsive"/>
-                                        </a>
-                                        <a href="#" class="item-favorite">
-                                            <span>3</span>
-                                            <i class="fa fa-heart"></i>
-                                        </a>
-                                    </div>
-                                    <div class="item-info">
-                                        <div class="item-info-header">
-                                            <div class="item-info-title">
-                                                <a href="#"><h4>Bánh chocolate</h4></a>
-                                            </div>
-                                            <div class="item-info-stats">
-                                                <ul class="item-info-stats-1">
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-clock"></i>
-                                                        <span>
-                                                            <span>7</span>
-                                                            <span>min</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-thumbs-up"></i>
-                                                        <span>
-                                                            <span>69</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                                <ul class="item-info-stats-2">
-                                                    <li class="stats-item stats-item-dish-type">
-                                                        <i class="fa fa-fire"></i>
-                                                        <span>
-                                                            <span>Tr miệng</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-cuisine">
-                                                        <i class="fa fa-tint"></i>
-                                                        <span>
-                                                            <span>Mexico</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-diet">
-                                                        <i class="fa fa-leaf"></i>
-                                                        <span>
-                                                            <span>LactoVeget</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="item-info-footer">
-                                            <div class="item-rating">
-                                                <input type="hidden" class="starRating kv-ltr-theme-fas-star rating-loading" value="3" disabled data-size="xs"/>
-                                            </div>
-                                            <div class="recipe-by mt-3">
-                                                <a href="#">
-                                                    <img src="/images/user.jpg"/>
-                                                    St Recipe
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        {{else}}
+                            <div class="nothing-found-wrapper text-center">
+                                <h2>Rất tiếc hiện tại không có công thức bạn cần tìm !!!</h2>
+                                <img src="/images/nothing_found.png"/>
                             </div>
-                            <div class="col-md-3">
-                                <div class="item-inner card shadow">
-                                    <div class="item-image">
-                                        <a href="#">
-                                            <img src="/images/bakery_thumbnail.jpg" class="responsive"/>
-                                        </a>
-                                        <a href="#" class="item-favorite">
-                                            <span>3</span>
-                                            <i class="fa fa-heart"></i>
-                                        </a>
-                                    </div>
-                                    <div class="item-info">
-                                        <div class="item-info-header">
-                                            <div class="item-info-title">
-                                                <a href="#"><h4>Bánh chocolate</h4></a>
-                                            </div>
-                                            <div class="item-info-stats">
-                                                <ul class="item-info-stats-1">
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-clock"></i>
-                                                        <span>
-                                                            <span>7</span>
-                                                            <span>min</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-thumbs-up"></i>
-                                                        <span>
-                                                            <span>69</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                                <ul class="item-info-stats-2">
-                                                    <li class="stats-item stats-item-dish-type">
-                                                        <i class="fa fa-fire"></i>
-                                                        <span>
-                                                            <span>Tr miệng</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-cuisine">
-                                                        <i class="fa fa-tint"></i>
-                                                        <span>
-                                                            <span>Mexico</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-diet">
-                                                        <i class="fa fa-leaf"></i>
-                                                        <span>
-                                                            <span>LactoVeget</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="item-info-footer">
-                                            <div class="item-rating">
-                                                <input type="hidden" class="starRating kv-ltr-theme-fas-star rating-loading" value="3" disabled data-size="xs"/>
-                                            </div>
-                                            <div class="recipe-by mt-3">
-                                                <a href="#">
-                                                    <img src="/images/user.jpg"/>
-                                                    St Recipe
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="item-inner card shadow">
-                                    <div class="item-image">
-                                        <a href="#">
-                                            <img src="/images/bakery_thumbnail.jpg" class="responsive"/>
-                                        </a>
-                                        <a href="#" class="item-favorite">
-                                            <span>3</span>
-                                            <i class="fa fa-heart"></i>
-                                        </a>
-                                    </div>
-                                    <div class="item-info">
-                                        <div class="item-info-header">
-                                            <div class="item-info-title">
-                                                <a href="#"><h4>Bánh chocolate</h4></a>
-                                            </div>
-                                            <div class="item-info-stats">
-                                                <ul class="item-info-stats-1">
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-clock"></i>
-                                                        <span>
-                                                            <span>7</span>
-                                                            <span>min</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-thumbs-up"></i>
-                                                        <span>
-                                                            <span>69</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                                <ul class="item-info-stats-2">
-                                                    <li class="stats-item stats-item-dish-type">
-                                                        <i class="fa fa-fire"></i>
-                                                        <span>
-                                                            <span>Tr miệng</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-cuisine">
-                                                        <i class="fa fa-tint"></i>
-                                                        <span>
-                                                            <span>Mexico</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-diet">
-                                                        <i class="fa fa-leaf"></i>
-                                                        <span>
-                                                            <span>LactoVeget</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="item-info-footer">
-                                            <div class="item-rating">
-                                                <input type="hidden" class="starRating kv-ltr-theme-fas-star rating-loading" value="3" disabled data-size="xs"/>
-                                            </div>
-                                            <div class="recipe-by mt-3">
-                                                <a href="#">
-                                                    <img src="/images/user.jpg"/>
-                                                    St Recipe
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-3">
-                                <div class="item-inner card shadow">
-                                    <div class="item-image">
-                                        <a href="#">
-                                            <img src="/images/mainCourse_thumbnail.jpg" class="responsive"/>
-                                        </a>
-                                        <a href="#" class="item-favorite">
-                                            <span>3</span>
-                                            <i class="fa fa-heart"></i>
-                                        </a>
-                                    </div>
-                                    <div class="item-info">
-                                        <div class="item-info-header">
-                                            <div class="item-info-title">
-                                                <a href="#"><h4>Bánh chocolate</h4></a>
-                                            </div>
-                                            <div class="item-info-stats">
-                                                <ul class="item-info-stats-1">
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-clock"></i>
-                                                        <span>
-                                                            <span>7</span>
-                                                            <span>min</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-thumbs-up"></i>
-                                                        <span>
-                                                            <span>69</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                                <ul class="item-info-stats-2">
-                                                    <li class="stats-item stats-item-dish-type">
-                                                        <i class="fa fa-fire"></i>
-                                                        <span>
-                                                            <span>Tr miệng</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-cuisine">
-                                                        <i class="fa fa-tint"></i>
-                                                        <span>
-                                                            <span>Mexico</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-diet">
-                                                        <i class="fa fa-leaf"></i>
-                                                        <span>
-                                                            <span>LactoVeget</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="item-info-footer">
-                                            <div class="item-rating">
-                                                <input type="hidden" class="starRating kv-ltr-theme-fas-star rating-loading" value="3" disabled data-size="xs"/>
-                                            </div>
-                                            <div class="recipe-by mt-3">
-                                                <a href="#">
-                                                    <img src="/images/user.jpg"/>
-                                                    St Recipe
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="item-inner card shadow">
-                                    <div class="item-image">
-                                        <a href="#">
-                                            <img src="/images/sauce_thumbnail.jpg" class="responsive"/>
-                                        </a>
-                                        <a href="#" class="item-favorite">
-                                            <span>3</span>
-                                            <i class="fa fa-heart"></i>
-                                        </a>
-                                    </div>
-                                    <div class="item-info">
-                                        <div class="item-info-header">
-                                            <div class="item-info-title">
-                                                <a href="#"><h4>Bánh chocolate</h4></a>
-                                            </div>
-                                            <div class="item-info-stats">
-                                                <ul class="item-info-stats-1">
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-clock"></i>
-                                                        <span>
-                                                            <span>7</span>
-                                                            <span>min</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-thumbs-up"></i>
-                                                        <span>
-                                                            <span>69</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                                <ul class="item-info-stats-2">
-                                                    <li class="stats-item stats-item-dish-type">
-                                                        <i class="fa fa-fire"></i>
-                                                        <span>
-                                                            <span>Tr miệng</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-cuisine">
-                                                        <i class="fa fa-tint"></i>
-                                                        <span>
-                                                            <span>Mexico</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-diet">
-                                                        <i class="fa fa-leaf"></i>
-                                                        <span>
-                                                            <span>LactoVeget</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="item-info-footer">
-                                            <div class="item-rating">
-                                                <input type="hidden" class="starRating kv-ltr-theme-fas-star rating-loading" value="3" disabled data-size="xs"/>
-                                            </div>
-                                            <div class="recipe-by mt-3">
-                                                <a href="#">
-                                                    <img src="/images/user.jpg"/>
-                                                    St Recipe
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="item-inner card shadow">
-                                    <div class="item-image">
-                                        <a href="#">
-                                            <img src="/images/dessert_thumbnail.jpg" class="responsive"/>
-                                        </a>
-                                        <a href="#" class="item-favorite">
-                                            <span>3</span>
-                                            <i class="fa fa-heart"></i>
-                                        </a>
-                                    </div>
-                                    <div class="item-info">
-                                        <div class="item-info-header">
-                                            <div class="item-info-title">
-                                                <a href="#"><h4>Bánh chocolate</h4></a>
-                                            </div>
-                                            <div class="item-info-stats">
-                                                <ul class="item-info-stats-1">
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-clock"></i>
-                                                        <span>
-                                                            <span>7</span>
-                                                            <span>min</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-thumbs-up"></i>
-                                                        <span>
-                                                            <span>69</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                                <ul class="item-info-stats-2">
-                                                    <li class="stats-item stats-item-dish-type">
-                                                        <i class="fa fa-fire"></i>
-                                                        <span>
-                                                            <span>Tr miệng</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-cuisine">
-                                                        <i class="fa fa-tint"></i>
-                                                        <span>
-                                                            <span>Mexico</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-diet">
-                                                        <i class="fa fa-leaf"></i>
-                                                        <span>
-                                                            <span>LactoVeget</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="item-info-footer">
-                                            <div class="item-rating">
-                                                <input type="hidden" class="starRating kv-ltr-theme-fas-star rating-loading" value="3" disabled data-size="xs"/>
-                                            </div>
-                                            <div class="recipe-by mt-3">
-                                                <a href="#">
-                                                    <img src="/images/user.jpg"/>
-                                                    St Recipe
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="item-inner card shadow">
-                                    <div class="item-image">
-                                        <a href="#">
-                                            <img src="/images/lunch_thumbnail.jpg" class="responsive"/>
-                                        </a>
-                                        <a href="#" class="item-favorite">
-                                            <span>3</span>
-                                            <i class="fa fa-heart"></i>
-                                        </a>
-                                    </div>
-                                    <div class="item-info">
-                                        <div class="item-info-header">
-                                            <div class="item-info-title">
-                                                <a href="#"><h4>Bánh chocolate</h4></a>
-                                            </div>
-                                            <div class="item-info-stats">
-                                                <ul class="item-info-stats-1">
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-clock"></i>
-                                                        <span>
-                                                            <span>7</span>
-                                                            <span>min</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item">
-                                                        <i class="fa fa-thumbs-up"></i>
-                                                        <span>
-                                                            <span>69</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                                <ul class="item-info-stats-2">
-                                                    <li class="stats-item stats-item-dish-type">
-                                                        <i class="fa fa-fire"></i>
-                                                        <span>
-                                                            <span>Tr miệng</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-cuisine">
-                                                        <i class="fa fa-tint"></i>
-                                                        <span>
-                                                            <span>Mexico</span>
-                                                        </span>
-                                                    </li>
-                                                    <li class="stats-item stats-item-diet">
-                                                        <i class="fa fa-leaf"></i>
-                                                        <span>
-                                                            <span>LactoVeget</span>
-                                                        </span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="item-info-footer">
-                                            <div class="item-rating">
-                                                <input type="hidden" class="starRating kv-ltr-theme-fas-star rating-loading" value="3" disabled data-size="xs"/>
-                                            </div>
-                                            <div class="recipe-by mt-3">
-                                                <a href="#">
-                                                    <img src="/images/user.jpg"/>
-                                                    St Recipe
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {{/each}}
                     </div>
                     <!-- //template section -->
                     <nav id="dishes-pagination" aria-label="Page navigation example">
                       <ul class="pagination">
-                          <li class="page-item"><a class="page-link page-link-first-last" href="#">FIRST</a></li>
-                          <li class="page-item"><a class="page-link page-link-active" href="#">1</a></li>
-                          <li class="page-item"><a class="page-link" href="#">2</a></li>
-                          <li class="page-item"><a class="page-link" href="#">3</a></li>
-                          <li class="page-item"><a class="page-link page-link-first-last" href="#">LAST</a></li>
+                          {{#paginate pagination type="first"}}
+                            <li class="page-item {{#if disabled}}disabled{{/if}}"><a class="page-link page-link-first-last" href="page={{n}}">First</a></li>
+                            {{/paginate}}
+                            {{#paginate pagination type="previous"}}
+                            <li class="page-item {{#if disabled}}disabled{{/if}}"><a class="page-link page-link-first-last" href="page={{n}}">Prev</a></li>
+                            {{/paginate}}
+                            {{#paginate pagination type="middle" limit="5"}}
+                            <li class="page-item {{#if active}}active{{/if}}"><a class="page-link" href="page={{n}}">{{n}}</a></li>
+                            {{/paginate}}
+                            {{#paginate pagination type="next"}}
+                            <li class="page-item {{#if disabled}}disabled{{/if}}"><a class="page-link page-link-first-last" href="page={{n}}">Next</a></li>
+                            {{/paginate}}
+                            {{#paginate pagination type="last"}}
+                            <li class="page-item {{#if disabled}}disabled{{/if}}"><a class="page-link page-link-first-last" href="page={{n}}">Last</a></li>
+                            {{/paginate}}
                       </ul>
                     </nav>
                 </div>

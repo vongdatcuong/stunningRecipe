@@ -46,12 +46,7 @@ router.get('/dishes', dishController.dishes);
 router.get('/dish/:dishID', dishController.dishDetail);
 
 /* Search */
-router.get('/search', function(req, res) {
-    res.render('search', {
-        title: 'Stunning Recipe',
-        user: req.user
-    });
-});
+router.get('/search', dishController.search);
 
 /* Advanced search */
 router.get('/advanced_search', function(req, res) {

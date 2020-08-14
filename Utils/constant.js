@@ -36,6 +36,11 @@ const dishRecipeStatus = {
     accepted: 1,
     rejected: 2
 }
+const searchTypeOptionTitle = {
+    dishName: "Món ăn",
+    ingredientName: "Nguyên liệu",
+    nutritionName: "Dinh dưỡng"
+}
 const homePerPage = 4;
 const dishesPerPage = 8;
 const censorDishesPerPage = 5;
@@ -105,6 +110,7 @@ module.exports = {
     type,
     userType,
     dishRecipeStatus,
+    searchTypeOptionTitle,
     homePerPage,
     dishesPerPage,
     censorDishesPerPage,

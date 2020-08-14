@@ -28,7 +28,7 @@ const dishDetail = async (req, res) => {
     let relatedDishes = [dish, dish, dish, dish];
     relatedDishes = constant.splitToChunk(relatedDishes, 2);
     res.render('dish_detail', {
-        title: constant.appName,
+        title: dish.name,
         dish: dish,
         relatedDishes,
         userType: constant.userType
@@ -53,7 +53,6 @@ const dishes = async (req, res) => {
     }
     const originalUrl = req.originalUrl;
     req.session.originalUrl = originalUrl;
-    localStorage.setItem('myFirstKey', 'myFirstValue');
 
     // Filter Dish Types
     if(req.query.dishTypes){
@@ -147,7 +146,7 @@ const dishes = async (req, res) => {
         dish.creator = dish.creator[0];
         dish.favoriteNumber = dish.favorites.length;
     });
-    console.log(req.originalUrl);
+
     res.render('dishes', {
         title: constant.appName,
         dishes: constant.splitToChunk(dishes, 4),
@@ -158,6 +157,207 @@ const dishes = async (req, res) => {
         pagination: { page: getOption.page, pageCount: Math.ceil(count / getOption.perPage)},
         count: count,
         queryUrl: "/dishes?" + queryUrl
+    });
+}
+
+/* Search Dishes */
+const search = async (req, res) => {
+    const customDishTypes = constant.dishTypes.map((item, idx) =>  {
+        return {name: item, index: (idx)};
+    });
+    const customCuisines = constant.cuisines.map((item, idx) =>  {
+        return {name: item, index: idx};
+    });
+    const customDiets = constant.diets.map((item, idx) =>  {
+        return {name: item, index: idx};
+    });
+
+    // Options
+    const queryOption = {};
+    const getOption = {
+        sort: {createdDate: -1},
+        perPage: constant.dishesPerPage,
+        page: parseInt(req.query.page) || 1
+    }
+    const populateOption = {};
+
+    const originalUrl = req.originalUrl;
+    req.session.originalUrl = originalUrl;
+
+    localStorage.setItem('dishName', constant.emptyStr);
+    localStorage.setItem('ingredientName', constant.emptyStr);
+    localStorage.setItem('nutritionName', constant.emptyStr);
+    // Dish Name
+    if(req.query.dishName){
+        localStorage.setItem('dishName', req.query.dishName || req.params.dishName);
+    } else if (req.params.diets) {
+        localStorage.setItem('dishName', req.params.dishName);
+    } else {
+
+        // Ingredient name
+        if(req.query.ingredientName){
+            localStorage.setItem('ingredientName', req.query.ingredientName || req.params.ingredientName);
+        } else if (req.params.ingredientName) {
+            localStorage.setItem('ingredientName', req.params.ingredientName);
+        } else {
+
+            // Nutrition name
+            if(req.query.nutritionName){
+                localStorage.setItem('nutritionName', req.query.nutritionName || req.params.nutritionName);
+            } else if (req.params.nutritionName) {
+                localStorage.setItem('nutritionName', req.params.nutritionName);
+            }
+        }
+    }
+
+    // Filter Dish Types
+    if(req.query.dishTypes){
+        localStorage.setItem('dishTypes', req.query.dishTypes || req.params.dishTypes);
+    } else if (req.params.dishTypes) {
+        localStorage.setItem('dishTypes', req.params.dishTypes);
+    } else {
+        localStorage.setItem('dishTypes', constant.emptyStr);
+    }
+
+    // Filter Cuisines
+    if(req.query.cuisines){
+        localStorage.setItem('cuisines', req.query.cuisines || req.params.cuisines);
+    } else if (req.params.cuisines) {
+        localStorage.setItem('cuisines', req.params.cuisines);
+    } else {
+        localStorage.setItem('cuisines', constant.emptyStr);
+    }
+
+    // Filter Cuisines
+    if(req.query.diets){
+        localStorage.setItem('diets', req.query.diets || req.params.diets);
+    } else if (req.params.diets) {
+        localStorage.setItem('diets', req.params.diets);
+    } else {
+        localStorage.setItem('diets', constant.emptyStr);
+    }
+
+    let queryUrl = constant.emptyStr;
+
+    // Search keyword
+    let searchKeyword = constant.emptyStr;
+    let searchType = constant.emptyStr;
+    let searchTypeTitle = constant.emptyStr;
+    const localDishName = localStorage.getItem('dishName');
+    const localIngredientName = localStorage.getItem('ingredientName');
+    const localNutritionName = localStorage.getItem('nutritionName');
+
+    // Dish Name
+    if(localDishName && localDishName !== constant.emptyStr){
+        queryOption.name = { 
+            $regex: localDishName, 
+            $options: "i" 
+        };
+        // Active filter
+        searchKeyword = localDishName;
+        searchType = "dishName";
+        searchTypeTitle = constant.searchTypeOptionTitle[searchType];
+        // Add to query url
+        queryUrl+= `dishName=${localDishName}&`;
+    } 
+
+    // Ingredient Name
+    if(localIngredientName && localIngredientName !== constant.emptyStr){
+        populateOption.ingredientName = localIngredientName;
+        searchKeyword = localIngredientName;
+        searchType = "ingredientName";
+        searchTypeTitle = constant.searchTypeOptionTitle[searchType];
+        // Add to query url
+        queryUrl+= `ingredientName=${localIngredientName}&`;
+    } 
+
+    // Nutrition Name
+    if(localNutritionName && localNutritionName !== constant.emptyStr){
+        populateOption.nutritionName = localNutritionName;
+        searchKeyword = localNutritionName;
+        searchType = "nutritionName";
+        searchTypeTitle = constant.searchTypeOptionTitle[searchType];
+        // Add to query url
+        queryUrl+= `nutritionName=${localNutritionName}&`;
+    } 
+
+    // Filter values
+    const localDishTypes = localStorage.getItem('dishTypes');
+    const localCuisines = localStorage.getItem('cuisines');
+    const localDiets = localStorage.getItem('diets');
+
+    // Dish Types
+    if(localDishTypes && localDishTypes !== constant.emptyStr){
+        populateOption.dishTypes = JSON.parse(localDishTypes);
+        // Active filter
+        populateOption.dishTypes.forEach((dishType) => {
+            customDishTypes[dishType - 1].isActive = true;
+        })
+        // Add to query url
+        queryUrl+= `dishTypes=${localDishTypes}&`;
+    } 
+    // Cuisines
+    if(localCuisines && localCuisines !== constant.emptyStr){
+        populateOption.cuisines = JSON.parse(localCuisines);
+        // Active filter
+        populateOption.cuisines.forEach((cuisine) => {
+            customCuisines[cuisine - 1].isActive = true;
+        })
+        // Add to query url
+        queryUrl+= `cuisines=${localCuisines}&`;
+    } 
+    // Diets
+    if(localDiets && localDiets !== constant.emptyStr){
+        populateOption.diets = JSON.parse(localDiets);
+        // Active filter
+        populateOption.diets.forEach((diet) => {
+            customDiets[diet - 1].isActive = true;
+        })
+        // Add to query url
+        queryUrl+= `diets=${localDiets}&`;
+    } 
+
+    const result = await Dish.getFilterDishes(queryOption, getOption, populateOption);
+    const dishes = result[0].dishes;
+    const count = (result[0].count.length > 0)? result[0].count[0].count : 0;
+
+    // User favorite Dishes
+    const favoriteHashMap = {};
+    if (req.user){
+        const userFavoriteDishes = await User.getUserFavoriteDishes(req.user.userID, dishes.map((dish, index) => dish.dishID));
+        userFavoriteDishes.forEach((favDish, index) => {
+            favoriteHashMap[favDish.dishID] = 1
+        });
+    }
+
+    dishes.forEach((dish) => {
+        dish.imageUrl = () => constant.imageStorageLink + constant.dishPath + dish.image;
+        // Is User favorite dishe
+        if (req.user){
+            dish.isUserFavorite = favoriteHashMap[dish.dishID] != undefined;
+        }
+        
+        dish.dishTypesStr = dish.dishTypes.map((item, idx) => constant.dishTypes[item.dishTypeID - 1]).join(constant.commaSpace);
+        dish.cuisinesStr = dish.cuisines.map((item, idx) => constant.cuisines[item.cuisineID - 1]).join(constant.commaSpace);
+        dish.dietsStr = dish.diets.map((item, idx) => constant.diets[item.dietID - 1]).join(constant.commaSpace);
+
+        dish.creator = dish.creator[0];
+        dish.favoriteNumber = dish.favorites.length;
+    });
+
+    res.render('search', {
+        title: constant.appName,
+        dishes: constant.splitToChunk(dishes, 4),
+        userType: constant.userType,
+        dishTypes: constant.splitToChunk(customDishTypes, 3),
+        cuisines: constant.splitToChunk(customCuisines, 3),
+        diets: constant.splitToChunk(customDiets, 3),
+        pagination: { page: getOption.page, pageCount: Math.ceil(count / getOption.perPage)},
+        count: count,
+        queryUrl: "/search?" + queryUrl,
+        searchKeyword: searchKeyword,
+        searchType: searchType,
+        searchTypeTitle: searchTypeTitle
     });
 }
 
@@ -446,6 +646,7 @@ const censorRecipe = async (req, res) => {
 module.exports = {
     dishDetail,
     dishes,
+    search,
     postRecipePage,
     postRecipe,
     censorRecipePage,

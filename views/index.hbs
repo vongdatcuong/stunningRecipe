@@ -86,7 +86,7 @@
 <div class="container" id="dishesFilter">
     <!-- Cuisine -->
     <div class="row mt-3">
-        <ul class="cuisineSelect">
+        <ul class="filterCuisine lightSliderTarget">
             {{# each cuisines}}
                 <li class="{{#if isActive}}filter-active{{/if}} cuisine-item" data-cuisine="{{inc index}}">
                     <a>
@@ -101,7 +101,7 @@
     <!-- Diet -->
     <div class="row mt-0 pt-0">
         <br>
-        <ul class="dietSelect mt-3 mb-5">
+        <ul class="filterDiet lightSliderTarget mt-3 mb-5">
             {{# each diets}}
                 <li class="{{#if isActive}}filter-active{{/if}} diet-item" data-diet="{{inc index}}">
                     <a>{{name}}</a>
@@ -110,7 +110,7 @@
         </ul>
     </div>
 
-    <div class="dishTypeSelect">
+    <div class="filterDishType">
         <!-- Dish type row -->
         {{# each dishTypes}}
             <div class="row mb-3">

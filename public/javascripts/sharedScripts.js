@@ -1,5 +1,17 @@
 $( document ).ready(function() {
-    //const MySwal = MySwal;
+    
+    const $searchDishesForm = $(document.searchDishesForm);
+    if ($searchDishesForm.length > 0){
+        const $submitBtn = $searchDishesForm.find('button[type=submit]');
+        const $searchTypeDisplay = $searchDishesForm.find('.search-type-display');
+        const $searchKeyword = $searchDishesForm.find('.search-keyword');
+        $searchDishesForm.find('.search-type-option').on('click', (e) => {
+            const $this = $(e.target);
+            $searchTypeDisplay.text($this.attr("data-search-type-title"));
+            $searchKeyword.attr("name", $this.attr("data-search-type"));
+        })
+    }
+    
     const relatedProductSlider = $('#relatedProducts').lightSlider({
         item: 5,
         slideMove: 3,
@@ -372,13 +384,25 @@ $( document ).ready(function() {
     const $dishesFilter = $('#dishesFilter');
     if ($dishesFilter.length > 0){
         // Dish Types
-        $('.dishTypeSelect .dish-type-item').on('click', (e) => {
+        $('.filterDishType .dish-type-item, .filterDishTypeCbs .dish-type-item').on('click', (e) => {
             let queryUrl = (location.pathname == "/dishes" || location.pathname == "/search")? location.pathname : "/dishes";
             queryUrl+= "?";
             const urlParams = new URLSearchParams(window.location.search);
+            const dishName = urlParams.get("dishName");
+            const ingredientName = urlParams.get("ingredientName");
+            const nutritionName = urlParams.get("nutritionName");
             const dishTypes = urlParams.get("dishTypes");
             const cuisines = urlParams.get("cuisines");
             const diets = urlParams.get("diets");
+
+            // Keyword
+            if (dishName != null){
+                queryUrl+= "dishName=" + dishName + "&";
+            } else if (ingredientName != null){
+                queryUrl+= "ingredientName=" + ingredientName + "&";
+            } else if (nutritionName != null){
+                queryUrl+= "nutritionName=" + nutritionName + "&";
+            }
 
             const $this = $(e.currentTarget);
             const newDishTypeID = parseInt($this.attr("data-dish-type"));
@@ -411,13 +435,25 @@ $( document ).ready(function() {
         })
 
         // Cuisines
-        $('.cuisineSelect .cuisine-item').on('click', (e) => {
+        $('.filterCuisine .cuisine-item, .filterCuisineCbs .cuisine-item').on('click', (e) => {
             let queryUrl = (location.pathname == "/dishes" || location.pathname == "/search")? location.pathname : "/dishes";
             queryUrl+= "?";
             const urlParams = new URLSearchParams(window.location.search);
+            const dishName = urlParams.get("dishName");
+            const ingredientName = urlParams.get("ingredientName");
+            const nutritionName = urlParams.get("nutritionName");
             const dishTypes = urlParams.get("dishTypes");
             const cuisines = urlParams.get("cuisines");
             const diets = urlParams.get("diets");
+
+            // Keyword
+            if (dishName != null){
+                queryUrl+= "dishName=" + dishName + "&";
+            } else if (ingredientName != null){
+                queryUrl+= "ingredientName=" + ingredientName + "&";
+            } else if (nutritionName != null){
+                queryUrl+= "nutritionName=" + nutritionName + "&";
+            }
 
             const $this = $(e.currentTarget);
             if (dishTypes != null){
@@ -450,13 +486,25 @@ $( document ).ready(function() {
         })
 
         // Diets
-        $('.dietSelect .diet-item').on('click', (e) => {
+        $('.filterDiet .diet-item, .filterDietCbs .diet-item').on('click', (e) => {
             let queryUrl = (location.pathname == "/dishes" || location.pathname == "/search")? location.pathname : "/dishes";
             queryUrl+= "?";
             const urlParams = new URLSearchParams(window.location.search);
+            const dishName = urlParams.get("dishName");
+            const ingredientName = urlParams.get("ingredientName");
+            const nutritionName = urlParams.get("nutritionName");
             const dishTypes = urlParams.get("dishTypes");
             const cuisines = urlParams.get("cuisines");
             const diets = urlParams.get("diets");
+
+            // Keyword
+            if (dishName != null){
+                queryUrl+= "dishName=" + dishName + "&";
+            } else if (ingredientName != null){
+                queryUrl+= "ingredientName=" + ingredientName + "&";
+            } else if (nutritionName != null){
+                queryUrl+= "nutritionName=" + nutritionName + "&";
+            }
 
             const $this = $(e.currentTarget);
             if (dishTypes != null){

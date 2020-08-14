@@ -81,22 +81,33 @@
                     <div class="row" style="padding-left: 100px;">
                         <!-- search -->
                         <div class="col-10 agileits_search">
-                            <form class="form-inline input-group mb-2" action="/search" method="get">
+                            <form id="searchDishesForm" name="searchDishesForm" class="form-inline input-group mb-2" action="/search" method="get">
                                 <div class="input-group-prepend">
-                                    <button id="search-type-btn" class="btn btn-outline-secondary dropdown-toggle"
+                                    <button id="search-type-btn" class="search-type-display btn btn-outline-secondary dropdown-toggle"
                                         type="button" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">Món ăn </button>
+                                        aria-expanded="false">
+                                        {{#if searchTypeTitle}}
+                                            {{searchTypeTitle}}
+                                        {{else}}
+                                            Món ăn
+                                        {{/if}}
+                                    </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Món ăn</a>
-                                        <a class="dropdown-item" href="#">Nguyên liệu</a>
-                                        <a class="dropdown-item" href="#">Thành phần dinh dưỡng</a>
+                                        <a class="dropdown-item search-type-option" data-search-type-title="Món ăn" data-search-type="dishName">Món ăn</a>
+                                        <a class="dropdown-item search-type-option" data-search-type-title="Nguyên liệu" data-search-type="ingredientName">Nguyên liệu</a>
+                                        <a class="dropdown-item search-type-option" data-search-type-title="Dinh dưỡng" data-search-type="nutritionName">Dinh dưỡng</a>
                                     </div>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Tìm kiếm món ăn"
-                                    aria-label="search" aria-describedby="search dishes">
+                                <input type="text" class="search-keyword form-control" placeholder="Tìm kiếm món ăn"
+                                    aria-label="search" aria-describedby="search dishes" 
+                                    name="{{#if searchType}}{{searchType}}{{else}}dishName{{/if}}" 
+                                    value="{{searchKeyword}}">
                                 <div class="input-group-append">
-                                    <span class="input-group-text my-btn-bg-orange pl-3 pr-3"><i class="fas fa-search"
-                                            aria-hidden="true"></i></span>
+                                    <button type="submit" id="searchDishesSubmitBtn" class="btn">
+                                        <span class="input-group-text my-btn-bg-orange pl-3 pr-3">
+                                            <i class="fas fa-search" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -726,7 +737,7 @@
     <!-- LightSlider -->
     <script type="text/javascript" src="/javascripts/lightslider.min.js"></script>
     <script type="text/javascript">
-        $('.cuisineSelect').lightSlider({
+        $('.filterCuisine.lightSliderTarget').lightSlider({
             item: 8,
             slideMove: 1,
             mode: "slide",
@@ -734,7 +745,7 @@
             pauseOnHover: true,
             pager: false
         });
-        $('.dietSelect').lightSlider({
+        $('.filterDiet.lightSliderTarget').lightSlider({
             item: 6,
             slideMove: 1,
             mode: "slide",

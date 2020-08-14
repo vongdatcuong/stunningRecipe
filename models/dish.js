@@ -130,6 +130,67 @@ module.exports = {
       { 
         $match: query
       },
+    ];
+
+    // Search ingredients
+    if (populateOption.ingredientName){
+      pipeLine.push(...[
+        { 
+          $lookup: {
+            from: "DishIngredients",
+            localField: "dishID",
+            foreignField: "dishID",
+            as: "dishIngredients"
+          }
+        },
+        { 
+          $lookup: {
+            from: "Ingredients",
+            localField: "dishIngredients.ingredientID",
+            foreignField: "ingredientID",
+            as: "dishIngredients"
+          }
+        },
+        {
+          $match: { "dishIngredients.name": { 
+              $regex: populateOption.ingredientName, 
+              $options: "i" 
+            } 
+          },
+        }
+      ]);
+    }
+
+    // Search nutritions
+    if (populateOption.nutritionName){
+      pipeLine.push(...[
+        { 
+          $lookup: {
+            from: "DishNutritions",
+            localField: "dishID",
+            foreignField: "dishID",
+            as: "dishNutritions"
+          }
+        },
+        { 
+          $lookup: {
+            from: "Nutritions",
+            localField: "dishNutritions.nutritionID",
+            foreignField: "nutritionID",
+            as: "dishNutritions"
+          }
+        },
+        {
+          $match: { "dishNutritions.name": { 
+              $regex: populateOption.nutritionName, 
+              $options: "i" 
+            } 
+          },
+        }
+      ]);
+    }
+
+    pipeLine.push(...[
       { 
         $lookup: {
           from: "DishTypeDetails",
@@ -138,8 +199,8 @@ module.exports = {
           as: "dishTypes"
         }
       },
-      
-    ];
+    ]);
+
     // Filter dish types
     if (populateOption.dishTypes){
       pipeLine.push({
