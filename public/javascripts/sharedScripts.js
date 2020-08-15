@@ -579,6 +579,80 @@ $( document ).ready(function() {
         })
     }
 
+    // Comment
+    const $dishComment = $('.dish-comment');
+    if ($dishComment.length > 0){
+        const dishID = $('input[name=dishID]').val();
+        const $dishCommentList = $dishComment.find('.dish-comment-list');
+
+        const $submitBtn = $dishComment.find('.dish-comment-submit');
+        if ($submitBtn.length > 0){
+            $submitBtn.on('click', (e) => {
+                showLoading();
+                const $disNewCommentContent = $dishComment.find('.dish-new-comment-content');
+                const content = $disNewCommentContent.val();
+                $.ajax({
+                    url: '/addComment',
+                    data: {
+                        dishID: dishID,
+                        content: content
+                    },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function(dataJson){
+                        if (dataJson.success){
+                            $dishCommentList.prepend($(dataJson.newCommentLi));
+                            $disNewCommentContent.val("");
+                        } else {
+                            swal.error(dataJson.message);
+                        }
+                        hideLoading();
+                    },
+                    error: function(err){
+                        swal.error(err);
+                        hideLoading();
+                    }
+                });
+            })
+        }
+
+        // Load more comments
+        const $loadCommentsBtn = $('.load-comments-btn');
+        if ($loadCommentsBtn.length > 0){
+            const $commentLoadingImg = $loadCommentsBtn.find('.loading-comment');
+            $loadCommentsBtn.on('click', (e) => {
+                $commentLoadingImg.show();
+                const $this = $(e.target);
+                $.ajax({
+                    url: '/getComments',
+                    data: {
+                        dishID: dishID,
+                        page: parseInt($this.attr("data-next-comment-page"))
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(dataJson){
+                        if (dataJson.success){
+                            $dishCommentList.append($(dataJson.commentLis));
+                            if (dataJson.nextPage != -1){
+                                $this.attr("data-next-comment-page", dataJson.nextPage);
+                            } else {
+                                $this.remove();
+                            }
+                        } else {
+                            swal.error(dataJson.message);
+                        }
+                        $commentLoadingImg.hide();
+                    },
+                    error: function(err){
+                        swal.error(err);
+                        $commentLoadingImg.hide();
+                    }
+                });
+            })
+        }
+    }
+
     // Scroll Target
     const $scrollTarget = $('#scrollTarget');
     if ($scrollTarget.length > 0){

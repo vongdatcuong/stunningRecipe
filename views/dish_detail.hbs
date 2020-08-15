@@ -5,6 +5,7 @@
             <!-- Dish detail -left -->
             <div class="col-md-8 dish-detail-content-wrapper pl-0 pr-1">
                 <div class="dish-detail-content py-4">
+                    <input type="hidden" name="dishID" value="{{dish.dishID}}"/>
                     <!-- tittle heading -->
                     <h3 class="tittle-w3l text-center mb-lg-4 mb-sm-3 mb-3">
                         {{dish.name}}
@@ -227,7 +228,7 @@
         </div>
         <div class="row my-4">
             <!-- Comment -->
-            <div class="col-md-8 col-sm-12 dish-comment-wrapper py-3 px-3">
+            <div id="commentPanel" class="col-md-8 col-sm-12 dish-comment-wrapper py-3 px-3">
                 <div class="dish-comment">
                     <!-- tittle heading -->
                     <h4 class="tittle-w3l text-center border-bottom mb-lg-2 mb-sm-2 mb-2 mx-4 py-2">
@@ -239,21 +240,27 @@
                             Thảo luận về {{dish.name}}
                         </div>
                         <div class="panel-body">
-                            <textarea class="form-control" placeholder="Để lại bình luận..." rows="4"></textarea>
-                            <br>
-                            <div class="text-right py-2">
-                                <button type="button" class="btn violet-link-btn px-4 pull-right">Gửi</button>
-                            </div>
-                            <div class="clearfix"></div>
+                            {{#if user}}
+                                <textarea class="dish-new-comment-content form-control" placeholder="Để lại bình luận..." rows="4"></textarea>
+                                <br>
+                                <div class="text-right py-2">
+                                    <button type="button" class="dish-comment-submit btn violet-link-btn px-4 pull-right">Gửi</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            {{else}}
+                                <div class="p-3">
+                                    <a href="/login?retUrl=/dish/{{dish.dishID}}" class="" style="color: #7d00bb">Đăng nhập </a> để bình luận ngay !!!
+                                </div>
+                            {{/if}}
                             <hr>
-                            <ul class="media-list">
+                            <ul class="dish-comment-list media-list">
                                 {{# each dish.comments}}
                                     <li class="media">
                                         <a href="#" class="pull-left">
                                             {{#ifCond user.userType '==' ../userType.admin}}
                                                 <img src="/images/StunningRecipe.png" alt="" class="img-circle"/>
                                             {{else}}
-                                                <img src="{{user.avatar}}" alt="" class="img-circle"/>
+                                                <img src="{{getUserAvatarUrl user.avatar}}" alt="" class="img-circle"/>
                                             {{/ifCond}}
                                             
                                         </a>
@@ -269,6 +276,14 @@
                                     </li>
                                 {{/each}}
                             </ul>
+                            {{#if hasMoreComments}}
+                                <div class="py-3 text-center">
+                                    <button class="load-comments-btn btn violet-link-btn py-2 px-4" data-next-comment-page="2">
+                                        <img src="/images/loadingPartial.gif" class="loading-comment" style="width: 25px; height: 25px; display: none;"/>
+                                        Tải thêm bình luận
+                                    </button>
+                                </div>
+                            {{/if}}
                         </div>
                     </div>
                 </div>

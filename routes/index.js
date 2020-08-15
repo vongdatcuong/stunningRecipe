@@ -83,6 +83,11 @@ router.post('/uploadUserImage', upload.single('file'), userController.uploadUser
 router.get('/changePwd', requireLogin, userController.changePwdView);
 router.post('/changePwd', requireLogin, userController.changePwd);
 
+/* Get Comments */
+router.get('/getComments', dishController.getComments);
+/* Add Comment */
+router.post('/addComment', requireLogin, dishController.addComment);
+
 router.get("/contact", mainController.contact);
 
 router.get("/about", mainController.about);

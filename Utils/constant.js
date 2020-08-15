@@ -8,6 +8,8 @@ const acceptDishSuccess = "Chấp nhận công thức thành công";
 const acceptDishFail = "Chấp nhận công thức thất bại";
 const rejectDishSuccess = "Từ chối công thức thành công";
 const rejectDishFail = "Từ chối công thức thất bại";
+const addCommentSuccess = "Thêm bình luận thành công";
+const addCommentFail = "Thêm bình luận thất bại";
 // Constant variables
 const dishTypes = ["Món chính", "Món phụ", "Tráng miệng", "Món khai vị", "Salad", "Bánh", "Ăn sáng", "Soup", "Thức uống", "Nước sốt", "Snack", "Ăn trưa"];
 const cuisines = ["Món Mỹ", "Món Trung", "Món Pháp", "Món Ý", "Món Nhật", "Món Mexico", "Món Thái", "Món Việt", "Món Âu", "Món Tây", "Món Đông"];
@@ -41,11 +43,14 @@ const searchTypeOptionTitle = {
     ingredientName: "Nguyên liệu",
     nutritionName: "Dinh dưỡng"
 }
+const defaultAdminAvatar = "/images/StunningRecipe.png";
+const defaultUserAvatar = "/images/avatar.png";
 const notBelongAny = -1;
 const homePerPage = 4;
 const dishesPerPage = 8;
 const censorDishesPerPage = 5;
 const paginationMax = 5;
+const commentPerLoad = 5;
 const currency = "VND";
 const autoCompleteMaxResult = 10;
 const millisecondOfDay = 24 * 60 * 60 * 1000;
@@ -56,6 +61,7 @@ const emptyStr = "";
 const commaSpace = ", ";
 const imageUrlSeperator = ", ";
 const filterValSeperator = ", ";
+const dateSeparator = "/";
 
 function getUserType(typeStr) {
     return Object.keys(type).find(key => type[key] === typeStr);
@@ -97,6 +103,8 @@ module.exports = {
     acceptDishFail,
     rejectDishSuccess,
     rejectDishFail,
+    addCommentSuccess,
+    addCommentFail,
     // Constant variables
     dishTypes,
     cuisines,
@@ -112,11 +120,14 @@ module.exports = {
     userType,
     dishRecipeStatus,
     searchTypeOptionTitle,
+    defaultAdminAvatar,
+    defaultUserAvatar,
     notBelongAny,
     homePerPage,
     dishesPerPage,
     censorDishesPerPage,
     paginationMax,
+    commentPerLoad,
     currency,
     autoCompleteMaxResult,
     millisecondOfDay,
@@ -126,6 +137,7 @@ module.exports = {
     commaSpace,
     imageUrlSeperator,
     filterValSeperator,
+    dateSeparator,
     getUserType,
     splitToChunk,
     createDishImageName,

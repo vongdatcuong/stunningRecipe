@@ -8,6 +8,7 @@ const DishTypeDetail = mongoose.model('DishTypeDetail');
 const CuisineDetail = mongoose.model('CuisineDetail');
 const DietDetail = mongoose.model('DietDetail');
 const UserFavoriteDish = mongoose.model('UserFavoriteDish');
+const Comment = mongoose.model('Comment');
 const AzureBlob = require("../models/azure_blob");
 const constant = require('../Utils/constant');
 
@@ -54,7 +55,7 @@ module.exports = {
       .populate('steps')
       .populate({
           path: "comments",
-          populate: "user"
+          populate: "user",
       })
       .populate('reviewNumber')
       .exec();
@@ -375,7 +376,7 @@ module.exports = {
         dishID: dishID,
         userID: userID
       }).exec();
-      if (dishUserFav)
+      if (dishUserFav.length > 0)
         resolve(true);
       else 
         resolve(false);

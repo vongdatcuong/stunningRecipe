@@ -127,6 +127,9 @@ hbs.registerHelper('ifCond', function(v1, operator, v2, options) {
             return options.inverse(this);
     }
 });
+hbs.registerHelper("getUserAvatarUrl", function(avatar) {
+    return (avatar)? constant.imageStorageLink + constant.userPath + avatar : constant.defaultUserAvatar;
+});
 const handlebarsHelpers = require('handlebars-helpers');
 const helpers = handlebarsHelpers();
 hbs.registerHelper("is", helpers.is);

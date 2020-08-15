@@ -1,17 +1,21 @@
 const Dish = require("../models/dish");
 const User = require("../models/user");
 const Ingredient = require("../models/ingredient");
+const Comment = require("../models/comment");
 const AzureBlob = require("../models/azure_blob");
 const constant = require("../Utils/constant");
+const ConversionUtils = require("../Utils/ConversionUtils");
 const { dishTypes } = require("../Utils/constant");
 
 /* Dish Detail */
 const dishDetail = async (req, res) => {
-    const dish = await Dish.getDishAndUpdateView(req.params.dishID);
+    const dishID = parseInt(req.params.dishID);
+    const dish = await Dish.getDishAndUpdateView(dishID);
+    const countComment = await Comment.getCountComment({dishID: dishID});
     dish.imageUrl = constant.imageStorageLink + constant.dishPath + dish.image;
     // User favorite
     if (req.user){
-        dish.isUserFavorite = await Dish.isDishUserFavorite(req.params.dishID, req.user.userID);
+        dish.isUserFavorite = await Dish.isDishUserFavorite(dishID, req.user.userID);
     } else {
         dish.isUserFavorite = false;
     }
@@ -31,7 +35,8 @@ const dishDetail = async (req, res) => {
         title: dish.name,
         dish: dish,
         relatedDishes,
-        userType: constant.userType
+        userType: constant.userType,
+        hasMoreComments: (countComment > constant.commentPerLoad)? true : false
     });
 }
 /* Dishes */
@@ -667,6 +672,75 @@ const censorRecipe = async (req, res) => {
         });
     }
 }
+
+/* Get Comment */
+const getComments = async (req, res) => {
+    const dishID = parseInt(req.query.dishID);
+    const page = parseInt(req.query.page);
+    const comments = await Comment.getComments({
+        dishID: dishID
+    }, {
+        page: page,
+        perPage: constant.commentPerLoad,
+        sort: {createdDate: -1}
+    })
+    const commentCount = await Comment.getCountComment({dishID: dishID});
+    let commentLis = constant.emptyStr;
+    comments.forEach((comment, index) => {
+        const user = comment.user;
+        const avatarStorageLink = constant.imageStorageLink + constant.userPath;
+        const userAvatarUrl = (user.userType == constant.userType.admin)? constant.defaultAdminAvatar : (user.avatar)? avatarStorageLink + user.avatar : constant.defaultUserAvatar;
+        commentLis+= `<li class="media">
+                                <a href="#" class="pull-left">
+                                    <img src="${userAvatarUrl}" alt="" class="img-circle"/>
+                                </a>
+                                <div class="media-body ml-3">
+                                    <span class="text-muted pull-right">
+                                        <small class="text-muted">${ConversionUtils.parseDateTime(comment.createdDate, constant.dateSeparator)}</small>
+                                    </span>
+                                    <strong class="text-success"> ${user.firstName} ${user.lastName}</strong>
+                                    <p>
+                                        ${comment.content}
+                                    </p>
+                                </div>
+                            </li>`;
+    })
+    res.json({
+        success: true,
+        message: constant.emptyStr,
+        commentLis: commentLis,
+        nextPage: (commentCount > page * constant.commentPerLoad)? page + 1 : -1
+    })
+}
+
+/* Add Comment */
+const addComment = async (req, res) => {
+    const dishID = parseInt(req.body.dishID);
+    const content = req.body.content;
+    const user = req.user;
+    const newComment = await Comment.addComment(dishID, req.user.userID, content);
+    const avatarStorageLink = constant.imageStorageLink + constant.userPath;
+    const userAvatarUrl = (user.userType == constant.userType.admin)? constant.defaultAdminAvatar : (user.avatar)? avatarStorageLink + user.avatar : constant.defaultUserAvatar;
+    const newCommentLi = `<li class="media">
+                            <a href="#" class="pull-left">
+                                <img src="${userAvatarUrl}" alt="" class="img-circle"/>
+                            </a>
+                            <div class="media-body ml-3">
+                                <span class="text-muted pull-right">
+                                    <small class="text-muted">${ConversionUtils.parseDateTime(new Date()/*newComment.createdDate*/, constant.dateSeparator)}</small>
+                                </span>
+                                <strong class="text-success"> ${user.firstName} ${user.lastName}</strong>
+                                <p>
+                                    ${content}
+                                </p>
+                            </div>
+                        </li>`;
+    res.json({
+        success: true,
+        message: constant.addCommentSuccess,
+        newCommentLi: newCommentLi
+    })
+}
 module.exports = {
     dishDetail,
     dishes,
@@ -675,5 +749,7 @@ module.exports = {
     postRecipePage,
     postRecipe,
     censorRecipePage,
-    censorRecipe
+    censorRecipe,
+    getComments,
+    addComment
 };

@@ -1837,7 +1837,7 @@ a.filter-link:hover {
 }
 
 .dish-comment .panel-body {
-    max-height: 650px;
+    /*max-height: 650px;*/
     overflow: auto;
 }
 
