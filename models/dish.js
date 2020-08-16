@@ -236,7 +236,7 @@ module.exports = {
         }
       },
     ]);
-    // Filter cuisines
+    // Filter diets
     if (populateOption.diets){
       if (populateOption.diets.length > 0 && populateOption.diets[0] == constant.notBelongAny){
         pipeLine.push({
@@ -288,7 +288,107 @@ module.exports = {
             } ,
             //Skip
             {
-              $skip: (option.page && option.perPage)? (option.perPage * (option.page - 1)) : 1 
+              $skip: (option.page && option.perPage)? (option.perPage * (option.page - 1)) : 0 
+            },
+            // Limit  
+            {
+              $limit: option.perPage
+            }]
+        }
+      }
+    ])
+
+    return Dish.aggregate(pipeLine).exec()
+  },
+  getRelatedDishes(query, option, populateOption){
+    option = option || {};
+    // Default get accepted dishes
+    query.status = (query.status != undefined && query.status != null)? query.status : constant.dishRecipeStatus.accepted;
+
+    const pipeLine = [
+      { 
+        $match: query
+      },
+    ];
+
+
+    pipeLine.push(...[
+      { 
+        $lookup: {
+          from: "DishTypeDetails",
+          localField: "dishID",
+          foreignField: "dishID",
+          as: "dishTypes"
+        }
+      },
+      { 
+        $lookup: {
+          from: "CuisineDetails",
+          localField: "dishID",
+          foreignField: "dishID",
+          as: "cuisines"
+        }
+      },
+      { 
+        $lookup: {
+          from: "DietDetails",
+          localField: "dishID",
+          foreignField: "dishID",
+          as: "diets"
+        }
+      },
+    ]);
+
+    // Filter
+    if (populateOption.dishTypes && populateOption.cuisines && populateOption.diets){
+      pipeLine.push({
+        $match: { $or: [
+          { "dishTypes.dishTypeID": { $in: populateOption.dishTypes} }, 
+          { "cuisines.cuisineID": { $in: populateOption.cuisines} },
+          { "diets.dietID": { $in: populateOption.diets} }
+        ]}
+      });
+    }
+
+    pipeLine.push(...[
+      { 
+        $lookup: {
+          from: "Users",
+          localField: "createdBy",
+          foreignField: "userID",
+          as: "creator"
+        }
+      },
+      { 
+        $lookup: {
+          from: "UserFavoriteDishes",
+          localField: "dishID",
+          foreignField: "dishID",
+          as: "favorites"
+        }
+      }
+    ]);
+
+    
+    if (option.page && option.perPage){
+      pipeLine.push(...[
+        
+      ]);
+    }
+
+    pipeLine.push(...[
+      // Count 
+      { 
+        $facet: {
+          count:  [{ $count: "count" }],
+          dishes: [
+            // Sort
+            { 
+              $sort: (option.sort)? option.sort : {createdDate: -1}
+            } ,
+            //Skip
+            {
+              $skip: (option.page && option.perPage)? (option.perPage * (option.page - 1)) : 0 
             },
             // Limit  
             {
@@ -328,6 +428,7 @@ module.exports = {
       dishID: dishID,
       ingredientID: ingredientID,
       amount: props.amount || 0,
+      unit: props.unit,
       isExtended: props.isExtended || false
     })
     return dishIngredient.save();
@@ -429,13 +530,13 @@ module.exports = {
     }
   },
   async resetDatabase(){
-    await Dish.deleteMany({dishID: {$nin: [1, 2]}});
-    //await Ingredient.deleteMany({isActive: false});
-    await DishIngredient.deleteMany({dishID: {$nin: [1, 2]}});
-    await DishNutrition.deleteMany({dishID: {$nin: [1, 2]}});
-    await DishStep.deleteMany({dishID: {$nin: [1, 2]}});    
-    await DishTypeDetail.deleteMany({dishID: {$nin: [1, 2]}});
-    await CuisineDetail.deleteMany({dishID: {$nin: [1, 2]}});
-    await DietDetail.deleteMany({dishID: {$nin: [1, 2]}});
+    await Dish.deleteMany({dishID: {$nin: [1, 2, 3]}});
+    await Ingredient.deleteMany({isActive: false});
+    await DishIngredient.deleteMany({dishID: {$nin: [1, 2, 3]}});
+    await DishNutrition.deleteMany({dishID: {$nin: [1, 2, 3]}});
+    await DishStep.deleteMany({dishID: {$nin: [1, 2, 3]}});    
+    await DishTypeDetail.deleteMany({dishID: {$nin: [1, 2, 3]}});
+    await CuisineDetail.deleteMany({dishID: {$nin: [1, 2, 3]}});
+    await DietDetail.deleteMany({dishID: {$nin: [1, 2, 3]}});
   }
 };

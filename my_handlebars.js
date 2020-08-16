@@ -130,6 +130,9 @@ hbs.registerHelper('ifCond', function(v1, operator, v2, options) {
 hbs.registerHelper("getUserAvatarUrl", function(avatar) {
     return (avatar)? constant.imageStorageLink + constant.userPath + avatar : constant.defaultUserAvatar;
 });
+hbs.registerHelper("getDishImageUrl", function(dishImage) {
+    return (dishImage)? constant.imageStorageLink + constant.dishPath + dishImage : constant.defaultUserAvatar;
+});
 const handlebarsHelpers = require('handlebars-helpers');
 const helpers = handlebarsHelpers();
 hbs.registerHelper("is", helpers.is);

@@ -16,7 +16,7 @@ const home = async (req, res) => {
 
     // Popular dishes
     const popularDishes = await Dish.getDishes({}, {
-        sort: {createdDate: -1},
+        sort: {totalView: -1, rating: -1, createdDate: -1},
         perPage: constant.homePerPage,
         page: 1
     });

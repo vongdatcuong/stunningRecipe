@@ -94,6 +94,7 @@ dishSchema.virtual("steps", {
     localField: "dishID",
     foreignField: "dishID",
     justOne: false,
+    options: { sort: { number: 1 }}
 });
 
 dishSchema.virtual("dishTypes", {

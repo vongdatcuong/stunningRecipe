@@ -62,7 +62,7 @@
                     <!-- template section -->
                     <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
                         {{# each dishes}}
-                            <div class="row">
+                            <div class="row mb-4">
                                 {{# each this}}
                                     <div class="col-md-3">
                                         <div class="item-inner card shadow">
@@ -128,6 +128,9 @@
                                                                 </span>
                                                             </li>
                                                         </ul>
+                                                    </div>
+                                                    <div class="item-info-createdDate">
+                                                        <span>{{parseDateTime createdDate "/"}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="item-info-footer">

@@ -11,6 +11,14 @@ const { dishTypes } = require("../Utils/constant");
 const dishDetail = async (req, res) => {
     const dishID = parseInt(req.params.dishID);
     const dish = await Dish.getDishAndUpdateView(dishID);
+    // Check if dish is approved
+    if (dish.status != constant.dishRecipeStatus.accepted){
+        res.render("inHandling", {
+            title: constant.appName,
+            message: constant.dishIsInWaiting
+        })
+    }
+
     const countComment = await Comment.getCountComment({dishID: dishID});
     dish.imageUrl = constant.imageStorageLink + constant.dishPath + dish.image;
     // User favorite
@@ -25,12 +33,46 @@ const dishDetail = async (req, res) => {
         step.equipment = step.equipment || constant.emptyStr;
         step.image = (step.image)? constant.imageStorageLink + constant.dishStepPath + step.image.split(constant.imageUrlSeperator)[0] : constant.emptyStr;
     })
-    dish.dishTypesStr = dish.dishTypes.map((item, idx) => constant.dishTypes[item.dishTypeID - 1]).join(constant.commaSpace);
-    dish.cuisinesStr = dish.cuisines.map((item, idx) => constant.cuisines[item.cuisineID - 1]).join(constant.commaSpace);
-    dish.dietsStr = dish.diets.map((item, idx) => constant.diets[item.dietID - 1]).join(constant.commaSpace);
+
+    // Dish Types
+    const dishTypeIDs = [];
+    const dishTypeNames = [];
+    dish.dishTypes.forEach((item, idx) => {
+        dishTypeIDs.push(item.dishTypeID);
+        dishTypeNames.push(constant.dishTypes[item.dishTypeID - 1]);
+    })
+    dish.dishTypesStr = dishTypeNames.join(constant.commaSpace);
+
+    // Cuisines
+    const cuisineIDs = [];
+    const cuisineNames = [];
+    dish.cuisines.forEach((item, idx) => {
+        cuisineIDs.push(item.cuisineID);
+        cuisineNames.push(constant.cuisines[item.cuisineID - 1]);
+    })
+    dish.cuisinesStr = cuisineNames.join(constant.commaSpace);
+
+    // Diets
+    const dietIDs = [];
+    const dietNames = [];
+    dish.diets.forEach((item, idx) => {
+        dietIDs.push(item.dietID);
+        dietNames.push(constant.diets[item.dietID - 1]);
+    })
+
+    dish.dietsStr = dietNames.join(constant.commaSpace);
+
     // Related dishes
-    let relatedDishes = [dish, dish, dish, dish];
-    relatedDishes = constant.splitToChunk(relatedDishes, 2);
+    let relatedDishes = await Dish.getRelatedDishes({
+        dishID: {$ne: dishID}
+    }, {
+        perPage: constant.maxRelatedDishes
+    }, {
+        dishTypes: dishTypeIDs,
+        cuisines: cuisineIDs,
+        diets: dietIDs
+    });
+    relatedDishes = (relatedDishes.length > 0)? (constant.splitToChunk(relatedDishes[0].dishes, 2)) : [];
     res.render('dish_detail', {
         title: dish.name,
         dish: dish,
@@ -392,6 +434,7 @@ const advancedSearch = async (req, res) => {
 
 /* Post Recipe */
 const postRecipePage = async (req, res) => {
+    //const www = await Dish.resetDatabase();
     const customDishTypes = constant.dishTypes.map((item, idx) =>  {
         return {name: item, index: (idx + 1)};
     });
@@ -426,11 +469,11 @@ const postRecipe = async (req, res) => {
             const newIngredient = await Ingredient.addIngredients(user.userID, {
                 name: ingredient.ingredientID,
             });
+            ingredient.ingredientID = newIngredient.ingredientID;
             if (ingredient.hasNewImage){
                 try {
                     const fileName = await Ingredient.uploadIngredientImage(newIngredient.ingredientID, files.newIngreImages.shift());
                     await Ingredient.setIngredientImage(newIngredient.ingredientID, fileName);
-                    ingredient.ingredientID = newIngredient.ingredientID;
                 } catch (err) {
                     console.log(err);
                     reject({
@@ -450,11 +493,11 @@ const postRecipe = async (req, res) => {
             const newIngredient = await Ingredient.addIngredients(user.userID, {
                 name: ingredient.ingredientID,
             });
+            ingredient.ingredientID = newIngredient.ingredientID;
             if (ingredient.hasNewImage){
                 try {
                     const fileName = await Ingredient.uploadIngredientImage(newIngredient.ingredientID, files.newExtIngreImages.shift());
                     await Ingredient.setIngredientImage(newIngredient.ingredientID, fileName);
-                    ingredient.ingredientID = newIngredient.ingredientID;
                 } catch (err) {
                     console.log(err);
                     res.json({
@@ -566,26 +609,28 @@ const postRecipe = async (req, res) => {
                 // If step doesn't have any images
                 if (!step.hasImages){
                     resolve(dishStep);
-                }
-                let stepIthImagePromises = [];
-                // If not last step
-                if (index < stepNum - 1){
-                    files.stepImages.slice(parseInt(stepImagesBoundary[index]), parseInt(stepImagesBoundary[index + 1])).forEach((stepImage, index2) => {
-                        stepIthImagePromises.push(new Promise(async (resolve2, reject2) => {
-                            const fileName = await Dish.uploadDishStepImage(newDish.dishID, step.number, index2 + 1, stepImage);
-                            resolve2(fileName);
-                        }));
-                    })
                 } else {
-                    files.stepImages.slice(parseInt(stepImagesBoundary[index])).forEach((stepImage, index2) => {
-                        stepIthImagePromises.push(new Promise(async (resolve2, reject2) => {
-                            const fileName = await Dish.uploadDishStepImage(newDish.dishID, step.number, index2 + 1, stepImage);
-                            resolve2(fileName);
-                        }));
-                    })
+                    let stepIthImagePromises = [];
+                    // If not last step
+                    if (index < stepNum - 1){
+                        files.stepImages.slice(parseInt(stepImagesBoundary[index]), parseInt(stepImagesBoundary[index + 1])).forEach((stepImage, index2) => {
+                            stepIthImagePromises.push(new Promise(async (resolve2, reject2) => {
+                                const fileName = await Dish.uploadDishStepImage(newDish.dishID, step.number, index2 + 1, stepImage);
+                                resolve2(fileName);
+                            }));
+                        })
+                    } else {
+                        files.stepImages.slice(parseInt(stepImagesBoundary[index])).forEach((stepImage, index2) => {
+                            stepIthImagePromises.push(new Promise(async (resolve2, reject2) => {
+                                const fileName = await Dish.uploadDishStepImage(newDish.dishID, step.number, index2 + 1, stepImage);
+                                resolve2(fileName);
+                            }));
+                        })
+                    }
+                    const stepIthImages = await Promise.all(stepIthImagePromises);
+                    await Dish.setDishStepImage(newDish.dishID, step.number, stepIthImages.join(constant.imageUrlSeperator));
                 }
-                const stepIthImages = await Promise.all(stepIthImagePromises);
-                await Dish.setDishStepImage(newDish.dishID, step.number, stepIthImages.join(constant.imageUrlSeperator));
+                
             } catch (err) {
                 console.log(err);
                 res.json({
@@ -652,11 +697,6 @@ const censorRecipePage = async (req, res) => {
 
 /* Censor recipe */
 const censorRecipe = async (req, res) => {
-    res.json({
-        success: true,
-        message: constant.addDishSuccess,
-        //returnUrl: "/profile/" + user.userID
-    })
     const dishIDs = req.body.dishIDs.map((id, index) => parseInt(id));
     const status = parseInt(req.body.status);
     try {

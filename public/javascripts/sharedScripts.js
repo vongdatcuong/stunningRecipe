@@ -314,8 +314,8 @@ $( document ).ready(function() {
                     }
                     hideLoading();
                 },
-                error: function(err){
-                    swal.error(err);
+                error: function(xhr, ajaxOptions, thrownError){
+                    swal.error(xhr.responseText);
                     hideLoading();
                 }
             });
@@ -406,7 +406,7 @@ $( document ).ready(function() {
                     if (dataJson.success){
                         (async function(){
                             await swal.success(dataJson.message);
-                            window.location.href = window.location.reload(false);
+                            window.location.href = "/censorRecipe";
                         })();
                     } else {
                         swal.error(dataJson.message);

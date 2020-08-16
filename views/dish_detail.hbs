@@ -174,7 +174,7 @@
                                             <div class="dish-related-item pl-2 pr-1">
                                                 <div class="dish-related-item-image">
                                                     <a href="/dish/{{dishID}}">
-                                                        <img src="{{imageUrl}}"/>
+                                                        <img src="{{getDishImageUrl image}}"/>
                                                     </a>
                                                 </div>
                                                 <div class="dish-related-item-info text-ellipsis text-center">
@@ -197,7 +197,7 @@
                                             <div class="dish-related-item pl-1 pr-2">
                                                 <div class="dish-related-item-image">
                                                     <a href="/dish/{{dishID}}">
-                                                        <img src="{{imageUrl}}"/>
+                                                        <img src="{{getDishImageUrl image}}"/>
                                                     </a>
                                                 </div>
                                                 <div class="dish-related-item-info text-ellipsis text-center">
@@ -217,6 +217,10 @@
                                         </div>
                                     {{/ifCond}}
                                 {{/each}}
+                            {{else}}
+                                <div class="nothing-found-wrapper text-center px-5">
+                                    <h6>Không có công thức nào liên quan!!!</h6>
+                                </div>
                             {{/each}}
                         </div>
                     </div>

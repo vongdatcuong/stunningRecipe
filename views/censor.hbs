@@ -189,25 +189,30 @@
                                     </div>
                                 </div>
                             </div>
+                        {{else}}
+                            <div class="nothing-found-wrapper text-center">
+                                <h2>Không có công thức nào đang chờ kiểm duyệt!!!</h2>
+                                <img src="/images/nothing_found.png"/>
+                            </div>
                         {{/each}}
                     </div>
                     <!-- //template section page-link-first-last page-link-active page-link-first-last-->
                     <nav id="dishes-pagination" aria-label="Page navigation example">
                       <ul class="pagination">
                             {{#paginate pagination type="first"}}
-                            <li class="page-item {{#if disabled}}disabled{{/if}}"><a class="page-link page-link-first-last" href="censorRecipe?page={{n}}">First</a></li>
+                            <li class="page-item {{#if disabled}}disabled{{/if}}"><a class="page-link page-link-first-last" href="page={{n}}">First</a></li>
                             {{/paginate}}
                             {{#paginate pagination type="previous"}}
-                            <li class="page-item {{#if disabled}}disabled{{/if}}"><a class="page-link page-link-first-last" href="censorRecipe?page={{n}}">Prev</a></li>
+                            <li class="page-item {{#if disabled}}disabled{{/if}}"><a class="page-link page-link-first-last" href="page={{n}}">Prev</a></li>
                             {{/paginate}}
                             {{#paginate pagination type="middle" limit="5"}}
-                            <li class="page-item {{#if active}}active{{/if}}"><a class="page-link" href="censorRecipe?page={{n}}">{{n}}</a></li>
+                            <li class="page-item {{#if active}}active{{/if}}"><a class="page-link" href="page={{n}}">{{n}}</a></li>
                             {{/paginate}}
                             {{#paginate pagination type="next"}}
-                            <li class="page-item {{#if disabled}}disabled{{/if}}"><a class="page-link page-link-first-last" href="censorRecipe?page={{n}}">Next</a></li>
+                            <li class="page-item {{#if disabled}}disabled{{/if}}"><a class="page-link page-link-first-last" href="page={{n}}">Next</a></li>
                             {{/paginate}}
                             {{#paginate pagination type="last"}}
-                            <li class="page-item {{#if disabled}}disabled{{/if}}"><a class="page-link page-link-first-last" href="censorRecipe?page={{n}}">Last</a></li>
+                            <li class="page-item {{#if disabled}}disabled{{/if}}"><a class="page-link page-link-first-last" href="page={{n}}">Last</a></li>
                             {{/paginate}}
                       </ul>
                     </nav>

@@ -10,14 +10,15 @@ const rejectDishSuccess = "Từ chối công thức thành công";
 const rejectDishFail = "Từ chối công thức thất bại";
 const addCommentSuccess = "Thêm bình luận thành công";
 const addCommentFail = "Thêm bình luận thất bại";
+const dishIsInWaiting = "Công thức đang chờ được quản trị viên kiểm duyệt !!!";
 // Constant variables
 const dishTypes = ["Món chính", "Món phụ", "Tráng miệng", "Món khai vị", "Salad", "Bánh", "Ăn sáng", "Soup", "Thức uống", "Nước sốt", "Snack", "Ăn trưa"];
 const cuisines = ["Món Mỹ", "Món Trung", "Món Pháp", "Món Ý", "Món Nhật", "Món Mexico", "Món Thái", "Món Việt", "Món Âu", "Món Tây", "Món Đông"];
 const diets = ["Không Gluent", "Không chứa sữa", "Ketogenic", "Vegetarian", "Lacto Vegetarian", "Ovo Vegetarian", "Vegan", "Pescetarian", "Paleo", "Primal", "Whole30"];
 const ingredientUnits = [
-    {key: "Trọng lượng", value: ["mg", "gram", "kg"]},
+    {key: "Trọng lượng", value: ["gram", "mg", "kg"]},
     {key: "Dung lượng", value: ["ml", "l"]},
-    {key: "Khác", value: ["thìa", "muỗng cà phê", "muỗng canh", "trái", "quả", "củ", "con", "ổ"]}
+    {key: "Khác", value: ["thìa", "muỗng cà phê", "muỗng canh", "trái", "quả", "củ", "con", "ổ", "lon"]}
 ];
 const imageStorageLink = "https://stunningrecipe.blob.core.windows.net/";
 const userPath = "user/";
@@ -51,6 +52,7 @@ const dishesPerPage = 8;
 const censorDishesPerPage = 5;
 const paginationMax = 5;
 const commentPerLoad = 5;
+const maxRelatedDishes = 6;
 const currency = "VND";
 const autoCompleteMaxResult = 10;
 const millisecondOfDay = 24 * 60 * 60 * 1000;
@@ -105,6 +107,7 @@ module.exports = {
     rejectDishFail,
     addCommentSuccess,
     addCommentFail,
+    dishIsInWaiting,
     // Constant variables
     dishTypes,
     cuisines,
@@ -128,6 +131,7 @@ module.exports = {
     censorDishesPerPage,
     paginationMax,
     commentPerLoad,
+    maxRelatedDishes,
     currency,
     autoCompleteMaxResult,
     millisecondOfDay,
