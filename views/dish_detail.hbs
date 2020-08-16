@@ -12,7 +12,7 @@
                     </h3>
                     <div class="dish-publish mt-1 mb-3">
                         <div class="recipe-by mr-4">
-                            <a href="/profile/{{user.userID}}">
+                            <a href="/profile/{{dish.createdBy}}">
                                 {{#ifCond dish.creator.userType '==' userType.admin}}
                                     <img src="/images/StunningRecipe.png"/>
                                 {{else}}
