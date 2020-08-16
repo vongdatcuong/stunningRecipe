@@ -24,20 +24,22 @@
                     <div class="card-title mb-4">
                         <div class="d-flex justify-content-start">
                             <div class="image-container">
-                                <img src="{{userProfile.avatarUrl}}"
-                                    id="imgProfile" style="width: 216px; height: 216px" class="img-thumbnail" />
+                                <img src="{{userProfile.avatarUrl}}" id="imgProfile" style="width: 216px; height: 216px"
+                                    class="img-thumbnail" />
 
                             </div>
                             <div class="userData ml-3">
                                 <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a
-                                        href="javascript:void(0);">{{userProfile.firstName}} {{userProfile.lastName}} (@{{userProfile.username}})</a></h2>
+                                        href="javascript:void(0);">{{userProfile.firstName}} {{userProfile.lastName}}
+                                        (@{{userProfile.username}})</a></h2>
                                 <span class="badge badge-success"
-                                    style="font-size: 1.2rem; font-weight: bold">?Blogger</span>
+                                    style="font-size: 1.2rem; font-weight: bold">Blogger</span>
                                 <br><br>
-                                <h6 class="d-block"><a href="javascript:void(0)">?300</a> Bài Blog đã đăng tải</h6>
+                                <h6 class="d-block"><a href="javascript:void(0)">{{postedDishesCount}}</a> Bài viết đã đăng tải</h6>
                                 <h6 class="d-block"> Tham gia ngày {{parseDate userProfile.createdDate "/"}}</h6>
                                 {{#if userProfile.phone}}
-                                <h6 class="d-block"> <i class="fa fa-phone" aria-hidden="true"></i> {{userProfile.phone}}</h6>
+                                <h6 class="d-block"> <i class="fa fa-phone" aria-hidden="true"></i>
+                                    {{userProfile.phone}}</h6>
                                 {{/if}}
                                 {{#if userProfile.email}}
                                 <h6 class="d-block"> <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -76,7 +78,110 @@
 
 
                                     <div class="container">
+                                        {{#if postedDishes}}
                                         <div class="row">
+                                            {{# each postedDishes}}
+                                            <div class="col-md-3">
+                                                <div class="item-inner card shadow">
+                                                    <div class="item-image">
+                                                        <a href="/dish/{{dishID}}">
+                                                            <img src="{{imageUrl}}" class="responsive" />
+                                                        </a>
+                                                        <a href="#" class="item-favorite">
+                                                            <span>{{favoriteNumber}}</span>
+                                                            {{#if isUserFavorite}}
+                                                            <i class="fa fa-heart"></i>
+                                                            {{else}}
+                                                            <i class="far fa-heart"></i>
+                                                            {{/if}}
+
+                                                        </a>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <div class="item-info-header">
+                                                            <div class="item-info-title">
+                                                                <a href="/dish/{{dishID}}">
+                                                                    <h5 class="truncate2">{{name}}</h5>
+                                                                </a>
+                                                            </div>
+                                                            <div class="item-info-stats">
+                                                                <ul class="item-info-stats-1">
+                                                                    <li class="stats-item">
+                                                                        <i class="fa fa-clock"></i>
+                                                                        <span>
+                                                                            <span>{{readyTime}}</span>
+                                                                            <span>min</span>
+                                                                        </span>
+                                                                    </li>
+                                                                    <li class="stats-item">
+                                                                        <i class="fa fa-eye"></i>
+                                                                        <span>
+                                                                            <span>{{totalView}}</span>
+                                                                        </span>
+                                                                    </li>
+                                                                </ul>
+                                                                <!-- Dish types -->
+                                                                <ul class="item-info-stats-2">
+                                                                    <li class="stats-item stats-item-dish-type">
+                                                                        <span class="truncate1" data-toggle="tooltip"
+                                                                            title="{{dishTypesStr}}">
+                                                                            <i class="fa fa-fire"></i>
+                                                                            {{# each dishTypes}}
+                                                                            <span><a
+                                                                                    herf="#">{{getDishTypeName dishTypeID}}</a></span>,&nbsp;
+                                                                            {{/each}}
+                                                                        </span>
+                                                                    </li>
+                                                                    <li class="stats-item stats-item-cuisine">
+                                                                        <span class="truncate1" data-toggle="tooltip"
+                                                                            title="{{cuisinesStr}}">
+                                                                            <i class="fa fa-tint"></i>
+                                                                            {{# each cuisines}}
+                                                                            <span><a
+                                                                                    herf="#">{{getCuisineName cuisineID}}</a></span>,&nbsp;
+                                                                            {{/each}}
+                                                                        </span>
+                                                                    </li>
+                                                                    <li class="stats-item stats-item-diet">
+                                                                        <span class="truncate1" data-toggle="tooltip"
+                                                                            title="{{dietsStr}}">
+                                                                            <i class="fa fa-leaf"></i>
+                                                                            {{# each diets}}
+                                                                            <span><a
+                                                                                    herf="#">{{getDietName dietID}}</a></span>,&nbsp;
+                                                                            {{/each}}
+                                                                        </span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-info-footer">
+                                                            <div class="item-rating">
+                                                                <input type="hidden"
+                                                                    class="starRating kv-ltr-theme-fas-star rating-loading"
+                                                                    value="{{rating}}" disabled data-size="xs" />
+                                                            </div>
+                                                            <br>
+                                                            <div class="recipe-by mt-3">
+                                                                <a href="/profile/{{creator.userID}}">
+                                                                    {{#ifCond creator.userType '==' ../userType.admin}}
+                                                                    <img src="/images/StunningRecipe.png" />
+                                                                    {{else}}
+                                                                    <img src="/images/user.jpg" />
+                                                                    {{/ifCond}}
+                                                                    {{creator.firstName}} {{creator.lastName}}
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{/each}}
+                                        </div>
+                                        {{else}}
+                                        <div>Người dùng chưa có bài viết nào</div>
+                                        {{/if}}
+                                        {{!-- <div class="row">
                                             <div class="col-md-3">
                                                 <div class="item-inner card shadow">
                                                     <div class="item-image">
@@ -381,10 +486,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                      
+                                        </div> --}}
 
-                                      
+
+
                                     </div>
                                 </div>
 

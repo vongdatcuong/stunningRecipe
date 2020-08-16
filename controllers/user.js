@@ -95,7 +95,41 @@ const profile = async(req, res) => {
     // Lấy ảnh đại diện
     userProfile.avatarUrl = () => constant.imageStorageLink + constant.userPath + userProfile.avatar;
     // Lấy dữ liệu các bài viết
+    const customDishTypes = constant.dishTypes.map((item, idx) => {
+        return { name: item, index: (idx) };
+    });
+    const customCuisines = constant.cuisines.map((item, idx) => {
+        return { name: item, index: idx };
+    });
+    const customDiets = constant.diets.map((item, idx) => {
+        return { name: item, index: idx };
+    });
+    // lấy danh sách các món ăn đã post
+    const postedDishes = await Dish.getDishes({ // query
+        createdBy: profileUserID
+    }, { // option
+        sort: { createdDate: -1 },
+        perPage: constant.homePerPage,
+        page: 1
+    });
 
+    const favoriteHashMap = {};
+    const allDishIDs = [
+        ...postedDishes.map((dish, index) => dish.dishID)
+    ];
+    if (req.user) {
+        const userFavoriteDishes = await User.getUserFavoriteDishes(req.user.userID, allDishIDs);
+        userFavoriteDishes.forEach((favDish, index) => {
+            favoriteHashMap[favDish.dishID] = 1
+        });
+    }
+    postedDishes.forEach((dish) => {
+        dish.imageUrl = () => constant.imageStorageLink + constant.dishPath + dish.image;
+        dish.isUserFavorite = favoriteHashMap[dish.dishID] != undefined;
+        dish.dishTypesStr = dish.dishTypes.map((item, idx) => constant.dishTypes[item.dishTypeID]).join(constant.commaSpace);
+        dish.cuisinesStr = dish.cuisines.map((item, idx) => constant.cuisines[item.cuisineID]).join(constant.commaSpace);
+        dish.dietsStr = dish.diets.map((item, idx) => constant.diets[item.dietID]).join(constant.commaSpace);
+    });
     // Lấy dữ liệu món ăn yêu thích
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +137,12 @@ const profile = async(req, res) => {
     res.render("profile", {
         title: constant.appName,
         user: req.user,
-        userProfile: userProfile
+        userProfile: userProfile,
+        postedDishes: postedDishes,
+        postedDishesCount: postedDishes.length,
+        dishTypes: constant.splitToChunk(customDishTypes, 6),
+        cuisines: customCuisines,
+        diets: customDiets,
     });
 };
 
