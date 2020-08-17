@@ -651,6 +651,13 @@ const postRecipe = async (req, res) => {
 
 /* Censor recipe */
 const censorRecipePage = async (req, res) => {
+    // Authorized User
+    if (req.user.userType != constant.userType.admin){
+        res.render("noAuthorityError.hbs", {
+            title: constant.appName,
+            message: constant.noAuthorityError
+        })
+    }
     const censorQuery = {
         status: constant.dishRecipeStatus.waiting
     };

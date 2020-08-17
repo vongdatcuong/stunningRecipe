@@ -6,10 +6,14 @@ var logger = require('morgan');
 var LocalStorage = require('node-localstorage').LocalStorage;
 localStorage = new LocalStorage('./scratch');
 const flash = require('connect-flash');
+const constant = require('./Utils/constant');
 
 // Database connection
 require('dotenv').config();
 require('./database/db');
+
+// Set default variables from database
+require('./default-variables.config.js');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -55,6 +59,7 @@ app.use(async function(req, res, next) {
         res.locals.user = req.user;
         res.locals.authenticated = !req.user.anonymous;
     }
+    res.locals.adminType = constant.userType.admin;
     next();
 });
 

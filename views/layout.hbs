@@ -126,7 +126,9 @@
                                 <div class="dropdown-menu" aria-labelledby="profileDropdown">
                                     <a class="dropdown-item" href="/yourInfo">Hồ sơ</a>
                                     <a class="dropdown-item" href="/changePwd">Thay đổi mật khẩu</a>
-                                    <a class="dropdown-item" href="/censorRecipe">Kiểm duyệt</a>
+                                    {{#ifCond user.userType '==' adminType}}
+                                        <a class="dropdown-item" href="/censorRecipe">Kiểm duyệt</a>
+                                    {{/ifCond}}
                                 </div>
                             </div>
                         </li>

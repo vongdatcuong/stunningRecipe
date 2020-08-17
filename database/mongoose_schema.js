@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 require("mongoose-long")(mongoose);
 const SchemaTypes = mongoose.Schema.Types;
 const AutoIncrement = require("mongoose-sequence")(mongoose);
-const constant = require('../Utils/constant');
+const constantForSchema = require('../Utils/constantForSchema');
 
 // User
 const userSchema = new mongoose.Schema({
@@ -123,7 +123,7 @@ dishSchema.virtual("comments", {
     localField: "dishID",
     foreignField: "dishID",
     justOne: false,
-    options: { sort: { createdDate: -1 }, limit: constant.commentPerLoad}
+    options: { sort: { createdDate: -1 }, limit: constantForSchema.commentPerLoad}
 });
 
 dishSchema.virtual("favoriteNumber", {
@@ -251,6 +251,9 @@ mongoose.model("Diet", dietSchema);
 // Parameter
 const parameterSchema = new mongoose.Schema({
     name: String,
+    type: String,
+    value: String,
+    status: Boolean
 }, { collection: "Parameters" });
 
 parameterSchema.index({ coords: "2dsphere" });
