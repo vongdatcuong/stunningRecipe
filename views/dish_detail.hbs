@@ -25,14 +25,15 @@
                             <span>{{parseDateTime dish.createdDate "/"}}</span>
                         </div>
                     </div>
-                    <div class="dish-favorite">
-                        <a href="#" class="">
+                    <div class="dish-favorite" style="color: red; font-size: 200%;">
+                        <a class="item-favorite">
                             <span>{{dish.favoriteNumber}}</span>
                             {{#if dish.isUserFavorite}}
-                                <i class="fa fa-heart"></i>
+                            <i class="fa fa-heart favorite-dish" id="{{dish.dishID}}"></i>
                             {{else}}
-                                <i class="far fa-heart"></i>
+                            <i class="far fa-heart favorite-dish" id="{{dish.dishID}}"></i>
                             {{/if}}
+
                         </a>
                     </div>
                     <!-- //tittle heading -->

@@ -267,6 +267,27 @@ const changePwd = async(req, res, next) => {
     }
 };
 
+/* Do Favorite */
+const doFavorite = async(req, res) => {
+    const dishID = parseInt(req.body.dishID);
+    const user = req.user;
+    const isFavorite = await User.userFavoriteDish(req.user.userID, dishID);
+    if (isFavorite != null) { // nếu đã có favorite rồi thì bỏ favorite
+        const removeFavorite = await User.removeFavoriteDish(req.user.userID, dishID);
+        res.json({
+            success: true,
+            message: constant.removeFavoriteSuccess
+        })
+    } else { // nếu chưa favorite thì add Favorite
+        const addFavorite = await User.addFavoriteDish(req.user.userID, dishID);
+        res.json({
+            success: true,
+            message: constant.addFavoriteSuccess
+        })
+    }
+
+}
+
 module.exports = {
     loginView,
     login,
@@ -280,4 +301,5 @@ module.exports = {
     uploadUserImageCtrl,
     changePwdView,
     changePwd,
+    doFavorite,
 };

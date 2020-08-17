@@ -73,10 +73,30 @@ module.exports = {
     },
     getUserFavoriteDishes(userID, dishIDs) {
         return UserFavoriteDish.find({
-            userID: userID, 
-            dishID: {$in: dishIDs}
-        })
-            .select({dishID: 1})
+                userID: userID,
+                dishID: { $in: dishIDs }
+            })
+            .select({ dishID: 1 })
             .exec();
-    }
+    },
+    userFavoriteDish(userID, dishID) {
+        return UserFavoriteDish.findOne({
+                userID: userID,
+                dishID: dishID
+            })
+            .exec();
+    },
+    addFavoriteDish(userID, dishID) {
+        return new UserFavoriteDish({
+            dishID: dishID,
+            userID: userID,
+            createdDate: Date.now()
+        }).save();
+    },
+    removeFavoriteDish(userID, dishID) {
+        return UserFavoriteDish.deleteOne({
+            dishID: dishID,
+            userID: userID
+        })
+    },
 };
