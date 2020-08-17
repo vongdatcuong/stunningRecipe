@@ -154,15 +154,15 @@
                                             <a href="/dish/{{dishID}}">
                                                 <img src="{{imageUrl}}" class="responsive"/>
                                             </a>
-                                            <a href="#" class="item-favorite">
+                                            <div class="item-favorite">
                                                 <span>{{favoriteNumber}}</span>
                                                 {{#if isUserFavorite}}
-                                                    <i class="fa fa-heart"></i>
+                                                    <i class="fa fa-heart favorite-dish" id="{{dishID}}"></i>
                                                 {{else}}
-                                                    <i class="far fa-heart"></i>
+                                                    <i class="far fa-heart favorite-dish" id="{{dishID}}"></i>
                                                 {{/if}}
                                                 
-                                            </a>
+                                            </div>
                                         </div>
                                         <div class="item-info">
                                             <div class="item-info-header">
@@ -275,15 +275,15 @@
                                             <a href="/dish/{{dishID}}">
                                                 <img src="{{imageUrl}}" class="responsive"/>
                                             </a>
-                                            <a href="#" class="item-favorite">
+                                            <div class="item-favorite">
                                                 <span>{{favoriteNumber}}</span>
                                                 {{#if isUserFavorite}}
-                                                    <i class="fa fa-heart"></i>
+                                                    <i class="fa fa-heart favorite-dish" id="{{dishID}}"></i>
                                                 {{else}}
-                                                    <i class="far fa-heart"></i>
+                                                    <i class="far fa-heart favorite-dish" id="{{dishID}}"></i>
                                                 {{/if}}
                                                 
-                                            </a>
+                                            </div>
                                         </div>
                                         <div class="item-info">
                                             <div class="item-info-header">

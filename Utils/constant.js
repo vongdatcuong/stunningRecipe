@@ -10,15 +10,17 @@ const rejectDishSuccess = "Từ chối công thức thành công";
 const rejectDishFail = "Từ chối công thức thất bại";
 const addCommentSuccess = "Thêm bình luận thành công";
 const addCommentFail = "Thêm bình luận thất bại";
+const addFavoriteSuccess = "Đã yêu thích món ăn";
+const removeFavoriteSuccess = "Đã bỏ yêu thích món ăn";
 const dishIsInWaiting = "Công thức đang chờ được quản trị viên kiểm duyệt !!!";
 // Constant variables
 const dishTypes = ["Món chính", "Món phụ", "Tráng miệng", "Món khai vị", "Salad", "Bánh", "Ăn sáng", "Soup", "Thức uống", "Nước sốt", "Snack", "Ăn trưa"];
 const cuisines = ["Món Mỹ", "Món Trung", "Món Pháp", "Món Ý", "Món Nhật", "Món Mexico", "Món Thái", "Món Việt", "Món Âu", "Món Tây", "Món Đông"];
 const diets = ["Không Gluent", "Không chứa sữa", "Ketogenic", "Vegetarian", "Lacto Vegetarian", "Ovo Vegetarian", "Vegan", "Pescetarian", "Paleo", "Primal", "Whole30"];
 const ingredientUnits = [
-    {key: "Trọng lượng", value: ["gram", "mg", "kg"]},
-    {key: "Dung lượng", value: ["ml", "l"]},
-    {key: "Khác", value: ["thìa", "muỗng cà phê", "muỗng canh", "trái", "quả", "củ", "con", "ổ", "lon"]}
+    { key: "Trọng lượng", value: ["gram", "mg", "kg"] },
+    { key: "Dung lượng", value: ["ml", "l"] },
+    { key: "Khác", value: ["thìa", "muỗng cà phê", "muỗng canh", "chén", "tô", "trái", "quả", "củ", "con", "ổ", "lon"] }
 ];
 const imageStorageLink = "https://stunningrecipe.blob.core.windows.net/";
 const userPath = "user/";
@@ -107,6 +109,8 @@ module.exports = {
     rejectDishFail,
     addCommentSuccess,
     addCommentFail,
+    addFavoriteSuccess,
+    removeFavoriteSuccess,
     dishIsInWaiting,
     // Constant variables
     dishTypes,

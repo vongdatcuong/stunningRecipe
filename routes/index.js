@@ -83,6 +83,9 @@ router.post('/uploadUserImage', upload.single('file'), userController.uploadUser
 router.get('/changePwd', requireLogin, userController.changePwdView);
 router.post('/changePwd', requireLogin, userController.changePwd);
 
+/* Do Favorite */
+router.post('/doFavorite', requireLogin, userController.doFavorite);
+
 /* Get Comments */
 router.get('/getComments', dishController.getComments);
 /* Add Comment */
