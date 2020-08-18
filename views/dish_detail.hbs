@@ -242,6 +242,12 @@
                         Đánh giá
                     </h4>
                     {{#if user}}
+                        {{#if dish.userReviewed}}    <!-- nếu user đã review món ăn rồi -->
+                        <div class="dish-rating" style="text-align: center;">
+                            <input type="hidden" class="dishDetailStarRating kv-ltr-theme-fas-star rating-loading" value="{{dish.userReviewed.rating}}" disabled data-size="xl"/>                         
+                            <div>Bạn đã đánh giá {{dish.userReviewed.rating}} sao cho món ăn này với nội dung: {{dish.userReviewed.content}}</div>
+                        </div>
+                        {{else}}
                         <div class="dish-rating" style="text-align: center;">
                             <input type="hidden" class="dishDetailStarRating kv-ltr-theme-fas-star rating-loading" value="{{dish.rating}}" data-size="xl"/>                         
                         </div>
@@ -251,6 +257,7 @@
                                 <button type="button" class="dish-review-submit btn violet-link-btn px-4 pull-right">Gửi</button>
                             </div>
                             <div class="clearfix"></div>
+                        {{/if}}
                     {{else}}
                              <div class="p-3">
                                 <a href="/login?retUrl=/dish/{{dish.dishID}}" class="" style="color: #7d00bb">Đăng nhập </a> đánh giá món ăn này !!!

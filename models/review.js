@@ -4,23 +4,12 @@ const constant = require('../Utils/constant');
 
 
 module.exports = {
-    // getComments(query, option) {
-    //     option = option || {};
-    //     let findPromise = Comment.find(query)
-    //         .select({});
-    //     if (option.perPage) {
-    //         findPromise = findPromise.limit(option.perPage);
-    //         if (option.page) {
-    //             findPromise = findPromise.skip(option.perPage * (option.page - 1));
-    //         }
-    //     }
-    //     if (option.sort) {
-    //         findPromise = findPromise.sort(option.sort);
-    //     }
-    //     return findPromise
-    //         .populate('user')
-    //         .exec();
-    // },
+    getUserReview(userID, dishID) {
+        let findPromise = Review.findOne({ dishID: dishID, userID: userID })
+            .select({});
+        return findPromise
+            .exec();
+    },
     // getCountComment(query) {
     //     return Comment.count(query).exec();
     // },

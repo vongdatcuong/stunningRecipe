@@ -21,6 +21,13 @@ const dishDetail = async(req, res) => {
             })
         }
 
+        // get user's review that existed
+        if (req.user) {
+            dish.userReviewed = await Review.getUserReview(req.user.userID, dishID);
+        } else {
+            dish.userReviewed = false;
+        }
+
         const countComment = await Comment.getCountComment({ dishID: dishID });
         dish.imageUrl = constant.imageStorageLink + constant.dishPath + dish.image;
         // User favorite
