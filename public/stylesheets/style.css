@@ -18,7 +18,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 html,
 body {
     margin: 0;
-    font-size: 100%;
+    font-size: 16.5px;
     background: #fff;
     font-family: "Montserrat-Regular" !important;
     background-color: #e9ebee !important;
@@ -1763,11 +1763,12 @@ a.filter-link:hover {
 }
 
 .dish-instruction .dish-step .dish-step-image {
-    text-align: center;
+    text-align: left;
 }
 
 .dish-instruction .dish-step .dish-step-image img {
-    max-height: 450px;
+    width: 150px;
+    height: 150px;
     border-radius: 3px;
 }
 

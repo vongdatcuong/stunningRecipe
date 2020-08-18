@@ -133,6 +133,9 @@ hbs.registerHelper("getUserAvatarUrl", function(avatar) {
 hbs.registerHelper("getDishImageUrl", function(dishImage) {
     return (dishImage)? constant.imageStorageLink + constant.dishPath + dishImage : constant.defaultUserAvatar;
 });
+hbs.registerHelper("getStepImageUrl", function(stepImage) {
+    return (stepImage)? constant.imageStorageLink + constant.dishStepPath + stepImage : constant.defaultUserAvatar;
+});
 const handlebarsHelpers = require('handlebars-helpers');
 const helpers = handlebarsHelpers();
 hbs.registerHelper("is", helpers.is);
