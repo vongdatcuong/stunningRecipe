@@ -17,12 +17,13 @@
     <!-- //Meta tag Keywords -->
 
     <link rel="shortcut icon" type="image/png" href="/images/favicon.png" />
-    <!-- Custom-Files -->
-    <link href="/stylesheets/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+
     <!-- Bootstrap css -->
+    <link href="/stylesheets/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- LightSlider css -->
     <link href="/stylesheets/lightslider.min.css" rel="stylesheet" type="text/css" media="all" />
-    <!-- Lightslider css -->
-    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- LightGallery css -->
+    <link href="/vendor/css/lightGallery/lightgallery.min.css" rel="stylesheet" type="text/css" media="all" />
     <!-- FilePond css -->
     <link href="/vendor/css/filepond/filepond.min.css" rel="stylesheet" type="text/css" media="all" />
     <link href="/vendor/css/filepond/filepond-plugin-image-review.css" rel="stylesheet" type="text/css" media="all" />
@@ -33,7 +34,6 @@
     <!-- pop-up-box -->
     <link href="/stylesheets/menu.css" rel="stylesheet" type="text/css" media="all" />
     <!-- menu style -->
-    <!-- //Custom-Files -->
 
     <!-- Star rating css -->
     <link href="/vendor/css/star-rating/star-rating.min.css" rel="stylesheet" type="text/css" media="all" />
@@ -44,6 +44,9 @@
 
     <!-- Sweetalert2 css -->
     <link href="/vendor/css/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" media="all" />
+
+    <!-- Custom-Files -->
+    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" media="all" />
 
     <!-- web fonts -->
     <link
@@ -758,6 +761,15 @@
         });
     </script>
     <!-- //LightSlider -->
+
+    <!-- LightGallery -->
+    <script type="text/javascript" src="/vendor/javascript/lightGallery/lightgallery.min.js"></script>
+    <script type="text/javascript">
+        $('.lightGallery').lightGallery({
+            loop: false
+        });
+    </script>
+    <!-- //LightGallery -->
 
     <!-- Star rating -->
     <script type="text/javascript" src="/vendor/javascript/star-rating/star-rating.min.js"></script>

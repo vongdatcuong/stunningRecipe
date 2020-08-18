@@ -33,7 +33,7 @@ const dishDetail = async(req, res) => {
         dish.ingredients = constant.splitToChunk(dish.ingredients, 2);
         dish.steps.forEach((step, idx) => {
             step.equipment = step.equipment || constant.emptyStr;
-            step.image = (step.image) ? constant.imageStorageLink + constant.dishStepPath + step.image.split(constant.imageUrlSeperator)[0] : constant.emptyStr;
+            step.images = step.image.split(constant.imageUrlSeperator);
         })
 
         // Dish Types
