@@ -224,11 +224,7 @@
                                                 <br>
                                                 <div class="recipe-by mt-3">
                                                     <a href="/profile/{{creator.userID}}">
-                                                        {{#ifCond creator.userType '==' ../userType.admin}}
-                                                            <img src="/images/StunningRecipe.png"/>
-                                                        {{else}}
-                                                            <img src="/images/user.jpg"/>
-                                                        {{/ifCond}}
+                                                        <img src="{{getUserAvatarUrl creator.avatar}}" alt="" class="img-circle"/>
                                                         {{creator.firstName}} {{creator.lastName}}
                                                     </a>
                                                 </div>
@@ -344,11 +340,7 @@
                                                 </div>
                                                 <div class="recipe-by mt-3">
                                                     <a href="/profile/{{creator.userID}}">
-                                                        {{#ifCond creator.userType '==' ../userType.admin}}
-                                                            <img src="/images/StunningRecipe.png"/>
-                                                        {{else}}
-                                                            <img src="/images/user.jpg"/>
-                                                        {{/ifCond}}
+                                                        <img src="{{getUserAvatarUrl creator.avatar}}" alt="" class="img-circle"/>
                                                         {{creator.firstName}} {{creator.lastName}}
                                                     </a>
                                                 </div>

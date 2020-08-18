@@ -25,11 +25,7 @@
                     <div class="dish-publish mt-1 mb-3">
                         <div class="recipe-by mr-4">
                             <a href="/profile/{{dish.createdBy}}">
-                                {{#ifCond dish.creator.userType '==' userType.admin}}
-                                    <img src="/images/StunningRecipe.png"/>
-                                {{else}}
-                                    <img src="/images/user.jpg"/>
-                                {{/ifCond}}
+                                <img src="{{getUserAvatarUrl dish.creator.avatar}}" alt="" class="img-circle" style="width: 50px;"/>
                                 {{dish.creator.firstName}} {{dish.creator.lastName}}
                             </a>
                         </div>
@@ -263,12 +259,13 @@
                             <ul class="dish-comment-list media-list">
                                 {{# each dish.comments}}
                                     <li class="media">
-                                        <a href="#" class="pull-left">
-                                            {{#ifCond user.userType '==' ../userType.admin}}
+                                        <a href="/profile/{{user.userID}}" class="pull-left">
+                                            {{!-- {{#ifCond user.userType '==' ../userType.admin}}
                                                 <img src="/images/StunningRecipe.png" alt="" class="img-circle"/>
                                             {{else}}
                                                 <img src="{{getUserAvatarUrl user.avatar}}" alt="" class="img-circle"/>
-                                            {{/ifCond}}
+                                            {{/ifCond}} --}}
+                                            <img src="{{getUserAvatarUrl user.avatar}}" alt="" class="img-circle"/>
                                             
                                         </a>
                                         <div class="media-body ml-3">

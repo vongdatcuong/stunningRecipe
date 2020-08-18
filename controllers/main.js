@@ -3,27 +3,27 @@ const User = require('../models/user');
 const constant = require("../Utils/constant");
 
 /* Home */
-const home = async (req, res) => {
-    const customDishTypes = constant.dishTypes.map((item, idx) =>  {
-        return {name: item, index: (idx)};
+const home = async(req, res) => {
+    const customDishTypes = constant.dishTypes.map((item, idx) => {
+        return { name: item, index: (idx) };
     });
-    const customCuisines = constant.cuisines.map((item, idx) =>  {
-        return {name: item, index: idx};
+    const customCuisines = constant.cuisines.map((item, idx) => {
+        return { name: item, index: idx };
     });
-    const customDiets = constant.diets.map((item, idx) =>  {
-        return {name: item, index: idx};
+    const customDiets = constant.diets.map((item, idx) => {
+        return { name: item, index: idx };
     });
 
     // Popular dishes
     const popularDishes = await Dish.getDishes({}, {
-        sort: {totalView: -1, rating: -1, createdDate: -1},
+        sort: { totalView: -1, rating: -1, createdDate: -1 },
         perPage: constant.homePerPage,
         page: 1
     });
 
     // New Dishes
     const newDishes = await Dish.getDishes({}, {
-        sort: {createdDate: -1},
+        sort: { createdDate: -1 },
         perPage: constant.homePerPage,
         page: 1
     });
@@ -34,7 +34,7 @@ const home = async (req, res) => {
         ...popularDishes.map((dish, index) => dish.dishID),
         ...newDishes.map((dish, index) => dish.dishID),
     ];
-    if (req.user){
+    if (req.user) {
         const userFavoriteDishes = await User.getUserFavoriteDishes(req.user.userID, allDishIDs);
         userFavoriteDishes.forEach((favDish, index) => {
             favoriteHashMap[favDish.dishID] = 1

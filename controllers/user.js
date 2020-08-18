@@ -151,6 +151,7 @@ const profile = async(req, res) => {
         title: constant.appName,
         user: req.user,
         userProfile: userProfile,
+        userType: constant.userType,
         postedDishes: postedDishes,
         postedDishesCount: postedDishes.length,
         favoritedDishes: favoritedDishes,

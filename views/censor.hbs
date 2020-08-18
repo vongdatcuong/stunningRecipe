@@ -54,11 +54,7 @@
                                         <div class="mt-3 text-center">
                                             <div class="waiting-recipe-creator recipe-by">
                                                 <a href="/profile/{{creator.userID}}">
-                                                    {{#ifCond creator.userType '==' userType.admin}}
-                                                        <img src="/images/StunningRecipe.png"/>
-                                                    {{else}}
-                                                        <img src="/images/user.jpg"/>
-                                                    {{/ifCond}}
+                                                    <img src="{{getUserAvatarUrl creator.avatar}}" alt="" class="img-circle"/>
                                                     {{creator.firstName}} {{creator.lastName}}
                                                 </a>
                                             </div>

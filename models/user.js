@@ -117,8 +117,6 @@ module.exports = {
             .populate({
                 path: 'dish',
                 populate: [{ path: 'creator' }, { path: 'favoriteNumber' }, { path: 'dishTypes' }, { path: 'cuisines' }, { path: 'diets' }, ]
-
-
             })
             .exec();
     },

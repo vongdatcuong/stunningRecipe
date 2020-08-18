@@ -32,8 +32,13 @@
                                 <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a
                                         href="javascript:void(0);">{{userProfile.firstName}} {{userProfile.lastName}}
                                         (@{{userProfile.username}})</a></h2>
+                                {{#ifCond userProfile.userType '==' userType.admin}}
+                                <span class="badge badge-danger"
+                                    style="font-size: 1.2rem; font-weight: bold">Admin</span>
+                                {{else}}
                                 <span class="badge badge-success"
                                     style="font-size: 1.2rem; font-weight: bold">Blogger</span>
+                                {{/ifCond}}
                                 <br><br>
                                 <h6 class="d-block"><a href="javascript:void(0)">{{postedDishesCount}}</a> Bài viết đã
                                     đăng tải</h6>
@@ -47,10 +52,10 @@
                                     {{userProfile.email}}</h6>
                                 {{/if}}
                                 <h6 class="d-block">
-                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 10px;"><a
+                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 10px;" onclick="window.location.href='https://www.facebook.com/nhoxtheanh';"><a
                                             href="https://www.facebook.com/nhoxtheanh"><i class="fa fa-facebook"
                                                 aria-hidden="true"></i></a></button>
-                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 10px;"><a
+                                    <button type="button" class="btn btn-outline-primary" style="margin-right: 10px;"  onclick="window.location.href='https://www.instagram.com/nhoxtheanh';"><a
                                             href="https://www.instagram.com/nhoxtheanh"><i class="fa fa-instagram"
                                                 aria-hidden="true"></i></a></button>
                                 </h6>
@@ -165,11 +170,12 @@
                                                             <br>
                                                             <div class="recipe-by mt-3">
                                                                 <a href="/profile/{{creator.userID}}">
-                                                                    {{#ifCond creator.userType '==' ../userType.admin}}
+                                                                    {{!-- {{#ifCond creator.userType '==' ../userType.admin}}
                                                                     <img src="/images/StunningRecipe.png" />
                                                                     {{else}}
                                                                     <img src="/images/user.jpg" />
-                                                                    {{/ifCond}}
+                                                                    {{/ifCond}} --}}
+                                                                    <img src="{{getUserAvatarUrl creator.avatar}}" alt="" class="img-circle"/>
                                                                     {{creator.firstName}} {{creator.lastName}}
                                                                 </a>
                                                             </div>
@@ -279,11 +285,12 @@
                                                             <br>
                                                             <div class="recipe-by mt-3">
                                                                 <a href="/profile/{{dish.creator.userID}}">
-                                                                    {{#ifCond dish.creator.userType '==' ../userType.admin}}
+                                                                    {{!-- {{#ifCond dish.creator.userType '==' ../userType.admin}}
                                                                     <img src="/images/StunningRecipe.png" />
                                                                     {{else}}
                                                                     <img src="/images/user.jpg" />
-                                                                    {{/ifCond}}
+                                                                    {{/ifCond}} --}}
+                                                                    <img src="{{getUserAvatarUrl dish.creator.avatar}}" alt="" class="img-circle"/>
                                                                     {{dish.creator.firstName}} {{dish.creator.lastName}}
                                                                 </a>
                                                             </div>

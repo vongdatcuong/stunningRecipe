@@ -9,93 +9,93 @@ const { dishTypes } = require("../Utils/constant");
 const constantForSchema = require("../Utils/constantForSchema");
 
 /* Dish Detail */
-const dishDetail = async (req, res) => {
-    const dishID = parseInt(req.params.dishID);
-    const dish = await Dish.getDishAndUpdateView(dishID);
-    // Check if dish is approved
-    if (dish.status != constant.dishRecipeStatus.accepted){
-        res.render("inHandling", {
-            title: constant.appName,
-            message: constant.dishIsInWaiting
+const dishDetail = async(req, res) => {
+        const dishID = parseInt(req.params.dishID);
+        const dish = await Dish.getDishAndUpdateView(dishID);
+        // Check if dish is approved
+        if (dish.status != constant.dishRecipeStatus.accepted) {
+            res.render("inHandling", {
+                title: constant.appName,
+                message: constant.dishIsInWaiting
+            })
+        }
+
+        const countComment = await Comment.getCountComment({ dishID: dishID });
+        dish.imageUrl = constant.imageStorageLink + constant.dishPath + dish.image;
+        // User favorite
+        if (req.user) {
+            dish.isUserFavorite = await Dish.isDishUserFavorite(dishID, req.user.userID);
+        } else {
+            dish.isUserFavorite = false;
+        }
+        dish.nutritionsStr = dish.nutritions.map((item, idx) => item.nutrition.name).join(constant.commaSpace);
+        dish.ingredients = constant.splitToChunk(dish.ingredients, 2);
+        dish.steps.forEach((step, idx) => {
+            step.equipment = step.equipment || constant.emptyStr;
+            step.image = (step.image) ? constant.imageStorageLink + constant.dishStepPath + step.image.split(constant.imageUrlSeperator)[0] : constant.emptyStr;
         })
+
+        // Dish Types
+        const dishTypeIDs = [];
+        const dishTypeNames = [];
+        dish.dishTypes.forEach((item, idx) => {
+            dishTypeIDs.push(item.dishTypeID);
+            dishTypeNames.push(constant.dishTypes[item.dishTypeID - 1]);
+        })
+        dish.dishTypesStr = dishTypeNames.join(constant.commaSpace);
+
+        // Cuisines
+        const cuisineIDs = [];
+        const cuisineNames = [];
+        dish.cuisines.forEach((item, idx) => {
+            cuisineIDs.push(item.cuisineID);
+            cuisineNames.push(constant.cuisines[item.cuisineID - 1]);
+        })
+        dish.cuisinesStr = cuisineNames.join(constant.commaSpace);
+
+        // Diets
+        const dietIDs = [];
+        const dietNames = [];
+        dish.diets.forEach((item, idx) => {
+            dietIDs.push(item.dietID);
+            dietNames.push(constant.diets[item.dietID - 1]);
+        })
+
+        dish.dietsStr = dietNames.join(constant.commaSpace);
+
+        // Related dishes
+        let relatedDishes = await Dish.getRelatedDishes({
+            dishID: { $ne: dishID }
+        }, {
+            perPage: constant.maxRelatedDishes
+        }, {
+            dishTypes: dishTypeIDs,
+            cuisines: cuisineIDs,
+            diets: dietIDs
+        });
+        relatedDishes = (relatedDishes.length > 0) ? (constant.splitToChunk(relatedDishes[0].dishes, 2)) : [];
+        res.render('dish_detail', {
+            title: dish.name,
+            dish: dish,
+            relatedDishes,
+            userType: constant.userType,
+            hasMoreComments: (countComment > constantForSchema.commentPerLoad) ? true : false
+        });
     }
-
-    const countComment = await Comment.getCountComment({dishID: dishID});
-    dish.imageUrl = constant.imageStorageLink + constant.dishPath + dish.image;
-    // User favorite
-    if (req.user){
-        dish.isUserFavorite = await Dish.isDishUserFavorite(dishID, req.user.userID);
-    } else {
-        dish.isUserFavorite = false;
-    }
-    dish.nutritionsStr = dish.nutritions.map((item, idx) => item.nutrition.name).join(constant.commaSpace);
-    dish.ingredients = constant.splitToChunk(dish.ingredients, 2);
-    dish.steps.forEach((step, idx) => {
-        step.equipment = step.equipment || constant.emptyStr;
-        step.image = (step.image)? constant.imageStorageLink + constant.dishStepPath + step.image.split(constant.imageUrlSeperator)[0] : constant.emptyStr;
-    })
-
-    // Dish Types
-    const dishTypeIDs = [];
-    const dishTypeNames = [];
-    dish.dishTypes.forEach((item, idx) => {
-        dishTypeIDs.push(item.dishTypeID);
-        dishTypeNames.push(constant.dishTypes[item.dishTypeID - 1]);
-    })
-    dish.dishTypesStr = dishTypeNames.join(constant.commaSpace);
-
-    // Cuisines
-    const cuisineIDs = [];
-    const cuisineNames = [];
-    dish.cuisines.forEach((item, idx) => {
-        cuisineIDs.push(item.cuisineID);
-        cuisineNames.push(constant.cuisines[item.cuisineID - 1]);
-    })
-    dish.cuisinesStr = cuisineNames.join(constant.commaSpace);
-
-    // Diets
-    const dietIDs = [];
-    const dietNames = [];
-    dish.diets.forEach((item, idx) => {
-        dietIDs.push(item.dietID);
-        dietNames.push(constant.diets[item.dietID - 1]);
-    })
-
-    dish.dietsStr = dietNames.join(constant.commaSpace);
-
-    // Related dishes
-    let relatedDishes = await Dish.getRelatedDishes({
-        dishID: {$ne: dishID}
-    }, {
-        perPage: constant.maxRelatedDishes
-    }, {
-        dishTypes: dishTypeIDs,
-        cuisines: cuisineIDs,
-        diets: dietIDs
+    /* Dishes */
+const dishes = async(req, res) => {
+    const customDishTypes = constant.dishTypes.map((item, idx) => {
+        return { name: item, index: (idx) };
     });
-    relatedDishes = (relatedDishes.length > 0)? (constant.splitToChunk(relatedDishes[0].dishes, 2)) : [];
-    res.render('dish_detail', {
-        title: dish.name,
-        dish: dish,
-        relatedDishes,
-        userType: constant.userType,
-        hasMoreComments: (countComment > constantForSchema.commentPerLoad)? true : false
+    const customCuisines = constant.cuisines.map((item, idx) => {
+        return { name: item, index: idx };
     });
-}
-/* Dishes */
-const dishes = async (req, res) => {
-    const customDishTypes = constant.dishTypes.map((item, idx) =>  {
-        return {name: item, index: (idx)};
-    });
-    const customCuisines = constant.cuisines.map((item, idx) =>  {
-        return {name: item, index: idx};
-    });
-    const customDiets = constant.diets.map((item, idx) =>  {
-        return {name: item, index: idx};
+    const customDiets = constant.diets.map((item, idx) => {
+        return { name: item, index: idx };
     });
 
     const getOption = {
-        sort: {createdDate: -1},
+        sort: { createdDate: -1 },
         perPage: constant.dishesPerPage,
         page: parseInt(req.query.page) || 1
     }
@@ -103,7 +103,7 @@ const dishes = async (req, res) => {
     req.session.originalUrl = originalUrl;
 
     // Filter Dish Types
-    if(req.query.dishTypes){
+    if (req.query.dishTypes) {
         localStorage.setItem('dishTypes', req.query.dishTypes || req.params.dishTypes);
     } else if (req.params.dishTypes) {
         localStorage.setItem('dishTypes', req.params.dishTypes);
@@ -112,7 +112,7 @@ const dishes = async (req, res) => {
     }
 
     // Filter Cuisines
-    if(req.query.cuisines){
+    if (req.query.cuisines) {
         localStorage.setItem('cuisines', req.query.cuisines || req.params.cuisines);
     } else if (req.params.cuisines) {
         localStorage.setItem('cuisines', req.params.cuisines);
@@ -121,7 +121,7 @@ const dishes = async (req, res) => {
     }
 
     // Filter Cuisines
-    if(req.query.diets){
+    if (req.query.diets) {
         localStorage.setItem('diets', req.query.diets || req.params.diets);
     } else if (req.params.diets) {
         localStorage.setItem('diets', req.params.diets);
@@ -137,45 +137,45 @@ const dishes = async (req, res) => {
 
     let queryUrl = constant.emptyStr;
     // Dish Types
-    if(localDishTypes && localDishTypes !== constant.emptyStr){
+    if (localDishTypes && localDishTypes !== constant.emptyStr) {
         populateOption.dishTypes = JSON.parse(localDishTypes);
         // Active filter
         populateOption.dishTypes.forEach((dishType) => {
-            customDishTypes[dishType - 1].isActive = true;
-        })
-        // Add to query url
-        queryUrl+= `dishTypes=${localDishTypes}&`;
-    } 
+                customDishTypes[dishType - 1].isActive = true;
+            })
+            // Add to query url
+        queryUrl += `dishTypes=${localDishTypes}&`;
+    }
     // Cuisines
-    if(localCuisines && localCuisines !== constant.emptyStr){
+    if (localCuisines && localCuisines !== constant.emptyStr) {
         populateOption.cuisines = JSON.parse(localCuisines);
         // Active filter
         populateOption.cuisines.forEach((cuisine) => {
-            customCuisines[cuisine - 1].isActive = true;
-        })
-        // Add to query url
-        queryUrl+= `cuisines=${localCuisines}&`;
-    } 
+                customCuisines[cuisine - 1].isActive = true;
+            })
+            // Add to query url
+        queryUrl += `cuisines=${localCuisines}&`;
+    }
     // Diets
-    if(localDiets && localDiets !== constant.emptyStr){
+    if (localDiets && localDiets !== constant.emptyStr) {
         populateOption.diets = JSON.parse(localDiets);
         // Active filter
         populateOption.diets.forEach((diet) => {
-            if (diet > 0){
-                customDiets[diet - 1].isActive = true;
-            }
-        })
-        // Add to query url
-        queryUrl+= `diets=${localDiets}&`;
-    } 
+                if (diet > 0) {
+                    customDiets[diet - 1].isActive = true;
+                }
+            })
+            // Add to query url
+        queryUrl += `diets=${localDiets}&`;
+    }
 
     const result = await Dish.getFilterDishes({}, getOption, populateOption);
     const dishes = result[0].dishes;
-    const count = (result[0].count.length > 0)? result[0].count[0].count : 0;
+    const count = (result[0].count.length > 0) ? result[0].count[0].count : 0;
 
     // User favorite Dishes
     const favoriteHashMap = {};
-    if (req.user){
+    if (req.user) {
         const userFavoriteDishes = await User.getUserFavoriteDishes(req.user.userID, dishes.map((dish, index) => dish.dishID));
         userFavoriteDishes.forEach((favDish, index) => {
             favoriteHashMap[favDish.dishID] = 1
@@ -185,10 +185,10 @@ const dishes = async (req, res) => {
     dishes.forEach((dish) => {
         dish.imageUrl = () => constant.imageStorageLink + constant.dishPath + dish.image;
         // Is User favorite dishe
-        if (req.user){
+        if (req.user) {
             dish.isUserFavorite = favoriteHashMap[dish.dishID] != undefined;
         }
-        
+
         dish.dishTypesStr = dish.dishTypes.map((item, idx) => constant.dishTypes[item.dishTypeID - 1]).join(constant.commaSpace);
         dish.cuisinesStr = dish.cuisines.map((item, idx) => constant.cuisines[item.cuisineID - 1]).join(constant.commaSpace);
         dish.dietsStr = dish.diets.map((item, idx) => constant.diets[item.dietID - 1]).join(constant.commaSpace);
@@ -204,28 +204,28 @@ const dishes = async (req, res) => {
         dishTypes: constant.splitToChunk(customDishTypes, 6),
         cuisines: customCuisines,
         diets: customDiets,
-        pagination: { page: getOption.page, pageCount: Math.ceil(count / getOption.perPage)},
+        pagination: { page: getOption.page, pageCount: Math.ceil(count / getOption.perPage) },
         count: count,
         queryUrl: "/dishes?" + queryUrl
     });
 }
 
 /* Search Dishes */
-const search = async (req, res) => {
-    const customDishTypes = constant.dishTypes.map((item, idx) =>  {
-        return {name: item, index: (idx)};
+const search = async(req, res) => {
+    const customDishTypes = constant.dishTypes.map((item, idx) => {
+        return { name: item, index: (idx) };
     });
-    const customCuisines = constant.cuisines.map((item, idx) =>  {
-        return {name: item, index: idx};
+    const customCuisines = constant.cuisines.map((item, idx) => {
+        return { name: item, index: idx };
     });
-    const customDiets = constant.diets.map((item, idx) =>  {
-        return {name: item, index: idx};
+    const customDiets = constant.diets.map((item, idx) => {
+        return { name: item, index: idx };
     });
 
     // Options
     const queryOption = {};
     const getOption = {
-        sort: {createdDate: -1},
+        sort: { createdDate: -1 },
         perPage: constant.dishesPerPage,
         page: parseInt(req.query.page) || 1
     }
@@ -238,21 +238,21 @@ const search = async (req, res) => {
     localStorage.setItem('ingredientName', constant.emptyStr);
     localStorage.setItem('nutritionName', constant.emptyStr);
     // Dish Name
-    if(req.query.dishName){
+    if (req.query.dishName) {
         localStorage.setItem('dishName', req.query.dishName || req.params.dishName);
     } else if (req.params.diets) {
         localStorage.setItem('dishName', req.params.dishName);
     } else {
 
         // Ingredient name
-        if(req.query.ingredientName){
+        if (req.query.ingredientName) {
             localStorage.setItem('ingredientName', req.query.ingredientName || req.params.ingredientName);
         } else if (req.params.ingredientName) {
             localStorage.setItem('ingredientName', req.params.ingredientName);
         } else {
 
             // Nutrition name
-            if(req.query.nutritionName){
+            if (req.query.nutritionName) {
                 localStorage.setItem('nutritionName', req.query.nutritionName || req.params.nutritionName);
             } else if (req.params.nutritionName) {
                 localStorage.setItem('nutritionName', req.params.nutritionName);
@@ -261,7 +261,7 @@ const search = async (req, res) => {
     }
 
     // Filter Dish Types
-    if(req.query.dishTypes){
+    if (req.query.dishTypes) {
         localStorage.setItem('dishTypes', req.query.dishTypes || req.params.dishTypes);
     } else if (req.params.dishTypes) {
         localStorage.setItem('dishTypes', req.params.dishTypes);
@@ -270,7 +270,7 @@ const search = async (req, res) => {
     }
 
     // Filter Cuisines
-    if(req.query.cuisines){
+    if (req.query.cuisines) {
         localStorage.setItem('cuisines', req.query.cuisines || req.params.cuisines);
     } else if (req.params.cuisines) {
         localStorage.setItem('cuisines', req.params.cuisines);
@@ -279,7 +279,7 @@ const search = async (req, res) => {
     }
 
     // Filter Cuisines
-    if(req.query.diets){
+    if (req.query.diets) {
         localStorage.setItem('diets', req.query.diets || req.params.diets);
     } else if (req.params.diets) {
         localStorage.setItem('diets', req.params.diets);
@@ -298,38 +298,38 @@ const search = async (req, res) => {
     const localNutritionName = localStorage.getItem('nutritionName');
 
     // Dish Name
-    if(localDishName && localDishName !== constant.emptyStr){
-        queryOption.name = { 
-            $regex: localDishName, 
-            $options: "i" 
+    if (localDishName && localDishName !== constant.emptyStr) {
+        queryOption.name = {
+            $regex: localDishName,
+            $options: "i"
         };
         // Active filter
         searchKeyword = localDishName;
         searchType = "dishName";
         searchTypeTitle = constant.searchTypeOptionTitle[searchType];
         // Add to query url
-        queryUrl+= `dishName=${localDishName}&`;
-    } 
+        queryUrl += `dishName=${localDishName}&`;
+    }
 
     // Ingredient Name
-    if(localIngredientName && localIngredientName !== constant.emptyStr){
+    if (localIngredientName && localIngredientName !== constant.emptyStr) {
         populateOption.ingredientName = localIngredientName;
         searchKeyword = localIngredientName;
         searchType = "ingredientName";
         searchTypeTitle = constant.searchTypeOptionTitle[searchType];
         // Add to query url
-        queryUrl+= `ingredientName=${localIngredientName}&`;
-    } 
+        queryUrl += `ingredientName=${localIngredientName}&`;
+    }
 
     // Nutrition Name
-    if(localNutritionName && localNutritionName !== constant.emptyStr){
+    if (localNutritionName && localNutritionName !== constant.emptyStr) {
         populateOption.nutritionName = localNutritionName;
         searchKeyword = localNutritionName;
         searchType = "nutritionName";
         searchTypeTitle = constant.searchTypeOptionTitle[searchType];
         // Add to query url
-        queryUrl+= `nutritionName=${localNutritionName}&`;
-    } 
+        queryUrl += `nutritionName=${localNutritionName}&`;
+    }
 
     // Filter values
     const localDishTypes = localStorage.getItem('dishTypes');
@@ -337,45 +337,45 @@ const search = async (req, res) => {
     const localDiets = localStorage.getItem('diets');
 
     // Dish Types
-    if(localDishTypes && localDishTypes !== constant.emptyStr){
+    if (localDishTypes && localDishTypes !== constant.emptyStr) {
         populateOption.dishTypes = JSON.parse(localDishTypes);
         // Active filter
         populateOption.dishTypes.forEach((dishType) => {
-            customDishTypes[dishType - 1].isActive = true;
-        })
-        // Add to query url
-        queryUrl+= `dishTypes=${localDishTypes}&`;
-    } 
+                customDishTypes[dishType - 1].isActive = true;
+            })
+            // Add to query url
+        queryUrl += `dishTypes=${localDishTypes}&`;
+    }
     // Cuisines
-    if(localCuisines && localCuisines !== constant.emptyStr){
+    if (localCuisines && localCuisines !== constant.emptyStr) {
         populateOption.cuisines = JSON.parse(localCuisines);
         // Active filter
         populateOption.cuisines.forEach((cuisine) => {
-            customCuisines[cuisine - 1].isActive = true;
-        })
-        // Add to query url
-        queryUrl+= `cuisines=${localCuisines}&`;
-    } 
+                customCuisines[cuisine - 1].isActive = true;
+            })
+            // Add to query url
+        queryUrl += `cuisines=${localCuisines}&`;
+    }
     // Diets
-    if(localDiets && localDiets !== constant.emptyStr){
+    if (localDiets && localDiets !== constant.emptyStr) {
         populateOption.diets = JSON.parse(localDiets);
         // Active filter
         populateOption.diets.forEach((diet) => {
-            if (diet > 0){
-                customDiets[diet - 1].isActive = true;
-            }
-        })
-        // Add to query url
-        queryUrl+= `diets=${localDiets}&`;
-    } 
+                if (diet > 0) {
+                    customDiets[diet - 1].isActive = true;
+                }
+            })
+            // Add to query url
+        queryUrl += `diets=${localDiets}&`;
+    }
 
     const result = await Dish.getFilterDishes(queryOption, getOption, populateOption);
     const dishes = result[0].dishes;
-    const count = (result[0].count.length > 0)? result[0].count[0].count : 0;
+    const count = (result[0].count.length > 0) ? result[0].count[0].count : 0;
 
     // User favorite Dishes
     const favoriteHashMap = {};
-    if (req.user){
+    if (req.user) {
         const userFavoriteDishes = await User.getUserFavoriteDishes(req.user.userID, dishes.map((dish, index) => dish.dishID));
         userFavoriteDishes.forEach((favDish, index) => {
             favoriteHashMap[favDish.dishID] = 1
@@ -385,10 +385,10 @@ const search = async (req, res) => {
     dishes.forEach((dish) => {
         dish.imageUrl = () => constant.imageStorageLink + constant.dishPath + dish.image;
         // Is User favorite dishe
-        if (req.user){
+        if (req.user) {
             dish.isUserFavorite = favoriteHashMap[dish.dishID] != undefined;
         }
-        
+
         dish.dishTypesStr = dish.dishTypes.map((item, idx) => constant.dishTypes[item.dishTypeID - 1]).join(constant.commaSpace);
         dish.cuisinesStr = dish.cuisines.map((item, idx) => constant.cuisines[item.cuisineID - 1]).join(constant.commaSpace);
         dish.dietsStr = dish.diets.map((item, idx) => constant.diets[item.dietID - 1]).join(constant.commaSpace);
@@ -404,7 +404,7 @@ const search = async (req, res) => {
         dishTypes: constant.splitToChunk(customDishTypes, 3),
         cuisines: constant.splitToChunk(customCuisines, 3),
         diets: constant.splitToChunk(customDiets, 3),
-        pagination: { page: getOption.page, pageCount: Math.ceil(count / getOption.perPage)},
+        pagination: { page: getOption.page, pageCount: Math.ceil(count / getOption.perPage) },
         count: count,
         queryUrl: "/search?" + queryUrl,
         searchKeyword: searchKeyword,
@@ -414,15 +414,15 @@ const search = async (req, res) => {
 }
 
 /* Advanced Search Dishes */
-const advancedSearch = async (req, res) => {
-    const customDishTypes = constant.dishTypes.map((item, idx) =>  {
-        return {name: item, index: (idx)};
+const advancedSearch = async(req, res) => {
+    const customDishTypes = constant.dishTypes.map((item, idx) => {
+        return { name: item, index: (idx) };
     });
-    const customCuisines = constant.cuisines.map((item, idx) =>  {
-        return {name: item, index: idx};
+    const customCuisines = constant.cuisines.map((item, idx) => {
+        return { name: item, index: idx };
     });
-    const customDiets = constant.diets.map((item, idx) =>  {
-        return {name: item, index: idx};
+    const customDiets = constant.diets.map((item, idx) => {
+        return { name: item, index: idx };
     });
 
     res.render('advanced_search', {
@@ -434,16 +434,16 @@ const advancedSearch = async (req, res) => {
 }
 
 /* Post Recipe */
-const postRecipePage = async (req, res) => {
+const postRecipePage = async(req, res) => {
     //const www = await Dish.resetDatabase();
-    const customDishTypes = constant.dishTypes.map((item, idx) =>  {
-        return {name: item, index: (idx + 1)};
+    const customDishTypes = constant.dishTypes.map((item, idx) => {
+        return { name: item, index: (idx + 1) };
     });
-    const customCuisines = constant.cuisines.map((item, idx) =>  {
-        return {name: item, index: (idx + 1)};
+    const customCuisines = constant.cuisines.map((item, idx) => {
+        return { name: item, index: (idx + 1) };
     });
-    const customDiets = constant.diets.map((item, idx) =>  {
-        return {name: item, index: (idx + 1)};
+    const customDiets = constant.diets.map((item, idx) => {
+        return { name: item, index: (idx + 1) };
     });
     res.render('post_recipe', {
         title: constant.appName,
@@ -454,48 +454,48 @@ const postRecipePage = async (req, res) => {
     });
 }
 
-const postRecipe = async (req, res) => {
+const postRecipe = async(req, res) => {
     const props = req.body;
     const files = req.files;
-    const user = req.user; 
+    const user = req.user;
     // Add new ingredients
     const ingredients = JSON.parse(props.ingredients);
     const extIngredients = JSON.parse(props.extIngredients);
     const ingrePromises = [];
     // Main ingredients
     ingredients.forEach((ingredient, index) => {
-        if (!ingredient.isNew)
-            return;
-        ingrePromises.push(new Promise(async (resolve, reject) => {
-            const newIngredient = await Ingredient.addIngredients(user.userID, {
-                name: ingredient.ingredientID,
-            });
-            ingredient.ingredientID = newIngredient.ingredientID;
-            if (ingredient.hasNewImage){
-                try {
-                    const fileName = await Ingredient.uploadIngredientImage(newIngredient.ingredientID, files.newIngreImages.shift());
-                    await Ingredient.setIngredientImage(newIngredient.ingredientID, fileName);
-                } catch (err) {
-                    console.log(err);
-                    reject({
-                        success: false,
-                        message: constant.uploadImageFail
-                    });
+            if (!ingredient.isNew)
+                return;
+            ingrePromises.push(new Promise(async(resolve, reject) => {
+                const newIngredient = await Ingredient.addIngredients(user.userID, {
+                    name: ingredient.ingredientID,
+                });
+                ingredient.ingredientID = newIngredient.ingredientID;
+                if (ingredient.hasNewImage) {
+                    try {
+                        const fileName = await Ingredient.uploadIngredientImage(newIngredient.ingredientID, files.newIngreImages.shift());
+                        await Ingredient.setIngredientImage(newIngredient.ingredientID, fileName);
+                    } catch (err) {
+                        console.log(err);
+                        reject({
+                            success: false,
+                            message: constant.uploadImageFail
+                        });
+                    }
                 }
-            }
-            resolve(newIngredient);
-        }))
-    })
-    // Extended ingredients
+                resolve(newIngredient);
+            }))
+        })
+        // Extended ingredients
     extIngredients.forEach((ingredient, index) => {
         if (!ingredient.isNew)
             return;
-        ingrePromises.push(new Promise(async (resolve, reject) => {
+        ingrePromises.push(new Promise(async(resolve, reject) => {
             const newIngredient = await Ingredient.addIngredients(user.userID, {
                 name: ingredient.ingredientID,
             });
             ingredient.ingredientID = newIngredient.ingredientID;
-            if (ingredient.hasNewImage){
+            if (ingredient.hasNewImage) {
                 try {
                     const fileName = await Ingredient.uploadIngredientImage(newIngredient.ingredientID, files.newExtIngreImages.shift());
                     await Ingredient.setIngredientImage(newIngredient.ingredientID, fileName);
@@ -511,7 +511,7 @@ const postRecipe = async (req, res) => {
         }))
     })
     const ingreResponses = await Promise.all(ingrePromises);
-    
+
     // Add Dishes
     const newDish = await Dish.addDish(user.userID, {
         name: props.name,
@@ -537,7 +537,7 @@ const postRecipe = async (req, res) => {
     const dishPromises = [];
     // Ingredients
     ingredients.forEach((ingredient, index) => {
-        dishPromises.push(new Promise(async (resolve, reject) => {
+        dishPromises.push(new Promise(async(resolve, reject) => {
             const dishIngre = await Dish.addDishIngredient(newDish.dishID, ingredient.ingredientID, {
                 amount: ingredient.amount,
                 unit: ingredient.unit,
@@ -549,7 +549,7 @@ const postRecipe = async (req, res) => {
 
     // Extended Ingredients
     extIngredients.forEach((ingredient, index) => {
-        dishPromises.push(new Promise(async (resolve, reject) => {
+        dishPromises.push(new Promise(async(resolve, reject) => {
             const dishIngre = await Dish.addDishIngredient(newDish.dishID, ingredient.ingredientID, {
                 amount: ingredient.amount,
                 unit: ingredient.unit,
@@ -562,7 +562,7 @@ const postRecipe = async (req, res) => {
     // Dish Types
     const dishTypes = JSON.parse(props.dishTypes);
     dishTypes.forEach((dishType, index) => {
-        dishPromises.push(new Promise(async (resolve, reject) => {
+        dishPromises.push(new Promise(async(resolve, reject) => {
             const dishTypeDetail = await Dish.addDishTypeDetail(newDish.dishID, dishType);
             resolve(dishTypeDetail);
         }))
@@ -571,7 +571,7 @@ const postRecipe = async (req, res) => {
     // Cuisines
     const cuisines = JSON.parse(props.cuisines);
     cuisines.forEach((cuisine, index) => {
-        dishPromises.push(new Promise(async (resolve, reject) => {
+        dishPromises.push(new Promise(async(resolve, reject) => {
             const cuisineDetail = await Dish.addCuisineDetail(newDish.dishID, cuisine);
             resolve(cuisineDetail);
         }))
@@ -580,7 +580,7 @@ const postRecipe = async (req, res) => {
     // Diets
     const diets = JSON.parse(props.diets);
     diets.forEach((diet, index) => {
-        dishPromises.push(new Promise(async (resolve, reject) => {
+        dishPromises.push(new Promise(async(resolve, reject) => {
             const dietDetail = await Dish.addDietDetail(newDish.dishID, diet);
             resolve(dietDetail);
         }))
@@ -589,7 +589,7 @@ const postRecipe = async (req, res) => {
     // Nutritions
     const nutritions = JSON.parse(props.nutritions);
     nutritions.forEach((nutrition, index) => {
-        dishPromises.push(new Promise(async (resolve, reject) => {
+        dishPromises.push(new Promise(async(resolve, reject) => {
             const dishNutrition = await Dish.addDishNutrition(newDish.dishID, nutrition, {});
             resolve(dishNutrition);
         }))
@@ -600,7 +600,7 @@ const postRecipe = async (req, res) => {
     const stepImagesBoundary = props.stepImagesBoundary;
     const stepNum = steps.length;
     steps.forEach((step, index) => {
-        dishPromises.push(new Promise(async (resolve, reject) => {
+        dishPromises.push(new Promise(async(resolve, reject) => {
             const dishStep = await Dish.addDishStep(newDish.dishID, {
                 number: step.number,
                 description: step.description,
@@ -608,21 +608,21 @@ const postRecipe = async (req, res) => {
             });
             try {
                 // If step doesn't have any images
-                if (!step.hasImages){
+                if (!step.hasImages) {
                     resolve(dishStep);
                 } else {
                     let stepIthImagePromises = [];
                     // If not last step
-                    if (index < stepNum - 1){
+                    if (index < stepNum - 1) {
                         files.stepImages.slice(parseInt(stepImagesBoundary[index]), parseInt(stepImagesBoundary[index + 1])).forEach((stepImage, index2) => {
-                            stepIthImagePromises.push(new Promise(async (resolve2, reject2) => {
+                            stepIthImagePromises.push(new Promise(async(resolve2, reject2) => {
                                 const fileName = await Dish.uploadDishStepImage(newDish.dishID, step.number, index2 + 1, stepImage);
                                 resolve2(fileName);
                             }));
                         })
                     } else {
                         files.stepImages.slice(parseInt(stepImagesBoundary[index])).forEach((stepImage, index2) => {
-                            stepIthImagePromises.push(new Promise(async (resolve2, reject2) => {
+                            stepIthImagePromises.push(new Promise(async(resolve2, reject2) => {
                                 const fileName = await Dish.uploadDishStepImage(newDish.dishID, step.number, index2 + 1, stepImage);
                                 resolve2(fileName);
                             }));
@@ -631,7 +631,7 @@ const postRecipe = async (req, res) => {
                     const stepIthImages = await Promise.all(stepIthImagePromises);
                     await Dish.setDishStepImage(newDish.dishID, step.number, stepIthImages.join(constant.imageUrlSeperator));
                 }
-                
+
             } catch (err) {
                 console.log(err);
                 res.json({
@@ -651,9 +651,9 @@ const postRecipe = async (req, res) => {
 }
 
 /* Censor recipe */
-const censorRecipePage = async (req, res) => {
+const censorRecipePage = async(req, res) => {
     // Authorized User
-    if (req.user.userType != constant.userType.admin){
+    if (req.user.userType != constant.userType.admin) {
         res.render("noAuthorityError.hbs", {
             title: constant.appName,
             message: constant.noAuthorityError
@@ -664,16 +664,16 @@ const censorRecipePage = async (req, res) => {
     };
     const censorOption = {
         perPage: constant.censorDishesPerPage,
-        sort: {createdDate: 1}
+        sort: { createdDate: 1 }
     };
     const count = await Dish.getCount(censorQuery);
     const pageCount = Math.ceil(count / censorOption.perPage);
     const queryPage = parseInt(req.query.page) || 1;
-    censorOption.page = (queryPage <= pageCount)? queryPage : pageCount
-    
+    censorOption.page = (queryPage <= pageCount) ? queryPage : pageCount
+
     const dishes = await Dish.getDishesCensor(censorQuery, censorOption)
-    
-    
+
+
     dishes.forEach((dish) => {
         dish.imageUrl = () => constant.imageStorageLink + constant.dishPath + dish.image;
         dish.dishTypesStr = dish.dishTypes.map((item, idx) => constant.dishTypes[item.dishTypeID - 1]).join(constant.commaSpace);
@@ -692,37 +692,37 @@ const censorRecipePage = async (req, res) => {
 
         dish.steps.forEach((step, idx) => {
             step.equipment = step.equipment || constant.emptyStr;
-            step.image = (step.image)? constant.imageStorageLink + constant.dishStepPath + step.image.split(constant.imageUrlSeperator)[0] : constant.emptyStr;
+            step.image = (step.image) ? constant.imageStorageLink + constant.dishStepPath + step.image.split(constant.imageUrlSeperator)[0] : constant.emptyStr;
         })
     });
     res.render('censor', {
         title: constant.appName,
         dishes: dishes,
-        pagination: { page: censorOption.page, pageCount: pageCount},
+        pagination: { page: censorOption.page, pageCount: pageCount },
         count: count
     })
 }
 
 /* Censor recipe */
-const censorRecipe = async (req, res) => {
+const censorRecipe = async(req, res) => {
     const dishIDs = req.body.dishIDs.map((id, index) => parseInt(id));
     const status = parseInt(req.body.status);
     try {
         const result = await Dish.setDishesStatus(dishIDs, req.user.userID, status);
         res.json({
             success: true,
-            message: (status == constant.dishRecipeStatus.accepted)? constant.acceptDishSuccess : constant.rejectDishSuccess
+            message: (status == constant.dishRecipeStatus.accepted) ? constant.acceptDishSuccess : constant.rejectDishSuccess
         });
-    } catch(err) {
+    } catch (err) {
         res.json({
             success: false,
-            message: (status == constant.dishRecipeStatus.accepted)? constant.acceptDishFail : constant.rejectDishFail
+            message: (status == constant.dishRecipeStatus.accepted) ? constant.acceptDishFail : constant.rejectDishFail
         });
     }
 }
 
 /* Get Comment */
-const getComments = async (req, res) => {
+const getComments = async(req, res) => {
     const dishID = parseInt(req.query.dishID);
     const page = parseInt(req.query.page);
     const comments = await Comment.getComments({
@@ -730,15 +730,15 @@ const getComments = async (req, res) => {
     }, {
         page: page,
         perPage: constantForSchema.commentPerLoad,
-        sort: {createdDate: -1}
+        sort: { createdDate: -1 }
     })
-    const commentCount = await Comment.getCountComment({dishID: dishID});
+    const commentCount = await Comment.getCountComment({ dishID: dishID });
     let commentLis = constant.emptyStr;
     comments.forEach((comment, index) => {
         const user = comment.user;
         const avatarStorageLink = constant.imageStorageLink + constant.userPath;
-        const userAvatarUrl = (user.userType == constant.userType.admin)? constant.defaultAdminAvatar : (user.avatar)? avatarStorageLink + user.avatar : constant.defaultUserAvatar;
-        commentLis+= `<li class="media">
+        const userAvatarUrl = (user.userType == constant.userType.admin) ? constant.defaultAdminAvatar : (user.avatar) ? avatarStorageLink + user.avatar : constant.defaultUserAvatar;
+        commentLis += `<li class="media">
                                 <a href="#" class="pull-left">
                                     <img src="${userAvatarUrl}" alt="" class="img-circle"/>
                                 </a>
@@ -757,18 +757,18 @@ const getComments = async (req, res) => {
         success: true,
         message: constant.emptyStr,
         commentLis: commentLis,
-        nextPage: (commentCount > page * constantForSchema.commentPerLoad)? page + 1 : -1
+        nextPage: (commentCount > page * constantForSchema.commentPerLoad) ? page + 1 : -1
     })
 }
 
 /* Add Comment */
-const addComment = async (req, res) => {
+const addComment = async(req, res) => {
     const dishID = parseInt(req.body.dishID);
     const content = req.body.content;
     const user = req.user;
     const newComment = await Comment.addComment(dishID, req.user.userID, content);
     const avatarStorageLink = constant.imageStorageLink + constant.userPath;
-    const userAvatarUrl = (user.userType == constant.userType.admin)? constant.defaultAdminAvatar : (user.avatar)? avatarStorageLink + user.avatar : constant.defaultUserAvatar;
+    const userAvatarUrl = (user.userType == constant.userType.admin) ? constant.defaultAdminAvatar : (user.avatar) ? avatarStorageLink + user.avatar : constant.defaultUserAvatar;
     const newCommentLi = `<li class="media">
                             <a href="#" class="pull-left">
                                 <img src="${userAvatarUrl}" alt="" class="img-circle"/>
