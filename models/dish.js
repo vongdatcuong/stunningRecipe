@@ -520,6 +520,17 @@ module.exports = {
             return Promise.resolve();
         }
     },
+    updateDishReview(dishID, rating) { // cập nhật lại rating và totalReview cho món ăn
+        return new Promise(async(resolve, reject) => {
+            const dish = await Dish.findOne({ dishID: dishID })
+                .exec();
+            rating = parseFloat(rating);
+            dish.rating = (dish.rating * dish.totalReview + rating) / (+dish.totalReview + +1);
+            dish.totalReview = parseInt(dish.totalReview) + 1;
+            await dish.save();
+            resolve(dish);
+        })
+    },
     async resetDatabase() {
         await Dish.deleteMany({ dishID: { $nin: [1, 2, 3] } });
         await Ingredient.deleteMany({ isActive: false });

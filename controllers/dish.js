@@ -2,6 +2,7 @@ const Dish = require("../models/dish");
 const User = require("../models/user");
 const Ingredient = require("../models/ingredient");
 const Comment = require("../models/comment");
+const Review = require("../models/review");
 const AzureBlob = require("../models/azure_blob");
 const constant = require("../Utils/constant");
 const ConversionUtils = require("../Utils/ConversionUtils");
@@ -789,6 +790,29 @@ const addComment = async(req, res) => {
         newCommentLi: newCommentLi
     })
 }
+
+/* Add Review */
+const addReview = async(req, res) => {
+    const dishID = parseInt(req.body.dishID);
+    const rating = req.body.rating;
+    const content = req.body.content;
+    const user = req.user;
+
+    // tạo Review mới
+    const newReview = await Review.addReview(dishID, user.userID, rating, content);
+
+    // cập nhật lại rating và totalReview cho Dish
+    const updateDishReview = await Dish.updateDishReview(dishID, rating);
+
+    // +1 totalReviewSent của user nữa
+    const updateReviewSent = await User.updateReviewSent(user.userID);
+
+    res.json({
+        success: true,
+        message: constant.addCommentSuccess,
+    })
+}
+
 module.exports = {
     dishDetail,
     dishes,
@@ -799,5 +823,6 @@ module.exports = {
     censorRecipePage,
     censorRecipe,
     getComments,
-    addComment
+    addComment,
+    addReview
 };

@@ -40,8 +40,8 @@
                     <div class="dish-review-view mt-0 mb-3 text-center">
                         <div class="dish-rating">
                             <input type="hidden" class="dishDetailStarRating kv-ltr-theme-fas-star rating-loading" value="{{dish.rating}}" disabled data-size="xs"/>
-                            <span class="dish-rating-count">{{dish.reviewNumber}} đánh giá</span>
-                                                      
+                            <span class="dish-rating-count" id="dish-rating1">{{dish.reviewNumber}} đánh giá</span>
+                                                    
                         </div>
                         <div class="dish-rating ml-4">
                             <span class="dish-rating-count">
@@ -226,6 +226,32 @@
                     <h4 class="tittle-w3l text-center border-bottom mb-lg-2 mb-sm-2 mb-2 mx-4 pb-2">
                     </h4>
                     <!-- //Dish related list -->
+                </div>
+            </div>
+        </div>
+        <div class="row my-4">
+            <!-- Review -->
+            <div id="reviewSection" class="col-md-8 col-sm-12 dish-comment-wrapper py-3 px-3">
+                <div class="dish-review">
+                    <!-- tittle heading -->
+                    <h4 class="tittle-w3l text-center border-bottom mb-lg-2 mb-sm-2 mb-2 mx-4 py-2">
+                        Đánh giá
+                    </h4>
+                    {{#if user}}
+                        <div class="dish-rating" style="text-align: center;">
+                            <input type="hidden" class="dishDetailStarRating kv-ltr-theme-fas-star rating-loading" value="{{dish.rating}}" data-size="xl"/>                         
+                        </div>
+                            <textarea class="dish-review-content form-control" placeholder="Để lại đánh giá..." rows="2"></textarea>
+                            <br>
+                            <div class="text-right py-2">
+                                <button type="button" class="dish-review-submit btn violet-link-btn px-4 pull-right">Gửi</button>
+                            </div>
+                            <div class="clearfix"></div>
+                    {{else}}
+                             <div class="p-3">
+                                <a href="/login?retUrl=/dish/{{dish.dishID}}" class="" style="color: #7d00bb">Đăng nhập </a> đánh giá món ăn này !!!
+                            </div>
+                    {{/if}}
                 </div>
             </div>
         </div>

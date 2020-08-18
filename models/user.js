@@ -120,4 +120,13 @@ module.exports = {
             })
             .exec();
     },
+    updateReviewSent(userID) { // cập nhật lại totalReviewSent của user
+        return new Promise(async(resolve, reject) => {
+            const user = await User.findOne({ userID: userID })
+                .exec();
+            user.totalReviewSent = parseInt(user.totalReviewSent) + 1;
+            await user.save();
+            resolve(user);
+        })
+    },
 };

@@ -665,6 +665,49 @@ $(document).ready(function() {
         favoriteDish(item.target.id);
     });
 
+    // sent review
+    const dishID = $('input[name=dishID]').val();
+    // const $dishCommentList = $dishComment.find('.dish-comment-list');
+    const $dishReview = $('.dish-review');
+
+    const $submitReviewBtn = $dishReview.find('.dish-review-submit');
+    if ($submitReviewBtn.length > 0) {
+        $submitReviewBtn.on('click', (e) => {
+            showLoading();
+            const $dishReviewRating = $dishReview.find('.dishDetailStarRating');
+            const $dishReviewContent = $dishReview.find('.dish-review-content');
+            const rating = $dishReviewRating.val();
+            const content = $dishReviewContent.val();
+            // alert(dishID + rating + content)
+            $.ajax({
+                url: '/addReview',
+                data: {
+                    dishID: dishID,
+                    rating: rating,
+                    content: content
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function(dataJson) {
+                    if (dataJson.success) {
+                        // $dishCommentList.prepend($(dataJson.newCommentLi));
+                        // $disNewCommentContent.val("");
+
+                        //// thực hiện update số review trên view
+                        // Bạn đã đánh giá x sao cho món ăn này///////////////////////////////////////////////////////////
+                    } else {
+                        swal.error(dataJson.message);
+                    }
+                    hideLoading();
+                },
+                error: function(err) {
+                    swal.error(err);
+                    hideLoading();
+                }
+            });
+        })
+    }
+
 });
 
 // Favorite (add/remove)
@@ -694,3 +737,11 @@ function favoriteDish(dishID) {
 
     return;
 }
+
+
+$("#dish-rating1").click(function() {
+    $('html,body').animate({
+            scrollTop: $("#reviewSection").offset().top
+        },
+        'slow');
+});
