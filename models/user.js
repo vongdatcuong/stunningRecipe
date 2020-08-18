@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Dish = mongoose.model('Dish');
 const UserFavoriteDish = mongoose.model('UserFavoriteDish');
 const bcrypt = require('bcryptjs');
 const constant = require('../Utils/constant');
@@ -97,6 +98,28 @@ module.exports = {
         return UserFavoriteDish.deleteOne({
             dishID: dishID,
             userID: userID
-        })
+        }).exec();
+    },
+    getFavoriteDish(query, option) {
+        option = option || {};
+        let findPromise = UserFavoriteDish.find(query)
+            .select({});
+        // if (option.perPage) {
+        //     findPromise = findPromise.limit(option.perPage);
+        //     if (option.page) {
+        //         findPromise = findPromise.skip(option.perPage * (option.page - 1));
+        //     }
+        // }
+        if (option.sort) {
+            findPromise = findPromise.sort(option.sort);
+        }
+        return findPromise
+            .populate({
+                path: 'dish',
+                populate: [{ path: 'creator' }, { path: 'favoriteNumber' }, { path: 'dishTypes' }, { path: 'cuisines' }, { path: 'diets' }, ]
+
+
+            })
+            .exec();
     },
 };

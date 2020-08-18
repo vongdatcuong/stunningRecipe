@@ -7,6 +7,18 @@
                 <div class="dish-detail-content py-4">
                     <input type="hidden" name="dishID" value="{{dish.dishID}}"/>
                     <!-- tittle heading -->
+                    <div class="dish-favorite" style="color: red; font-size: 200%;">
+                        <a class="item-favorite">
+                            <span>{{dish.favoriteNumber}}</span>
+                            {{#if dish.isUserFavorite}}
+                            <i class="fa fa-heart favorite-dish" id="{{dish.dishID}}"></i>
+                            {{else}}
+                            <i class="far fa-heart favorite-dish" id="{{dish.dishID}}"></i>
+                            {{/if}}
+
+                        </a>
+                    </div>
+                    <br><br>
                     <h3 class="tittle-w3l text-center mb-lg-4 mb-sm-3 mb-3">
                         {{dish.name}}
                     </h3>
@@ -25,17 +37,7 @@
                             <span>{{parseDateTime dish.createdDate "/"}}</span>
                         </div>
                     </div>
-                    <div class="dish-favorite" style="color: red; font-size: 200%;">
-                        <a class="item-favorite">
-                            <span>{{dish.favoriteNumber}}</span>
-                            {{#if dish.isUserFavorite}}
-                            <i class="fa fa-heart favorite-dish" id="{{dish.dishID}}"></i>
-                            {{else}}
-                            <i class="far fa-heart favorite-dish" id="{{dish.dishID}}"></i>
-                            {{/if}}
 
-                        </a>
-                    </div>
                     <!-- //tittle heading -->
                     <!-- Dish content -->
                     <!-- Dish review and view-->

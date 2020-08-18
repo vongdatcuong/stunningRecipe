@@ -94,7 +94,7 @@ dishSchema.virtual("steps", {
     localField: "dishID",
     foreignField: "dishID",
     justOne: false,
-    options: { sort: { number: 1 }}
+    options: { sort: { number: 1 } }
 });
 
 dishSchema.virtual("dishTypes", {
@@ -123,7 +123,7 @@ dishSchema.virtual("comments", {
     localField: "dishID",
     foreignField: "dishID",
     justOne: false,
-    options: { sort: { createdDate: -1 }, limit: constant.commentPerLoad}
+    options: { sort: { createdDate: -1 }, limit: constant.commentPerLoad }
 });
 
 dishSchema.virtual("favoriteNumber", {

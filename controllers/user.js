@@ -92,9 +92,9 @@ const profile = async(req, res) => {
 
     const userProfile = await User.getUser(profileUserID);
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    // Lấy ảnh đại diện
+    ////////////////////// Lấy ảnh đại diện
     userProfile.avatarUrl = () => constant.imageStorageLink + constant.userPath + userProfile.avatar;
-    // Lấy dữ liệu các bài viết
+    ////////////////////// Lấy dữ liệu các bài viết
     const customDishTypes = constant.dishTypes.map((item, idx) => {
         return { name: item, index: (idx) };
     });
@@ -109,13 +109,19 @@ const profile = async(req, res) => {
         createdBy: profileUserID
     }, { // option
         sort: { createdDate: -1 },
-        perPage: constant.homePerPage,
-        page: 1
+    });
+
+    // lấy danh sách các món ăn đã yêu thích
+    const favoritedDishes = await User.getFavoriteDish({ // query
+        userID: profileUserID
+    }, { // option
+        sort: { createdDate: -1 },
     });
 
     const favoriteHashMap = {};
     const allDishIDs = [
-        ...postedDishes.map((dish, index) => dish.dishID)
+        ...postedDishes.map((dish, index) => dish.dishID),
+        ...favoritedDishes.map((dish, index) => dish.dishID)
     ];
     if (req.user) {
         const userFavoriteDishes = await User.getUserFavoriteDishes(req.user.userID, allDishIDs);
@@ -130,7 +136,14 @@ const profile = async(req, res) => {
         dish.cuisinesStr = dish.cuisines.map((item, idx) => constant.cuisines[item.cuisineID]).join(constant.commaSpace);
         dish.dietsStr = dish.diets.map((item, idx) => constant.diets[item.dietID]).join(constant.commaSpace);
     });
-    // Lấy dữ liệu món ăn yêu thích
+    favoritedDishes.forEach((favorite) => {
+        favorite.imageUrl = () => constant.imageStorageLink + constant.dishPath + favorite.dish.image;
+        favorite.isUserFavorite = favoriteHashMap[favorite.dish.dishID] != undefined;
+        favorite.dishTypesStr = favorite.dish.dishTypes.map((item, idx) => constant.dishTypes[item.dishTypeID]).join(constant.commaSpace);
+        favorite.cuisinesStr = favorite.dish.cuisines.map((item, idx) => constant.cuisines[item.cuisineID]).join(constant.commaSpace);
+        favorite.dietsStr = favorite.dish.diets.map((item, idx) => constant.diets[item.dietID]).join(constant.commaSpace);
+    });
+    ////////////////////// Lấy dữ liệu món ăn yêu thích
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -140,6 +153,7 @@ const profile = async(req, res) => {
         userProfile: userProfile,
         postedDishes: postedDishes,
         postedDishesCount: postedDishes.length,
+        favoritedDishes: favoritedDishes,
         dishTypes: constant.splitToChunk(customDishTypes, 6),
         cuisines: customCuisines,
         diets: customDiets,
