@@ -174,10 +174,14 @@
                                                             <div class="pl-4"><b>Dụng cụ: </b>{{equipments}}</div>
                                                         {{/ifCond}}
                                                     </div>
-                                                    <div class="dish-step-image my-3">
-                                                        {{#ifCond image '!=' ""}}
-                                                            <img src="{{image}}"/>
-                                                        {{/ifCond}}
+                                                    <div class="dish-step-image my-3 lightGallery">
+                                                        {{#each images}}
+                                                            {{#ifCond this '!=' ''}}
+                                                                <a href="{{getStepImageUrl this}}" class="mb-1 d-inline-block">
+                                                                    <img src="{{getStepImageUrl this}}" />
+                                                                </a>
+                                                            {{/ifCond}}
+                                                        {{/each}}
                                                     </div>
                                                 </div>
                                             {{/each}}

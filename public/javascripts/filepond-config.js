@@ -18,6 +18,7 @@ const recipeNewIngreFilePonOption = {
 const recipeGuideFilePonOption = {
   labelIdle: "<i class='fa fa-camera'></i> Kéo thả ảnh hoặc <span class='filepond--label-action'> Browse </span>",
   allowMultiple: true,
+  allowReorder: true,
   acceptedFileTypes: filePondImgFilter,
   maxFiles: 6
 }

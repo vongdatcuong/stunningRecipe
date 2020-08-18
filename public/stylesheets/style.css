@@ -1495,6 +1495,9 @@ a.dish-type-item {
     display: block;
 }
 
+.recipe-by {
+    max-height: 30px;
+}
 .recipe-by a img {
     width: 24px;
     height: auto;

@@ -825,7 +825,7 @@
       <script type="text/javascript">
           $('#dishes-pagination li a').each(function (key, value) {
               const href = $(this).attr("href");
-              const queryUrl = '{{{queryUrl}}}'
+              const queryUrl = '{{{queryUrl}}}' || "";
               if (queryUrl.includes("?")){
                   $(this).attr("href", queryUrl + href);
               } else {

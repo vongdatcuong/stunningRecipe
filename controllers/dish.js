@@ -472,7 +472,7 @@ const postRecipe = async(req, res) => {
                     name: ingredient.ingredientID,
                 });
                 ingredient.ingredientID = newIngredient.ingredientID;
-                if (ingredient.hasNewImage) {
+                if (ingredient.hasNewImage && files.newIngreImages.length > 0) {
                     try {
                         const fileName = await Ingredient.uploadIngredientImage(newIngredient.ingredientID, files.newIngreImages.shift());
                         await Ingredient.setIngredientImage(newIngredient.ingredientID, fileName);
@@ -496,7 +496,7 @@ const postRecipe = async(req, res) => {
                 name: ingredient.ingredientID,
             });
             ingredient.ingredientID = newIngredient.ingredientID;
-            if (ingredient.hasNewImage) {
+            if (ingredient.hasNewImage && files.newExtIngreImages.length > 0) {
                 try {
                     const fileName = await Ingredient.uploadIngredientImage(newIngredient.ingredientID, files.newExtIngreImages.shift());
                     await Ingredient.setIngredientImage(newIngredient.ingredientID, fileName);
@@ -693,7 +693,7 @@ const censorRecipePage = async(req, res) => {
 
         dish.steps.forEach((step, idx) => {
             step.equipment = step.equipment || constant.emptyStr;
-            step.image = (step.image) ? constant.imageStorageLink + constant.dishStepPath + step.image.split(constant.imageUrlSeperator)[0] : constant.emptyStr;
+            step.images = step.image.split(constant.imageUrlSeperator);
         })
     });
     res.render('censor', {
