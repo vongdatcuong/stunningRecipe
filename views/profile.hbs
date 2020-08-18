@@ -27,19 +27,25 @@
 
                             </div>
                             <div class="userData ml-3">
+                                <style>
+                                    h1, h2, h3, h4, h5, h6 {
+                                        line-height: 1;
+                                    }
+                                </style>
                                 <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a
                                         href="javascript:void(0);">{{userProfile.firstName}} {{userProfile.lastName}}
                                         (@{{userProfile.username}})</a></h2>
                                 {{#ifCond userProfile.userType '==' userType.admin}}
                                 <span class="badge badge-danger"
-                                    style="font-size: 1.2rem; font-weight: bold">Admin</span>
+                                    style="font-size: 1.2rem; font-weight: bold; margin-bottom: 12px;">Admin</span>
                                 {{else}}
                                 <span class="badge badge-success"
-                                    style="font-size: 1.2rem; font-weight: bold">Blogger</span>
+                                    style="font-size: 1.2rem; font-weight: bold; margin-bottom: 12px;">Blogger</span>
                                 {{/ifCond}}
-                                <br><br>
+                                <br>
                                 <h6 class="d-block"><a href="javascript:void(0)">{{postedDishesCount}}</a> Bài viết đã
                                     đăng tải</h6>
+                                <h6 class="d-block"><a href="javascript:void(0)">{{userProfile.totalReviewSent}}</a> Lượt đánh giá</h6>
                                 <h6 class="d-block"> Tham gia ngày {{parseDate userProfile.createdDate "/"}}</h6>
                                 {{#if userProfile.phone}}
                                 <h6 class="d-block"> <i class="fa fa-phone" aria-hidden="true"></i>
