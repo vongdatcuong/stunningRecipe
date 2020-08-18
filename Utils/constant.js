@@ -22,7 +22,7 @@ const diets = ["Không Gluent", "Không chứa sữa", "Ketogenic", "Vegetarian"
 const ingredientUnits = [
     { key: "Trọng lượng", value: ["gram", "mg", "kg"] },
     { key: "Dung lượng", value: ["ml", "l"] },
-    { key: "Khác", value: ["thìa", "muỗng cà phê", "muỗng canh", "chén", "tô", "trái", "quả", "củ", "con", "ổ", "lon"] }
+    { key: "Khác", value: ["thìa", "muỗng cà phê", "muỗng canh", "chén", "tô", "trái", "quả", "củ", "con", "ổ", "lon", "cây"] }
 ];
 const imageStorageLink = "https://stunningrecipe.blob.core.windows.net/";
 const userPath = "user/";

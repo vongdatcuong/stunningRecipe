@@ -87,7 +87,7 @@ $(document).ready(function() {
         $tab1NextBtn.on('click', (e) => {
             if (!postRecipeInfoFormValidator.form()) {
                 $tab2BackBtn.click();
-                swal(recipeInfoErrMsg);
+                swal.error(recipeInfoErrMsg);
                 return;
             }
             $recipeGuideTab.tab('show');
