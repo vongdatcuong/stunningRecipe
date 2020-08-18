@@ -1,4 +1,5 @@
 const appName = "Stunning Recipe";
+
 // Messages
 const addDishSuccess = "Công thức của bạn đã được gửi thành công. Xin hay đợi quản trị viên kiểm duyệt";
 const uploadIngredientImageFail = "Upload ảnh thất bại";
@@ -13,6 +14,7 @@ const addCommentFail = "Thêm bình luận thất bại";
 const addFavoriteSuccess = "Đã yêu thích món ăn";
 const removeFavoriteSuccess = "Đã bỏ yêu thích món ăn";
 const dishIsInWaiting = "Công thức đang chờ được quản trị viên kiểm duyệt !!!";
+const noAuthorityError = "Bạn không có quyền truy cập vào trang này";
 // Constant variables
 const dishTypes = ["Món chính", "Món phụ", "Tráng miệng", "Món khai vị", "Salad", "Bánh", "Ăn sáng", "Soup", "Thức uống", "Nước sốt", "Snack", "Ăn trưa"];
 const cuisines = ["Món Mỹ", "Món Trung", "Món Pháp", "Món Ý", "Món Nhật", "Món Mexico", "Món Thái", "Món Việt", "Món Âu", "Món Tây", "Món Đông"];
@@ -28,10 +30,6 @@ const dishPath = "dish/";
 const ingredientPath = "ingredient/";
 const dishStepPath = "dishstep/";
 const SALT_ROUNDS = 10;
-const type = {
-    admin: 0,
-    customer: 1
-}
 const userType = {
     admin: 0,
     user: 1
@@ -53,7 +51,6 @@ const homePerPage = 4;
 const dishesPerPage = 8;
 const censorDishesPerPage = 5;
 const paginationMax = 5;
-const commentPerLoad = 5;
 const maxRelatedDishes = 6;
 const currency = "VND";
 const autoCompleteMaxResult = 10;
@@ -112,6 +109,7 @@ module.exports = {
     addFavoriteSuccess,
     removeFavoriteSuccess,
     dishIsInWaiting,
+    noAuthorityError,
     // Constant variables
     dishTypes,
     cuisines,
@@ -123,7 +121,6 @@ module.exports = {
     ingredientPath,
     dishStepPath,
     SALT_ROUNDS,
-    type,
     userType,
     dishRecipeStatus,
     searchTypeOptionTitle,
@@ -134,7 +131,6 @@ module.exports = {
     dishesPerPage,
     censorDishesPerPage,
     paginationMax,
-    commentPerLoad,
     maxRelatedDishes,
     currency,
     autoCompleteMaxResult,

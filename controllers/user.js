@@ -5,7 +5,7 @@ require("../routes/passport.js");
 var path = require('path');
 const fs = require("fs");
 const requireLogin = require("./../middlewares/auth.mdw");
-const constant = require("../utils/constant");
+const constant = require("../Utils/constant");
 
 const User = require("../models/user");
 const Dish = require("../models/dish");

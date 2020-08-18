@@ -6,6 +6,7 @@ const AzureBlob = require("../models/azure_blob");
 const constant = require("../Utils/constant");
 const ConversionUtils = require("../Utils/ConversionUtils");
 const { dishTypes } = require("../Utils/constant");
+const constantForSchema = require("../Utils/constantForSchema");
 
 /* Dish Detail */
 const dishDetail = async (req, res) => {
@@ -78,7 +79,7 @@ const dishDetail = async (req, res) => {
         dish: dish,
         relatedDishes,
         userType: constant.userType,
-        hasMoreComments: (countComment > constant.commentPerLoad)? true : false
+        hasMoreComments: (countComment > constantForSchema.commentPerLoad)? true : false
     });
 }
 /* Dishes */
@@ -651,6 +652,13 @@ const postRecipe = async (req, res) => {
 
 /* Censor recipe */
 const censorRecipePage = async (req, res) => {
+    // Authorized User
+    if (req.user.userType != constant.userType.admin){
+        res.render("noAuthorityError.hbs", {
+            title: constant.appName,
+            message: constant.noAuthorityError
+        })
+    }
     const censorQuery = {
         status: constant.dishRecipeStatus.waiting
     };
@@ -721,7 +729,7 @@ const getComments = async (req, res) => {
         dishID: dishID
     }, {
         page: page,
-        perPage: constant.commentPerLoad,
+        perPage: constantForSchema.commentPerLoad,
         sort: {createdDate: -1}
     })
     const commentCount = await Comment.getCountComment({dishID: dishID});
@@ -749,7 +757,7 @@ const getComments = async (req, res) => {
         success: true,
         message: constant.emptyStr,
         commentLis: commentLis,
-        nextPage: (commentCount > page * constant.commentPerLoad)? page + 1 : -1
+        nextPage: (commentCount > page * constantForSchema.commentPerLoad)? page + 1 : -1
     })
 }
 
