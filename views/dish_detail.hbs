@@ -9,7 +9,7 @@
                     <!-- tittle heading -->
                     <div class="dish-favorite" style="color: red; font-size: 200%;">
                         <a class="item-favorite">
-                            <span>{{dish.favoriteNumber}}</span>
+                            <span class="favoriteNumber{{dish.dishID}}">{{dish.favoriteNumber}}</span>
                             {{#if dish.isUserFavorite}}
                             <i class="fa fa-heart favorite-dish" id="{{dish.dishID}}"></i>
                             {{else}}
@@ -345,7 +345,7 @@
     $(document).ready(function() { 
         let ratingValue;
         if (parseInt($('#reviewed').val())) // nếu đã review
-            ratingValue = parseInt($('#reviewed').val());
+            ratingValue = parseFloat($('#reviewed').val());
         else    //nếu chưa review
             ratingValue = -1;
         displayReact(ratingValue);
@@ -460,7 +460,7 @@
                 smile.fill();
                 break;
             default:
-                smile.bezierCurveTo(xStart, yStart, xEnd, yStart, xEnd, yEnd);
+                //smile.bezierCurveTo(xStart, yStart, xEnd, yStart, xEnd, yEnd);
         }
 
         //to draw a half rounded circle with a line stroke we can invoke the stroke function    

@@ -677,7 +677,7 @@ $(document).ready(function() {
     });
     // trả về giá trị cũ khi leave hover
     $dishDetailStarRating2.on('rating:hoverleave', function(event, target) {
-        let ratingValue = parseInt($dishDetailStarRating2.val());
+        let ratingValue = parseFloat($dishDetailStarRating2.val());
         displayReact(ratingValue);
     });
 
@@ -685,7 +685,7 @@ $(document).ready(function() {
     const $submitReviewBtn = $dishReview.find('.dish-review-submit');
     if ($submitReviewBtn.length > 0) {
         $submitReviewBtn.on('click', (e) => {
-            showLoading();
+            //showLoading();
             const $dishReviewRating = $dishReview.find('.dishDetailStarRating');
             const $dishReviewContent = $dishReview.find('.dish-review-content');
             const rating = $dishReviewRating.val();
@@ -710,11 +710,11 @@ $(document).ready(function() {
                     } else {
                         swal.error(dataJson.message);
                     }
-                    hideLoading();
+                    //hideLoading();
                 },
                 error: function(err) {
                     swal.error(err);
-                    hideLoading();
+                    //hideLoading();
                 }
             });
         })
@@ -725,7 +725,7 @@ $(document).ready(function() {
 // Favorite (add/remove)
 function favoriteDish(dishID) {
 
-    showLoading();
+    //showLoading();
     $.ajax({
         url: '/doFavorite',
         data: {
@@ -735,15 +735,15 @@ function favoriteDish(dishID) {
         dataType: 'json',
         success: function(dataJson) {
             if (dataJson.success) {
-                //do nothing
+                $('.favoriteNumber' + dishID).html(dataJson.newFavoriteNumber);
             } else {
                 swal.error(dataJson.message);
             }
-            hideLoading();
+            //hideLoading();
         },
         error: function(err) {
             swal.error("Hãy đăng nhập để yêu thích món ăn");
-            hideLoading();
+            //hideLoading();
         }
     });
 

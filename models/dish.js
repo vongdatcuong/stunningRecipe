@@ -531,6 +531,11 @@ module.exports = {
             resolve(dish);
         })
     },
+    getDishFavoriteNumber(dishID) {
+        return Dish.findOne({ dishID: dishID })
+            .populate('favoriteNumber')
+            .exec();
+    },
     async resetDatabase() {
         await Dish.deleteMany({ dishID: { $nin: [1, 2, 3] } });
         await Ingredient.deleteMany({ isActive: false });

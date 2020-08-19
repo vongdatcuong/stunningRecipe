@@ -289,15 +289,19 @@ const doFavorite = async(req, res) => {
     const isFavorite = await User.userFavoriteDish(req.user.userID, dishID);
     if (isFavorite != null) { // nếu đã có favorite rồi thì bỏ favorite
         const removeFavorite = await User.removeFavoriteDish(req.user.userID, dishID);
+        const newFavoriteNumber = await Dish.getDishFavoriteNumber(dishID);
         res.json({
             success: true,
-            message: constant.removeFavoriteSuccess
+            message: constant.removeFavoriteSuccess,
+            newFavoriteNumber: newFavoriteNumber.favoriteNumber
         })
     } else { // nếu chưa favorite thì add Favorite
         const addFavorite = await User.addFavoriteDish(req.user.userID, dishID);
+        const newFavoriteNumber = await Dish.getDishFavoriteNumber(dishID);
         res.json({
             success: true,
-            message: constant.addFavoriteSuccess
+            message: constant.addFavoriteSuccess,
+            newFavoriteNumber: newFavoriteNumber.favoriteNumber
         })
     }
 

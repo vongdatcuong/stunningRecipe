@@ -98,7 +98,7 @@
                                                             <img src="{{imageUrl}}" class="responsive" />
                                                         </a>
                                                         <div class="item-favorite">
-                                                            <span>{{favoriteNumber}}</span>
+                                                            <span class="favoriteNumber{{dishID}}">{{favoriteNumber}}</span>
                                                             {{#if isUserFavorite}}
                                                             <i class="fa fa-heart favorite-dish" id="{{dishID}}"></i>
                                                             {{else}}
@@ -213,7 +213,7 @@
                                                             <img src="{{imageUrl}}" class="responsive" />
                                                         </a>
                                                         <div class="item-favorite">
-                                                            <span>{{dish.favoriteNumber}}</span>
+                                                            <span class="favoriteNumber{{dish.dishID}}">{{dish.favoriteNumber}}</span>
                                                             {{#if isUserFavorite}}
                                                             <i class="fa fa-heart favorite-dish" id="{{dish.dishID}}"></i>
                                                             {{else}}
