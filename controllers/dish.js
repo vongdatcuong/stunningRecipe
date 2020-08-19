@@ -805,19 +805,35 @@ const addReview = async(req, res) => {
     const content = req.body.content;
     const user = req.user;
 
-    // tạo Review mới
-    const newReview = await Review.addReview(dishID, user.userID, rating, content);
+    // kiểm tra nếu user đã review rồi thì ko được review lại
+    const userReviewed = await Review.getUserReview(req.user.userID, dishID);
+    if (userReviewed) {
+        var message = " - bạn đã đánh giá món ăn này rồi"
+        res.json({
+            error: true,
+            message: constant.addReviewFail + message,
+        })
+    } else {
 
-    // cập nhật lại rating và totalReview cho Dish
-    const updateDishReview = await Dish.updateDishReview(dishID, rating);
+        // tạo Review mới
+        const newReview = await Review.addReview(dishID, user.userID, rating, content);
 
-    // +1 totalReviewSent của user nữa
-    const updateReviewSent = await User.updateReviewSent(user.userID);
+        // cập nhật lại rating và totalReview cho Dish
+        const updateDishReview = await Dish.updateDishReview(dishID, rating);
 
-    res.json({
-        success: true,
-        message: constant.addCommentSuccess,
-    })
+        // +1 totalReviewSent của user nữa
+        const updateReviewSent = await User.updateReviewSent(user.userID);
+
+        // thay đổi giao diện của phần review
+        const reviewed = `<div>Bạn đã đánh giá ${rating} sao cho món ăn này với nội dung: ${content}</div>`;
+
+        res.json({
+            success: true,
+            message: constant.addReviewSuccess,
+            reviewed: reviewed
+        })
+
+    }
 }
 
 module.exports = {

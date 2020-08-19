@@ -669,7 +669,7 @@ $(document).ready(function() {
     const dishID = $('input[name=dishID]').val();
     // const $dishCommentList = $dishComment.find('.dish-comment-list');
     const $dishReview = $('.dish-review');
-
+    const $sendReviewSection = $dishReview.find('#sendReviewSection');
     const $submitReviewBtn = $dishReview.find('.dish-review-submit');
     if ($submitReviewBtn.length > 0) {
         $submitReviewBtn.on('click', (e) => {
@@ -690,11 +690,12 @@ $(document).ready(function() {
                 dataType: 'json',
                 success: function(dataJson) {
                     if (dataJson.success) {
-                        // $dishCommentList.prepend($(dataJson.newCommentLi));
-                        // $disNewCommentContent.val("");
-
-                        //// thực hiện update số review trên view
-                        // Bạn đã đánh giá x sao cho món ăn này///////////////////////////////////////////////////////////
+                        // thông báo đã gửi đánh giá
+                        $sendReviewSection.replaceWith($(dataJson.reviewed));
+                        // hiển thị lại số sao đánh giá
+                        const $dishDetailStarRating2 = $dishReview.find('#dishDetailStarRating2');
+                        $dishDetailStarRating2.rating('destroy');
+                        $dishDetailStarRating2.rating('create', { disabled: true, showCaption: false, size: 'xl' });
                     } else {
                         swal.error(dataJson.message);
                     }

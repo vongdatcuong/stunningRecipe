@@ -11,6 +11,8 @@ const rejectDishSuccess = "Từ chối công thức thành công";
 const rejectDishFail = "Từ chối công thức thất bại";
 const addCommentSuccess = "Thêm bình luận thành công";
 const addCommentFail = "Thêm bình luận thất bại";
+const addReviewSuccess = "Thêm đánh giá thành công";
+const addReviewFail = "Thêm đánh giá thất bại";
 const addFavoriteSuccess = "Đã yêu thích món ăn";
 const removeFavoriteSuccess = "Đã bỏ yêu thích món ăn";
 const dishIsInWaiting = "Công thức đang chờ được quản trị viên kiểm duyệt !!!";
@@ -106,6 +108,8 @@ module.exports = {
     rejectDishFail,
     addCommentSuccess,
     addCommentFail,
+    addReviewSuccess,
+    addReviewFail,
     addFavoriteSuccess,
     removeFavoriteSuccess,
     dishIsInWaiting,

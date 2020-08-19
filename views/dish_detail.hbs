@@ -39,7 +39,7 @@
                     <!-- Dish review and view-->
                     <div class="dish-review-view mt-0 mb-3 text-center">
                         <div class="dish-rating">
-                            <input type="hidden" class="dishDetailStarRating kv-ltr-theme-fas-star rating-loading" value="{{dish.rating}}" disabled data-size="xs"/>
+                            <input id="dishDetailStarRating1" type="hidden" class="dishDetailStarRating kv-ltr-theme-fas-star rating-loading" value="{{dish.rating}}" disabled data-size="xs"/>
                             <span class="dish-rating-count" id="dish-rating1">{{dish.reviewNumber}} đánh giá</span>
                                                     
                         </div>
@@ -249,14 +249,17 @@
                         </div>
                         {{else}}
                         <div class="dish-rating" style="text-align: center;">
-                            <input type="hidden" class="dishDetailStarRating kv-ltr-theme-fas-star rating-loading" value="{{dish.rating}}" data-size="xl"/>                         
-                        </div>
-                            <textarea class="dish-review-content form-control" placeholder="Để lại đánh giá..." rows="2"></textarea>
-                            <br>
-                            <div class="text-right py-2">
-                                <button type="button" class="dish-review-submit btn violet-link-btn px-4 pull-right">Gửi</button>
+                            <input id="dishDetailStarRating2" type="hidden" class="dishDetailStarRating kv-ltr-theme-fas-star rating-loading" value="0" data-size="xl"/>                         
+                            <div  id="sendReviewSection">
+                                <textarea class="dish-review-content form-control" placeholder="Để lại đánh giá..." rows="2"></textarea>
+                                <br>
+                                <div class="text-right py-2">
+                                    <button type="button" class="dish-review-submit btn violet-link-btn px-4 pull-right">Gửi</button>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="clearfix"></div>
+                            
+                        </div>
                         {{/if}}
                     {{else}}
                              <div class="p-3">
