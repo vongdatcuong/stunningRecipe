@@ -59,12 +59,12 @@ const signup = async(req, res, next) => {
             });
         } else {
             const result = await User.addUser(
-                req.body.firstName,
-                req.body.lastName,
-                req.body.username,
-                req.body.email,
-                req.body.phone,
-                req.body.password
+                req.body.firstName.trim(),
+                req.body.lastName.trim(),
+                req.body.username.trim(),
+                req.body.email.trim(),
+                req.body.phone.trim(),
+                req.body.password.trim()
             );
 
             req.flash(

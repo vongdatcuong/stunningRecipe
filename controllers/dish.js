@@ -308,7 +308,7 @@ const search = async(req, res) => {
     // Dish Name
     if (localDishName && localDishName !== constant.emptyStr) {
         queryOption.name = {
-            $regex: localDishName,
+            $regex: localDishName.trim(),
             $options: "i"
         };
         // Active filter
@@ -321,7 +321,7 @@ const search = async(req, res) => {
 
     // Ingredient Name
     if (localIngredientName && localIngredientName !== constant.emptyStr) {
-        populateOption.ingredientName = localIngredientName;
+        populateOption.ingredientName = localIngredientName.trim();
         searchKeyword = localIngredientName;
         searchType = "ingredientName";
         searchTypeTitle = constant.searchTypeOptionTitle[searchType];
@@ -331,7 +331,7 @@ const search = async(req, res) => {
 
     // Nutrition Name
     if (localNutritionName && localNutritionName !== constant.emptyStr) {
-        populateOption.nutritionName = localNutritionName;
+        populateOption.nutritionName = localNutritionName.trim();
         searchKeyword = localNutritionName;
         searchType = "nutritionName";
         searchTypeTitle = constant.searchTypeOptionTitle[searchType];
@@ -522,14 +522,14 @@ const postRecipe = async(req, res) => {
 
     // Add Dishes
     const newDish = await Dish.addDish(user.userID, {
-        name: props.name,
+        name: props.name.trim(),
         servings: parseInt(props.servings),
         readyTime: parseInt(props.readyTime),
         healthScore: parseInt(props.healthScore),
         price: parseInt(props.price),
         difficulty: parseInt(props.difficulty),
-        description: props.description,
-        video: props.video,
+        description: props.description.trim(),
+        video: props.video.trim(),
     })
     try {
         const dishFileName = await Dish.uploadDishImage(newDish.dishID, files.image[0]);
@@ -611,8 +611,8 @@ const postRecipe = async(req, res) => {
         dishPromises.push(new Promise(async(resolve, reject) => {
             const dishStep = await Dish.addDishStep(newDish.dishID, {
                 number: step.number,
-                description: step.description,
-                equipments: step.equipments,
+                description: step.description.trim(),
+                equipments: step.equipments.trim(),
             });
             try {
                 // If step doesn't have any images
@@ -772,7 +772,7 @@ const getComments = async(req, res) => {
 /* Add Comment */
 const addComment = async(req, res) => {
     const dishID = parseInt(req.body.dishID);
-    const content = req.body.content;
+    const content = req.body.content.trim();
     const user = req.user;
     const newComment = await Comment.addComment(dishID, req.user.userID, content);
     const avatarStorageLink = constant.imageStorageLink + constant.userPath;
@@ -801,8 +801,8 @@ const addComment = async(req, res) => {
 /* Add Review */
 const addReview = async(req, res) => {
     const dishID = parseInt(req.body.dishID);
-    const rating = req.body.rating;
-    const content = req.body.content;
+    const rating = (req.body.rating)? parseFloat(req.body.rating) : 0;
+    const content = req.body.content.trim();
     const user = req.user;
 
     // kiểm tra nếu user đã review rồi thì ko được review lại

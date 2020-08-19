@@ -150,12 +150,14 @@
                         {{/each}}
                     </div>
                     <!-- Dish video -->
-                    <div class="dish-video my-4 pl-3 pr-3">
-                        <h4 class="my-3 text-center">Video hướng dẫn</h4>
-                        <iframe class="my-2" width="700" height="420" src="{{dish.video}}" 
-                            frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-                        </iframe>
-                    </div>
+                    {{#if dish.video}}
+                        <div class="dish-video my-4 pl-3 pr-3">
+                            <h4 class="my-3 text-center">Video hướng dẫn</h4>
+                            <iframe class="my-2" width="700" height="420" src="{{dish.video}}" 
+                                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                            </iframe>
+                        </div>
+                    {{/if}}
                     <!-- //Dish content-->
                 </div> 
             </div>
