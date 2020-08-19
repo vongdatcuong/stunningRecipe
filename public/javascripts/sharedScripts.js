@@ -669,6 +669,18 @@ $(document).ready(function() {
     const dishID = $('input[name=dishID]').val();
     // const $dishCommentList = $dishComment.find('.dish-comment-list');
     const $dishReview = $('.dish-review');
+
+    // thay đổi react khi hover vào rating
+    const $dishDetailStarRating2 = $dishReview.find('#dishDetailStarRating2');
+    $dishDetailStarRating2.on('rating:hover', function(event, value, caption, target) {
+        displayReact(value);
+    });
+    // trả về giá trị cũ khi leave hover
+    $dishDetailStarRating2.on('rating:hoverleave', function(event, target) {
+        let ratingValue = parseInt($dishDetailStarRating2.val());
+        displayReact(ratingValue);
+    });
+
     const $sendReviewSection = $dishReview.find('#sendReviewSection');
     const $submitReviewBtn = $dishReview.find('.dish-review-submit');
     if ($submitReviewBtn.length > 0) {
@@ -693,7 +705,6 @@ $(document).ready(function() {
                         // thông báo đã gửi đánh giá
                         $sendReviewSection.replaceWith($(dataJson.reviewed));
                         // hiển thị lại số sao đánh giá
-                        const $dishDetailStarRating2 = $dishReview.find('#dishDetailStarRating2');
                         $dishDetailStarRating2.rating('destroy');
                         $dishDetailStarRating2.rating('create', { disabled: true, showCaption: false, size: 'xl' });
                     } else {

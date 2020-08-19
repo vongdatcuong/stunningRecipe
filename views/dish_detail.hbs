@@ -244,12 +244,16 @@
                     {{#if user}}
                         {{#if dish.userReviewed}}    <!-- nếu user đã review món ăn rồi -->
                         <div class="dish-rating" style="text-align: center;">
-                            <input type="hidden" class="dishDetailStarRating kv-ltr-theme-fas-star rating-loading" value="{{dish.userReviewed.rating}}" disabled data-size="xl"/>                         
+                            <input id="reviewed" type="hidden" class="dishDetailStarRating kv-ltr-theme-fas-star rating-loading" value="{{dish.userReviewed.rating}}" disabled data-size="xl"/>                         
+                            <br>
+                            <canvas id="mycanvas" width="150" height="150"></canvas>
                             <div>Bạn đã đánh giá {{dish.userReviewed.rating}} sao cho món ăn này với nội dung: {{dish.userReviewed.content}}</div>
                         </div>
                         {{else}}
                         <div class="dish-rating" style="text-align: center;">
-                            <input id="dishDetailStarRating2" type="hidden" class="dishDetailStarRating kv-ltr-theme-fas-star rating-loading" value="0" data-size="xl"/>                         
+                            <input id="dishDetailStarRating2" type="hidden" class="dishDetailStarRating kv-ltr-theme-fas-star rating-loading" value="0" data-size="xl"/>
+                            <br>
+                            <canvas id="mycanvas" width="150" height="150"></canvas>
                             <div  id="sendReviewSection">
                                 <textarea class="dish-review-content form-control" placeholder="Để lại đánh giá..." rows="2"></textarea>
                                 <br>
@@ -334,3 +338,130 @@
             </div>
         </div>
 </div>
+
+<script>
+    $(document).ready(function() { 
+        let ratingValue;
+        if (parseInt($('#reviewed').val())) // nếu đã review
+            ratingValue = parseInt($('#reviewed').val());
+        else    //nếu chưa review
+            ratingValue = -1;
+        displayReact(ratingValue);
+        
+    });
+    function displayReact(ratingPoint) {
+        myFace();
+        myEye();
+        mySmile(ratingPoint);
+    }
+
+    function myFace() {
+        var c = document.getElementById("mycanvas");
+
+        //to draw a surface on canvas element pass 2d as an argument in the getContext function    
+        var draw = c.getContext("2d");
+
+        //to start a new path invoke BeginPath function.    
+        //Call this function when you want to create a new path    
+        draw.beginPath();
+
+        //to specify a color or style for your canvas use fillStyle property    
+        draw.fillStyle = "yellow";
+
+        //to create a full circle invoke the arc method and in that method    
+        //pass the value for x and y, radius, start point,    
+        draw.arc(75, 75, 75, 0, Math.PI * 2, true);
+
+        //to close the path invoke the closePath function    
+        draw.closePath();
+
+        //invoke fill function to fill the canvas with a circle and in that circle a color of yellow    
+        draw.fill();
+    }
+
+    function myEye() {
+        var c = document.getElementById("mycanvas");
+        var eye = c.getContext("2d");
+        //moveTo function is used to move the starting point of the canvas to a new point    
+        //x value is 55 and y value is 50    
+        eye.moveTo(55, 50);
+
+        //from the new point, begin a new path    
+        eye.beginPath();
+
+        //fill the style with color black    
+        eye.fillStyle = "black";
+
+        //left round eye    
+        eye.arc(40, 50, 6, 0, Math.PI * 2, true);
+        eye.closePath();
+        eye.fill();
+
+        //move to the new sub path from the current point and create a right eye    
+        eye.moveTo(103, 49);
+
+        eye.beginPath();
+        eye.fillStyle = "black";
+        //right round eye    
+        eye.arc(110, 50, 6, 0, Math.PI * 2, true);
+        eye.closePath();
+        eye.fill();
+    }
+
+    function mySmile(ratingPoint) {
+        var c = document.getElementById("mycanvas");
+        var smile = c.getContext("2d");
+        //105 means x it will go the left side and 75 means y it will go upward of //downward    
+        smile.moveTo(105, 75);
+        smile.beginPath();
+        smile.strokeStyle = "black";
+        const xStart = 30;
+        const yStart = 85;
+        const xEnd = 120;
+        const yEnd = 85;
+
+        switch (ratingPoint) {
+            case 0:
+                smile.bezierCurveTo(xStart, yStart + 10, xEnd - 50, yStart - 50, xEnd, yEnd + 10);
+                break;
+            case 0.5:
+                smile.bezierCurveTo(xStart, yStart + 10, xEnd - 50, yStart - 40, xEnd, yEnd + 10);
+                break;
+            case 1:
+                smile.bezierCurveTo(xStart, yStart + 10, xEnd - 50, yStart - 25, xEnd, yEnd + 10);
+                break;
+            case 1.5:
+                smile.bezierCurveTo(xStart, yStart + 10, xEnd - 50, yStart - 10, xEnd, yEnd + 10);
+                break;
+            case 2:
+                smile.bezierCurveTo(xStart, yStart, xEnd - 50, yStart - 10, xEnd, yEnd);
+                break;
+            case 2.5:
+                smile.bezierCurveTo(xStart, yStart, xEnd, yStart, xEnd, yEnd); // 2.5
+                break;
+            case 3:
+                smile.bezierCurveTo(xStart, yStart, xEnd - 50, yStart + 20, xEnd, yEnd); // 3
+                break;
+            case 3.5:
+                smile.bezierCurveTo(xStart, yStart, xEnd - 50, yStart + 40, xEnd, yEnd); // 3.5
+                break;
+            case 4:
+                smile.bezierCurveTo(xStart, yStart, xEnd - 50, yStart + 60, xEnd, yEnd); // 4
+                break;
+            case 4.5:
+                smile.bezierCurveTo(xStart, yStart, xEnd - 50, yStart + 80, xEnd, yEnd); // 4.5
+                break;
+            case 5:
+                smile.bezierCurveTo(xStart, yStart, xEnd, yStart, xEnd, yEnd);
+                smile.arc(75, 85, 45, 0, Math.PI);
+                smile.fillStyle = "white";
+                smile.fill();
+                break;
+            default:
+                smile.bezierCurveTo(xStart, yStart, xEnd, yStart, xEnd, yEnd);
+        }
+
+        //to draw a half rounded circle with a line stroke we can invoke the stroke function    
+        smile.stroke();
+    }
+</script>
