@@ -55,13 +55,13 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+#.env
 
 # next.js build output
 .next
 
 # bin directory
-bin
+#bin
 
 # package-json.log
 package-lock.json
