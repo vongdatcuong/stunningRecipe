@@ -98,13 +98,14 @@
                                                             <img src="{{imageUrl}}" class="responsive" />
                                                         </a>
                                                         <div class="item-favorite">
-                                                            <span class="favoriteNumber{{dishID}}">{{favoriteNumber}}</span>
-                                                            {{#if isUserFavorite}}
-                                                            <i class="fa fa-heart favorite-dish" id="{{dishID}}"></i>
-                                                            {{else}}
-                                                            <i class="far fa-heart favorite-dish" id="{{dishID}}"></i>
-                                                            {{/if}}
-
+                                                            {{#ifCond status '==' ../dishAccepted}}
+                                                                <span class="favoriteNumber{{dishID}}">{{favoriteNumber}}</span>
+                                                                {{#if isUserFavorite}}
+                                                                <i class="fa fa-heart favorite-dish" id="{{dishID}}"></i>
+                                                                {{else}}
+                                                                <i class="far fa-heart favorite-dish" id="{{dishID}}"></i>
+                                                                {{/if}}
+                                                            {{/ifCond}}
                                                         </div>
                                                     </div>
                                                     <div class="item-info">
