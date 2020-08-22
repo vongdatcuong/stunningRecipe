@@ -169,11 +169,23 @@
                                                             </div>
                                                         </div>
                                                         <div class="item-info-footer">
-                                                            <div class="item-rating">
-                                                                <input type="hidden"
-                                                                    class="starRating kv-ltr-theme-fas-star rating-loading"
-                                                                    value="{{rating}}" disabled data-size="xs" />
-                                                            </div>
+                                                            {{#ifCond status '==' ../dishAccepted}}
+                                                                <div class="item-rating">
+                                                                    <input type="hidden"
+                                                                        class="starRating kv-ltr-theme-fas-star rating-loading"
+                                                                        value="{{rating}}" disabled data-size="xs" />
+                                                                </div>
+                                                            {{else}}
+                                                                {{#ifCond status '==' ../dishWaiting}}
+                                                                    <div class="item-rating">
+                                                                        <h5 style="color: #ffc107!important">Chờ kiểm duyệt</h5>
+                                                                    </div>
+                                                                {{else}}
+                                                                    <div class="item-rating my-1">
+                                                                        <h5 style="color: #dc3545!important">Bị từ chối</h5>
+                                                                    </div>
+                                                                {{/ifCond}}
+                                                            {{/ifCond}}
                                                             <br>
                                                             <div class="recipe-by mt-3">
                                                                 <a href="/profile/{{creator.userID}}">

@@ -110,7 +110,8 @@ const profile = async(req, res) => {
         new Promise(async (resolve, reject) => {
             // lấy danh sách các món ăn đã post
             const postedDishes = await Dish.getDishes({ // query
-                createdBy: profileUserID
+                createdBy: profileUserID,
+                status: { $in: [constant.dishRecipeStatus.waiting, constant.dishRecipeStatus.accepted, constant.dishRecipeStatus.rejected,]}
             }, { // option
                 sort: { createdDate: -1 },
             });
@@ -180,6 +181,9 @@ const profile = async(req, res) => {
         dishTypes: constant.splitToChunk(customDishTypes, 6),
         cuisines: customCuisines,
         diets: customDiets,
+        dishAccepted: constant.dishRecipeStatus.accepted,
+        dishWaiting: constant.dishRecipeStatus.waiting,
+        dishRejected: constant.dishRecipeStatus.rejected,
     });
 };
 
